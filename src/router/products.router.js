@@ -8,7 +8,7 @@ const manager = new ProductManager(`${__dirname}/files/products.json`);
 
 
 //CREATE
-productsRouter.post('/', async (req, res) => {
+productsRouter.post('/', async (req, res, next) => {
     try {
         let product = await Product.create(req.body)
         return res.status(201).json({
