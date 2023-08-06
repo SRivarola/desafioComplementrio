@@ -1,10 +1,14 @@
 import { Router } from 'express';
+//imports models for mongoose
 import ProductManager from "../dao/manager/ProductManager.js";
 import __dirname from '../utils.js';
+//imports manager for fs
 import Product from '../dao/models/products.js';
 
-const productsRouter = Router();
-const manager = new ProductManager(`${__dirname}/files/products.json`);
+
+//manager FS
+/* const productsRouter = Router();
+const manager = new ProductManager(`${__dirname}/files/products.json`); */
 
 
 //CREATE
