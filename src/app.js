@@ -27,8 +27,11 @@ app.use(notFoundHandler)
 const PORT = 8080
 const ready = () => {
     console.log(`Server ready on port: ${PORT}`)
-    
+    connect('mongodb+srv://srivarola:1234@srivarola.glbd6br.mongodb.net/deafiocomplementario')
+        .then(() => console.log('database connected'))
+        .catch(err => console.log(err))
 }
+
 const server = app.listen(PORT, ready);
 
 const io = new Server(server);
