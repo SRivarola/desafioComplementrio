@@ -81,10 +81,11 @@ productsRouter.put('/:pid', async (req, res,next) => {
         let { pid } = req.params
         let data = req.body
         let product = await Product.findByIdAndUpdate(pid, data)
+        let updateProduct = await Product.findById(pid)
         return res.status(200).json({
             success: true,
             message: `Product id: ${product._id} modified.`,
-            payload: product
+            payload: updateProduct
         })
     } catch (error) {
         next(error)

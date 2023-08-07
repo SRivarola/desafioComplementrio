@@ -17,7 +17,7 @@ const cartsRouter = Router();
 //create
 cartsRouter.post('/', async (req, res, next) => {
     try {
-        const cart = await Cart.create()
+        const cart = await Cart.create({Products: []})
         return res.status(201).json({
             success: true,
             message: `Cart id: ${cart._id}`,
@@ -61,15 +61,17 @@ cartsRouter.put('/:cid/product/:pid', async (req, res, next) => {
         const { cid, pid } = req.params;
         const product = await Product.findById(pid);
         const cart = await Cart.findById(cid);
+        console.log(product)
         let products = cart.products;
-        let isInCart = product.find(e => e.product === pid);
+        let isInCart = products.find(e => e.product == pid);
+        console.log(isInCart)
         let newCart;
         if(!isInCart){
             products.push({product: product._id, quantity: 1});
             await Cart.findByIdAndUpdate(cid, {products: products});
             newCart = await Cart.findById(cid);
         } else {
-            const filteredCart = products.filter(e => e.product !== pid);
+            const filteredCart = products.filter(e => e.product != pid);
             isInCart.quantity = isInCart.quantity + 1;
             await Cart.findByIdAndUpdate(cid, {products: [...filteredCart, isInCart]});
             newCart = await Cart.findById(cid);
@@ -106,7 +108,7 @@ cartsRouter.delete('/:cid/product/:pid', async (req, res, next) => {
         const product = await Product.findById(pid);
         const cart = await Cart.findById(cid);
         let products = cart.products;
-        let isInCart = product.find(e => e.product === pid);
+        let isInCart = products.find(e => e.product == pid);
         let newCart;
         if(!isInCart){
             return res.status(404).json({
@@ -115,12 +117,12 @@ cartsRouter.delete('/:cid/product/:pid', async (req, res, next) => {
             })
         } else {
             if(isInCart.quantity > 1){
-                const filteredCart = products.filter(e => e.product !== pid);
+                const filteredCart = products.filter(e => e.product != pid);
                 isInCart.quantity = isInCart.quantity - 1;
                 await Cart.findByIdAndUpdate(cid, {products: [...filteredCart, isInCart]});
                 newCart = await Cart.findById(cid)
             } else {
-                const filteredCart = products.filter(e => e.product !== pid);
+                const filteredCart = products.filter(e => e.product != pid);
                 await Cart.findByIdAndUpdate(cid, {products: filteredCart});
                 newCart = await Cart.findById(cid)
             }
