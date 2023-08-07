@@ -7,8 +7,8 @@ import Product from '../dao/models/products.js';
 
 
 //manager FS
-/* const productsRouter = Router();
-const manager = new ProductManager(`${__dirname}/files/products.json`); */
+const productsRouter = Router();
+// const manager = new ProductManager(`${__dirname}/files/products.json`); 
 
 
 //CREATE
