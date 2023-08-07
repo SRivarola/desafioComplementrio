@@ -8,10 +8,10 @@ Endpoints para las vistas y api:
 Product Router 
 view de todos los productos -> localhost:8080/api/products 
  
-create product -> localhost:8080/api/products 
-leer 1 product -> localhost:8080/api/products/:pid 
-update product -> localhost:8080/api/products/:pid 
-delete product -> localhost:8080/api/products/:pid 
+create product -> localhost:8080/api/products \
+leer 1 product -> localhost:8080/api/products/:pid \
+update product -> localhost:8080/api/products/:pid \
+delete product -> localhost:8080/api/products/:pid \
  
 Cart Router 
  
