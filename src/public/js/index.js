@@ -62,7 +62,7 @@ function handleSubmit (e) {
 
     socket.on('product', data => {
         const card = `
-            <div class="card" id=${data.id}>
+            <div class="card" id=${data._id}>
                 <div class="image_container">
                     <img src="/images/${data.thumbnail[0]}" alt=${data.title}>
                 </div>
@@ -70,10 +70,10 @@ function handleSubmit (e) {
                     <div>
                         <p class="card_title">${data.title}</p>
                         <p class="card_description">${data.description}</p>
-                        <p class="card_price">$${this.price}</p>
+                        <p class="card_price">$${data.price}</p>
                     </div>
                     <div class="btn_container">
-                        <button class="btn-agregar">AGREGAR AL CARRITO</button>
+                        <button id=${data._id} class="btn-agregar">AGREGAR AL CARRITO</button>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@ function handleSubmit (e) {
 
         container.innerHTML += card
 
-        const option = `<option value=${data.id}>${data.title}</option>`
+        const option = `<option value=${data._id}>${data.title}</option>`
 
         const select = document.getElementById('select')
 
@@ -97,7 +97,7 @@ socket.on('data', data => {
     if(select.childElementCount < 2) {
         data.forEach(element => {
             const option = `
-                <option value=${element.id} >${element.title}</option>
+                <option value=${element._id} >${element.title}</option>
             `
             select.innerHTML += option
         });
@@ -109,7 +109,7 @@ deleteForm.addEventListener('submit', handleDeleteSubmit)
 
 function handleDeleteSubmit(e) {
     e.preventDefault();
-    const option = Number(e.target[0].value)
+    const option = e.target[0].value
 
     const formGroup = document.getElementById('formGroup');
     const error = document.getElementById('errorDeleteMessage')
@@ -172,7 +172,7 @@ async function handleDelete(id) {
             }, 2500);
         })
         socket.on('deletedProduct', data => {
-            const card = document.getElementById(`${data.id}`)
+            const card = document.getElementById(`${data._id}`)
             card.remove()
         })
     } catch (error) {
