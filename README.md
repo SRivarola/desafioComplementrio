@@ -1,11 +1,13 @@
 # Desafio Complementrio
  
 Para levantar el servidor ejecutar npm run dev o npm start. 
+El servidor se levanta en el puerto 8080. 
  
-## El servidor se levanta en el puerto 8080. 
- 
+  
 Endpoints para las vistas y api: 
-Product Router 
+
+## Product Router 
+
 view de todos los productos -> localhost:8080/api/products 
  
 create product -> localhost:8080/api/products  
