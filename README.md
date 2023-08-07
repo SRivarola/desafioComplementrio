@@ -1,6 +1,6 @@
 # Desafio Complementrio
 
-Para levantar el servidor ejecutar npm run dev o npm start
+Para levantar el servidor ejecutar npm run dev o npm start.
 
 El servidor se levanta en el puerto 8080.
 
