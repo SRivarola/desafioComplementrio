@@ -2,7 +2,7 @@
  
 Para levantar el servidor ejecutar npm run dev o npm start. 
  
-El servidor se levanta en el puerto 8080. 
+## El servidor se levanta en el puerto 8080. 
  
 Endpoints para las vistas y api: 
 Product Router 
@@ -13,10 +13,14 @@ leer 1 product -> localhost:8080/api/products/:pid
 update product -> localhost:8080/api/products/:pid  
 delete product -> localhost:8080/api/products/:pid  
  
-Cart Router 
+## Cart Router 
  
 create cart -> localhost:8080/api/carts  
 leer 1 cart -> localhost:8080/api/carts/:cid  
 update cart -> localhost:8080/api/carts/:cid/product/:pid  
 delete product -> localhost:8080/api/carts/:cid/product/:pid  
 delete cart -> localhost:8080/api/carts/:cid 
+
+## Real Time Products
+
+localhost:8080/api/realtimeproducts
