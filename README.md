@@ -15,8 +15,8 @@ delete product -> localhost:8080/api/products/:pid
  
 Cart Router 
  
-create cart -> localhost:8080/api/carts 
-leer 1 cart -> localhost:8080/api/carts/:cid 
-update cart -> localhost:8080/api/carts/:cid/products/:pid 
-delete product -> localhost:8080/api/carts/:cid/products/:pid 
+create cart -> localhost:8080/api/carts  
+leer 1 cart -> localhost:8080/api/carts/:cid  
+update cart -> localhost:8080/api/carts/:cid/products/:pid  
+delete product -> localhost:8080/api/carts/:cid/products/:pid  
 delete cart -> localhost:8080/api/carts/:cid 
