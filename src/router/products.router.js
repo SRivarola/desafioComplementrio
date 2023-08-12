@@ -1,8 +1,8 @@
 import { Router } from 'express';
-//imports models for mongoose
+//imports manager for fs
 import ProductManager from "../dao/manager/ProductManager.js";
 import __dirname from '../utils.js';
-//imports manager for fs
+//imports models for mongoose
 import Product from '../dao/models/products.js';
 
 
