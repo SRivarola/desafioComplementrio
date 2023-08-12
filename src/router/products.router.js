@@ -35,15 +35,24 @@ productsRouter.post('/', async (req, res, next) => {
 
 //READ ALL
 productsRouter.get('/', async (req, res, next) => {
+    
+    const { title } = req.query;
+    let products;
     try {
-       let products = await Product.find().lean()
-       return res.status(200).render('home', {products})
+        if(title){
+            const lookfor = new RegExp(title, "i");
+            products = await Product.paginate({title: lookfor}, {limit: 6, page: 1});
+        } else {
+            products = await Product.paginate({}, {limit: 6, page: 1});
+        }
+        return res.status(200).json({
+            success: true,
+            payload: products
+        });
+
     } catch (error) {
-        next(error)
-        
+        next(error);
     }
-    
-    
     //Esto es para FS
     /* const { limit } = req.query;
     let products = await manager.getProducts();
