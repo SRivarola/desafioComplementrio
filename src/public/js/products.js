@@ -1,18 +1,30 @@
 function nextPage(hasNextPage, nextPage) {
-    if(hasNextPage) {
-        const location = window.location.href
-        const query = location.split('?')
-        const title = query[1] ? query[1].includes('title') : false
-        window.location.href = `/products/${title ? ('?',query[1],'&') : ''}?page=${nextPage}`
-    } 
+    if(hasNextPage){
+        const location = window.location.href;
+        let query = location.split('?')[1] ? location.split('?')[1] : '';
+        let title;
+        if(query.includes('&')){
+            query = query.split('&')[0];
+            title = query ? query.includes('title') : false;
+        } else {
+            title = query ? query.includes('title') : false;
+        }
+        window.location.href = `/products${title ? ('?'+query+`&page=${nextPage}`) : `?page=${nextPage}`}?`;
+    }
 }
 
 function prevPage(hasPrevPage, prevPage) {
-    if(hasPrevPage) {
-        const location = window.location.href
-        const query = location.split('?')
-        const title = query[1].includes('title')
-        window.location.href = `/products/${title ? ('?',query[1],'&') : ''}?page=${prevPage}` 
+    if(hasPrevPage){
+        const location = window.location.href;
+        let query = location.split('?')[1] ? location.split('?')[1] : '';
+        let title;
+        if(query.includes('&')){
+            query = query.split('&')[0];
+            title = query ? query.includes('title') : false;
+        } else {
+            title = query ? query.includes('title') : false;
+        }
+        window.location.href = `/products${title ? ('?'+query+`&page=${prevPage}`) : `?page=${prevPage}`}?`;
     }
 }
 
