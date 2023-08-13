@@ -108,6 +108,29 @@ body{
     align-items: center;
     width: 100%; 
 }
+.btn_container_buscar{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+}
+
+.btn_set_buscar{
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 50px;
+    font-weight: bold;
+    width: 390px;
+    cursor: pointer;
+    transition: background-color 0.8s ease;
+}
+.btn_set_buscar:hover {
+    background-color: #e3972d;
+    color:black;
+    border:  solid #e3972d;
+}
 
 .btn-agregar{
     background-color: black;
@@ -137,6 +160,20 @@ body{
     flex-direction: column;
     gap: 20px;
 }
+.form_container_buscar{
+    align-self: center;
+    justify-content: center;
+    width: 60%;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 15px;
+    font-family: 'Oswald', sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
 
 .form_title{
     text-align: center;
@@ -203,6 +240,13 @@ input:focus{
 .formGroup{
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+.formGroup_buscar{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 20px;
     width: 100%;
 }

@@ -27,6 +27,15 @@
         <div class="button_container_right">
             <button id="right" onclick="nextPage({{products.hasNextPage}}, {{products.nextPage}})" class="nav_button" >→</button>
         </div>
+        <form id="filter_form" class="form_container_buscar">
+        <h2 class="form_title">Filtro</h2>
+        <div id="formGroup" class="formGroup_buscar">
+            <input id="title_input" type="text" placeholder="------Ingrese una letra, silaba o palabra------">
+        </div>
+        <div id="btn_filter" class="btn_container_buscar">
+            <button type="submit" class="btn_set_buscar">BUSCAR</button>
+        </div>
+    </form>
     </div>
 </div>
 

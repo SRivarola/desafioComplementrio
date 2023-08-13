@@ -34,6 +34,14 @@ function prevPage(hasPrevPage, prevPage) {
         const newLocation = window.location.protocol + "//localhost:8080/products/?page=" + prevPage;
         window.location.replace(newLocation)
     }
+}
 
-    
+const filterForm = document.getElementById('filter_form')
+filterForm.addEventListener('submit', handleFilterSubmit)
+
+function handleFilterSubmit(e) {
+    e.preventDefault();
+    const titleInput = document.getElementById('title_input');
+    const titleValue = titleInput.value;
+    window.location.href = `/api/products/?title=${titleValue}`;
 }
