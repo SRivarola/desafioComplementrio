@@ -11,7 +11,7 @@ router.get('/', async (req, res, next) => {
     try {
         if(title){
             const lookfor = new RegExp(title, "i");
-            products = await Product.paginate({title: lookfor}, {limit: 4, page: page ? page : 1});
+            products = await Product.paginate({title: lookfor}, {lean: true, limit: 4, page: page ? page : 1});
         } else {
             products = await Product.paginate({},{lean: true, limit: 4, page: page ? page : 1});
             console.log(products)

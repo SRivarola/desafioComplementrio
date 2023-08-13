@@ -43,5 +43,5 @@ function handleFilterSubmit(e) {
     e.preventDefault();
     const titleInput = document.getElementById('title_input');
     const titleValue = titleInput.value;
-    window.location.href = `/api/products/?title=${titleValue}`;
+    window.location.href = `/products/?title=${titleValue}`;
 }
