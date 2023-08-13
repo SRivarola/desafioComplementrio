@@ -13,11 +13,9 @@ router.get('/', async (req, res, next) => {
             const lookfor = new RegExp(title, "i");
             products = await Product.paginate({title: lookfor}, {limit: 6, page: 1});
         } else {
-            let data = await Product.paginate({}, {limit: 6, page: 1});
-            products = res.json({data});
-            console.log(products)
+            products = await Product.paginate({},{lean: true, limit: 6, page: 1});
         }
-        return res.render('products', { data }); 
+        return res.render('products', { products }); 
 
     } catch (error) {
         next(error);
