@@ -7,7 +7,6 @@ const router = Router();
 router.get('/', async (req, res, next) => {
     
     const { title, page } = req.query;
-    console.log(title)
     let products;
     try {
         if(title){
@@ -15,7 +14,6 @@ router.get('/', async (req, res, next) => {
             products = await Product.paginate({title: lookfor}, {lean: true, limit: 4, page: page ? page : 1});
         } else {
             products = await Product.paginate({},{lean: true, limit: 4, page: page ? page : 1});
-            console.log(products)
         }
         return res.render('products', { products }); 
 
