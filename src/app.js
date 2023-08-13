@@ -22,7 +22,7 @@ app.engine('handlebars', handlebars.engine())
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'handlebars');
 
-app.use('/api', indexRouter)
+app.use('/', indexRouter)
 
 app.use(errorHandler)
 app.use(notFoundHandler)
