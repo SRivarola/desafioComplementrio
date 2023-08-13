@@ -2,6 +2,7 @@ import express from 'express';
 import { connect } from 'mongoose';
 import errorHandler from './middlewares/errorHandler.js'
 import notFoundHandler from './middlewares/notFoundHandler.js';
+import cors from 'cors'
 import indexRouter from './router/index.router.js';
 import Product from './dao/models/products.js';
 // import ProductManager from './dao/manager/ProductManager.js';
@@ -18,11 +19,14 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(express.static((`${__dirname}/public`)))
 
+app.use(cors())
+
 app.engine('handlebars', handlebars.engine())
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'handlebars');
 
 app.use('/', indexRouter)
+
 
 app.use(errorHandler)
 app.use(notFoundHandler)
