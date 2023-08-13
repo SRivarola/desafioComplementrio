@@ -9,7 +9,7 @@ const indexRouter = Router()
 // configurar las rutas de recursos
 indexRouter.use('/api/products', productsRouter)
 indexRouter.use('/api/carts', cartsRouter)
-/* indexRouter.use('/api/realtimeproducts', rtProductsRouter) */
+indexRouter.use('/api/realtimeproducts', rtProductsRouter)
 indexRouter.use('/products', viewsProducts)
 
 export default indexRouter

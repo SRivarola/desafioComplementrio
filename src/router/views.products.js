@@ -6,14 +6,15 @@ const router = Router();
 //READ ALL
 router.get('/', async (req, res, next) => {
     
-    const { title } = req.query;
+    const { title, page } = req.query;
     let products;
     try {
         if(title){
             const lookfor = new RegExp(title, "i");
-            products = await Product.paginate({title: lookfor}, {limit: 6, page: 1});
+            products = await Product.paginate({title: lookfor}, {limit: 4, page: page ? page : 1});
         } else {
-            products = await Product.paginate({},{lean: true, limit: 6, page: 1});
+            products = await Product.paginate({},{lean: true, limit: 4, page: page ? page : 1});
+            console.log(products)
         }
         return res.render('products', { products }); 
 
