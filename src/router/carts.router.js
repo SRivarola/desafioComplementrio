@@ -35,15 +35,12 @@ cartsRouter.post('/', async (req, res, next) => {
 cartsRouter.get('/:cid', async (req, res, next) => {
     try {
         const { cid } = req.params;
-        const cart = await Cart.findById(cid).populate("products.product", "title price").sort({title: -1});
-        const products = cart.products
-        // .sort((a, b) => a.product.title - b.product.title)
-        
-        // console.log(products[0].product.title)
+        const cart = await Cart.findById(cid).populate({path: "products.product", select: "title price"});
+        cart.products.sort((a, b) => a.product.title.localeCompare(b.product.title))
         return res.status(200).json({
             success: true,
-            // message: `Cart id: ${cart._id}`,
-            payload: products
+            message: `Cart id: ${cart._id}`,
+            payload: cart.products
         });
     } catch (error) {
         next(error)
@@ -60,7 +57,14 @@ cartsRouter.get('/:cid', async (req, res, next) => {
 
 cartsRouter.get('/bills/:cid', async (req, res, next) => {
     try {
-        
+        const { cid } = req.params;
+        const cart = await Cart.findById(cid).populate({path: "products.product", select: "price"}).lean();
+        const totalMount = cart.products.reduce((acc, item) => acc + item.product.price * item.quantity, 0)
+        console.log(totalMount)
+        return res.status(200).json({
+            success: true,
+            payload: totalMount
+        })
     } catch (error) {
         next(error)
     }

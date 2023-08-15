@@ -37,7 +37,6 @@ productsRouter.post('/', async (req, res, next) => {
 //READ ALL
 productsRouter.get('/', async (req, res, next) => {
     const { title, page } = req.query;
-    console.log('title: ', title, ' page: ', page)
     let products;
     try {
         if(title){
