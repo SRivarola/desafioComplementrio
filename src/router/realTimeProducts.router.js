@@ -16,7 +16,6 @@ rtProductsRouter.get('/', async (req, res, next) => {
         next(error)
     }
 
-
     // esto es para FS
     // const { limit } = req.query;
     // let products = await manager.getProducts();

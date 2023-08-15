@@ -35,11 +35,15 @@ cartsRouter.post('/', async (req, res, next) => {
 cartsRouter.get('/:cid', async (req, res, next) => {
     try {
         const { cid } = req.params;
-        const cart = await Cart.findById(cid).populate("products.product", "title price").lean();
+        const cart = await Cart.findById(cid).populate("products.product", "title price").sort({title: -1});
+        const products = cart.products
+        // .sort((a, b) => a.product.title - b.product.title)
+        
+        // console.log(products[0].product.title)
         return res.status(200).json({
             success: true,
-            message: `Cart id: ${cart._id}`,
-            payload: cart
+            // message: `Cart id: ${cart._id}`,
+            payload: products
         });
     } catch (error) {
         next(error)

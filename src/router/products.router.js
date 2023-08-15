@@ -13,11 +13,12 @@ const productsRouter = Router();
 
 //CREATE
 productsRouter.post('/', async (req, res, next) => {
+    const data = req.body;
     try {
-        let product = await Product.create(req.body)
+        let product = await Product.create(data);
         return res.status(201).json({
             success: true,
-            message: `product id: ${product._id}`,
+            message: `Product with id: ${product._id}, added successfully!`,
             payload: product
         })
     } catch (error) {
@@ -109,7 +110,6 @@ productsRouter.put('/:pid', async (req, res,next) => {
     } 
     res.send({ status: 'success', payload: product }) */
 })
-
 
 //Delete
 productsRouter.delete('/:pid', async (req, res, next) => {
