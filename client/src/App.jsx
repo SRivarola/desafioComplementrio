@@ -1,19 +1,13 @@
-import { useEffect } from 'react';
-import axios from 'axios'
+import { useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom';
+import ProductsContainer from './components/ProductsContainer';
 
 function App() {
   
-  useEffect(() => {
-    axios.get('http://localhost:8080/api/products')
-      .then(res => {
-        console.log(res.data)
-      })
-  }, []);
-
   return (
-    <div>
-        hola  
-    </div>
+    <Routes>
+      <Route path='/products' element={<ProductsContainer />} />
+    </Routes>
   )
 }
 
