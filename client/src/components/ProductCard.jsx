@@ -1,6 +1,11 @@
+import { Link } from "react-router-dom"
+
 const ProductCard = ({_id, thumbnail, title, price}) => {
   return (
-    <div className="relative w-[220px] h-[360px] font-poppins rounded-lg overflow-hidden flex flex-col pt-4 z-0 bg-white">
+    <Link
+      to={`/products/${_id}`} 
+      className="relative w-[220px] h-[360px] font-poppins rounded-lg overflow-hidden flex flex-col pt-4 z-0 bg-white"
+    >
         <div className="relative my-0 mx-[10px] w-fit">
             <img className="w-full"  src={`/src/public/images/${thumbnail[0]}`} alt={title} />
         </div>
@@ -12,7 +17,7 @@ const ProductCard = ({_id, thumbnail, title, price}) => {
               <button className="bg-black text-white font-semibold border-none rounded-full py-[5px] px-[20px]">AGREGAR AL CARRITO</button>
           </div>
         </div>
-    </div>
+    </Link>
   )
 }
 export default ProductCard

@@ -32,9 +32,10 @@ const ProductsContainer = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/products/${query.title ? `?title=${query.title}` : ''}${query.page ? `?page=${query.page}` : ''}`)
+        axios.get(`http://localhost:8080/api/products/${query.title ? `?title=${query.title}` : ''}${query.page ? `${query.title ? '&' : '?'}page=${query.page}` : ''}`)
             .then(res => {
                 setData(res.data.payload)
+                console.log(res.data.payload)
             })
     }, [query.title, query.page]);
 
@@ -68,7 +69,8 @@ const ProductsContainer = () => {
                 <div className="absolute left-[-17px] top-[165px] z-10 flex justify-center items-center text-lg">
                     <button 
                         id="left"
-                        onClick={() => prevPage(data?.prevPage)}
+                        disabled={!data?.hasPrevPage}
+                        onClick={() => prevPage(data.prevPage)}
                         className="flex justify-center items-center bg-black text-white border border-white h-[35px] w-[35px] rounded cursor-pointer hover:bg-[#e3972d] hover:text-black hover:border-[#e3972d] transition-all ease-linear duration-150"
                     >
                         <BiSolidLeftArrow />

@@ -35,21 +35,21 @@ productsRouter.post('/', async (req, res, next) => {
 
 //READ ALL
 productsRouter.get('/', async (req, res, next) => {
-    
-    const { title } = req.query;
+    const { title, page } = req.query;
+    console.log('title: ', title, ' page: ', page)
     let products;
     try {
         if(title){
             const lookfor = new RegExp(title, "i");
-            products = await Product.paginate({title: lookfor}, {limit: 6, page: 1});
+            products = await Product.paginate({title: lookfor}, {lean: true, limit: 4, page: page ? page : 1});
         } else {
-            products = await Product.paginate({}, {limit: 4, page: 1});
+            products = await Product.paginate({}, {lean: true, limit: 4, page: page ? page : 1});
         }
+        // return res.render('products', {products})
         return res.status(200).json({
             success: true,
             payload: products
-        });
-
+        })
     } catch (error) {
         next(error);
     }
