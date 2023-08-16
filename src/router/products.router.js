@@ -13,9 +13,12 @@ const productsRouter = Router();
 
 
 //CREATE
-productsRouter.post('/', uploader.array('file'), async (req, res, next) => {
+productsRouter.post('/', uploader.single('file'), async (req, res, next) => {
     const data = req.body;
-    const file = req.files
+    const files = req.file
+
+    console.log(files, data)
+    
     try {
         let product = await Product.create(data);
         return res.status(201).json({

@@ -35,7 +35,7 @@ cartsRouter.post('/', async (req, res, next) => {
 cartsRouter.get('/:cid', async (req, res, next) => {
     try {
         const { cid } = req.params;
-        const cart = await Cart.findById(cid).populate({path: "products.product", select: "title price"});
+        const cart = await Cart.findById(cid).populate({path: "products.product", select: "title price thumbnail"});
         cart.products.sort((a, b) => a.product.title.localeCompare(b.product.title))
         return res.status(200).json({
             success: true,
