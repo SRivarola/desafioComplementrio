@@ -3,7 +3,7 @@ import { Router } from 'express';
 import Product from '../dao/models/products.js';
 //imports manager for fs
 import ProductManager from "../dao/manager/ProductManager.js";
-import __dirname from '../utils.js';
+import __dirname, { uploader } from '../utils.js';
 
 const productsRouter = Router();
 
@@ -12,8 +12,9 @@ const productsRouter = Router();
 
 
 //CREATE
-productsRouter.post('/', async (req, res, next) => {
+productsRouter.post('/', uploader.array('file'), async (req, res, next) => {
     const data = req.body;
+    const file = req.files
     try {
         let product = await Product.create(data);
         return res.status(201).json({
