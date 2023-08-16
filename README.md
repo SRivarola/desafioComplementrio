@@ -1,4 +1,4 @@
-# SGUNDA PRE-ENTREGA
+# SEGUNDA PRE-ENTREGA
  
 Para levantar el servidor ejecutar npm run dev o npm start. 
 El servidor se levanta en el puerto 8080. 
