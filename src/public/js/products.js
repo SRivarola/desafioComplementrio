@@ -1,44 +1,35 @@
-const nextButton = document.getElementById('right')
 function nextPage(hasNextPage, nextPage) {
-    if(!hasNextPage) {
-        nextButton.setAttribute("disabled");
-    } else {
-        nextButton.removeAttribute("disabled");
+    if(hasNextPage){
+        const location = window.location.href;
+        let query = location.split('?')[1] ? location.split('?')[1] : '';
+        let title;
+        if(query.includes('&')){
+            query = query.split('&')[0];
+            title = query ? query.includes('title') : false;
+        } else {
+            title = query ? query.includes('title') : false;
+        }
+        window.location.href = `/products${title ? ('?'+query+`&page=${nextPage}`) : `?page=${nextPage}`}?`;
     }
-    const location = window.location.href
-    const locationArray = location.split("/")
-    if(locationArray[locationArray.length - 1] == "products") {
-        const newLocation = location + "?page=" + nextPage
-        window.location.replace(newLocation);
-    } else {
-        const newLocation = window.location.protocol + "//localhost:8080/products/?page=" + nextPage;
-        window.location.replace(newLocation)
-    }
-
-    
 }
 
-const prevButton = document.getElementById('left');
 function prevPage(hasPrevPage, prevPage) {
-    if(!hasPrevPage) {
-        prevButton.setAttribute("disabled");
-    } else {
-        prevButton.removeAttribute("disabled");
-    }
-    const location = window.location.href
-    const locationArray = location.split("/")
-    if(locationArray[locationArray.length - 1] == "products") {
-        const newLocation = location + "?page=" + prevPage
-        window.location.replace(newLocation);
-    } else {
-        const newLocation = window.location.protocol + "//localhost:8080/products/?page=" + prevPage;
-        window.location.replace(newLocation)
+    if(hasPrevPage){
+        const location = window.location.href;
+        let query = location.split('?')[1] ? location.split('?')[1] : '';
+        let title;
+        if(query.includes('&')){
+            query = query.split('&')[0];
+            title = query ? query.includes('title') : false;
+        } else {
+            title = query ? query.includes('title') : false;
+        }
+        window.location.href = `/products${title ? ('?'+query+`&page=${prevPage}`) : `?page=${prevPage}`}?`;
     }
 }
 
 const filterForm = document.getElementById('filter_form')
 filterForm.addEventListener('submit', handleFilterSubmit)
-
 
 function handleFilterSubmit(e) {
     e.preventDefault();
@@ -46,3 +37,4 @@ function handleFilterSubmit(e) {
     const titleValue = titleInput.value;
     window.location.href = `/products?title=${titleValue}`;
 }
+

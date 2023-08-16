@@ -1,10 +1,10 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 
 const collection = 'carts';
 
 const schema = new Schema({
     products: [{
-        product: {type: Schema.Types.ObjectId, ref: 'Product'},
+        product: {type: Types.ObjectId, ref: 'products'},
         quantity: {type: Number}
     }] 
 });

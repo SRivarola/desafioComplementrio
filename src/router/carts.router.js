@@ -13,7 +13,6 @@ const cartsRouter = Router();
 // const manager = new CartsManager(`${__dirname}/files/carts.json`);
 // const productManager = new ProductManager(`${__dirname}/files/products.json`)
 
-
 //create
 cartsRouter.post('/', async (req, res, next) => {
     try {
@@ -36,11 +35,12 @@ cartsRouter.post('/', async (req, res, next) => {
 cartsRouter.get('/:cid', async (req, res, next) => {
     try {
         const { cid } = req.params;
-        const cart = await Cart.findById(cid);
+        const cart = await Cart.findById(cid).populate({path: "products.product", select: "title price thumbnail"});
+        cart.products.sort((a, b) => a.product.title.localeCompare(b.product.title))
         return res.status(200).json({
             success: true,
             message: `Cart id: ${cart._id}`,
-            payload: cart
+            payload: cart.products
         });
     } catch (error) {
         next(error)
@@ -54,6 +54,21 @@ cartsRouter.get('/:cid', async (req, res, next) => {
     // } 
     // res.send({ status: 'success', payload: cart })
 });
+
+cartsRouter.get('/bills/:cid', async (req, res, next) => {
+    try {
+        const { cid } = req.params;
+        const cart = await Cart.findById(cid).populate({path: "products.product", select: "price"}).lean();
+        const totalMount = cart.products.reduce((acc, item) => acc + item.product.price * item.quantity, 0)
+        console.log(totalMount)
+        return res.status(200).json({
+            success: true,
+            payload: totalMount
+        })
+    } catch (error) {
+        next(error)
+    }
+})
 
 //update
 cartsRouter.put('/:cid/product/:pid', async (req, res, next) => {

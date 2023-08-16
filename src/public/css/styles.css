@@ -10,16 +10,13 @@ body{
 .container{
     display: flex;
     flex-direction: column;
-    /* padding: 50px; */
 }
-
 .container__title{
     text-align: center;
     font-family: 'Caprasimo';
     color: white;
     letter-spacing: 2px;
 }
-
 .cards_container{
     display: flex;
     position: relative;
@@ -68,18 +65,15 @@ body{
     padding-top: 10px;
     z-index: 1;
 } 
-
 .image_container{
     position: relative;
     margin: 0 10px;
     height: fit-content;
     min-height: 50px;
 }
-
 .image{
     width: 100%;
 }
-
 .details_container{
     margin: 0 !important;
     padding: 0 !important;
@@ -93,18 +87,15 @@ hr{
     font-size: 20px;
     text-align: center;
 }
-
 .card_description {
     text-align: center;
 }
-
 .card_price{
     text-align: center;
     color: #1b1b80;
     font-size: 20px;
     font-weight: bold;
 }
-
 .btn_container{
     margin-top: 20px;
     display: flex;
@@ -119,7 +110,6 @@ hr{
     align-items: center;
     width: 100%; 
 }
-
 .btn_set_buscar{
     background-color: black;
     color: white;
@@ -135,7 +125,6 @@ hr{
     color:black;
     border:  solid #e3972d;
 }
-
 .btn-agregar{
     background-color: black;
     color: white;
@@ -151,7 +140,6 @@ hr{
     display: flex;
     justify-content: space-between;
 }
-
 .form_container{
     align-self: center;
     width: 60%;
@@ -177,27 +165,21 @@ hr{
     flex-wrap: wrap;
     gap: 20px;
 }
-
-
 .form_title{
     text-align: center;
 }
-
 .form_group{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 label{
     display: flex;
     align-items: center;
 }
-
 .label{
     width: 120px;
 }
-
 input{
     border: none;
     border-bottom: #161616 solid 1px;
@@ -205,17 +187,14 @@ input{
     padding: 5px;
     width: 250px;
 }
-
 input:focus{
     outline: none;
     border-bottom: #161616 2px solid;
 }
-
 .text_area{
     width: 350px;
     height: 350px;
 }
-
 .btn_set{
     background-color: black;
     color: white;

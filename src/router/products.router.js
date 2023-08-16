@@ -1,23 +1,29 @@
 import { Router } from 'express';
+//imports models for mongoose
+import Product from '../dao/models/products.js';
 //imports manager for fs
 import ProductManager from "../dao/manager/ProductManager.js";
 import __dirname from '../utils.js';
-//imports models for mongoose
-import Product from '../dao/models/products.js';
+import uploader from '../services/uploader.js';
 
+const productsRouter = Router();
 
 //manager FS
-const productsRouter = Router();
 // const manager = new ProductManager(`${__dirname}/files/products.json`); 
 
 
 //CREATE
-productsRouter.post('/', async (req, res, next) => {
+productsRouter.post('/', uploader.single('file'), async (req, res, next) => {
+    const data = req.body;
+    const files = req.file
+
+    console.log(files, data)
+    
     try {
-        let product = await Product.create(req.body)
+        let product = await Product.create(data);
         return res.status(201).json({
             success: true,
-            message: `product id: ${product._id}`,
+            message: `Product with id: ${product._id}, added successfully!`,
             payload: product
         })
     } catch (error) {
@@ -35,21 +41,20 @@ productsRouter.post('/', async (req, res, next) => {
 
 //READ ALL
 productsRouter.get('/', async (req, res, next) => {
-    
-    const { title } = req.query;
+    const { title, page } = req.query;
     let products;
     try {
         if(title){
             const lookfor = new RegExp(title, "i");
-            products = await Product.paginate({title: lookfor}, {limit: 6, page: 1});
+            products = await Product.paginate({title: lookfor}, {lean: true, limit: 4, page: page ? page : 1});
         } else {
-            products = await Product.paginate({}, {limit: 6, page: 1});
+            products = await Product.paginate({}, {lean: true, limit: 4, page: page ? page : 1});
         }
+        // return res.render('products', {products})
         return res.status(200).json({
             success: true,
             payload: products
-        });
-
+        })
     } catch (error) {
         next(error);
     }
@@ -109,7 +114,6 @@ productsRouter.put('/:pid', async (req, res,next) => {
     } 
     res.send({ status: 'success', payload: product }) */
 })
-
 
 //Delete
 productsRouter.delete('/:pid', async (req, res, next) => {
