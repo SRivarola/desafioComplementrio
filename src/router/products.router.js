@@ -3,7 +3,8 @@ import { Router } from 'express';
 import Product from '../dao/models/products.js';
 //imports manager for fs
 import ProductManager from "../dao/manager/ProductManager.js";
-import __dirname, { uploader } from '../utils.js';
+import __dirname from '../utils.js';
+import uploader from '../services/uploader.js';
 
 const productsRouter = Router();
 
