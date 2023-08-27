@@ -15,7 +15,7 @@ const productsRouter = Router();
 //CREATE
 productsRouter.post('/', uploader.single('file'), async (req, res, next) => {
     const { title, description, price, stock, code, status } = req.body;
-    const file = req.file.filename
+    const file = req.file?.filename ? [req.file.filename] : []
     const data = {
         title,
         description,
@@ -23,7 +23,7 @@ productsRouter.post('/', uploader.single('file'), async (req, res, next) => {
         stock,
         code,
         status,
-        thumbnail: [file]
+        thumbnail: file
     }
 
     try {
