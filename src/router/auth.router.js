@@ -7,19 +7,9 @@ import uploader from '../services/uploader.js';
 
 const authRouter = Router();
 
-authRouter.post('/register', is_form_ok, is_8_char, uploader.single('file'), async (req, res, next) => {
-    const { name, mail, password, age } = req.body
-    console.log(name, mail, password)
-    const file = req.file.filename ? req.file.filename : ""
-    const data = {
-        name,
-        mail,
-        password,
-        age,
-        photo: file
-    }
+authRouter.post('/register', is_form_ok, is_8_char, async (req, res, next) => {
     try {
-        let user = await User.create(data)
+        let user = await User.create(req.body)
         return res.status(201).json({
             success: true,
             massage: 'user registered',
