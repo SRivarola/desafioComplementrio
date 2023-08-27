@@ -1,14 +1,25 @@
 import { Router } from "express";
-import User from '../dao/models/user.model.js';
+import User from '../dao/models/user.js';
 import is_form_ok from '../middlewares/is_form_ok.js';
 import is_8_char from '../middlewares/is_8_char.js';
 import is_valid_user from '../middlewares/is_valid_user.js';
+import uploader from '../services/uploader.js';
 
 const authRouter = Router();
 
-authRouter.post('/register', is_form_ok, is_8_char, async (req, res, next) => {
+authRouter.post('/register', is_form_ok, is_8_char, uploader.single('file'), async (req, res, next) => {
+    const { name, mail, password, age } = req.body
+    console.log(name, mail, password)
+    const file = req.file.filename ? req.file.filename : ""
+    const data = {
+        name,
+        mail,
+        password,
+        age,
+        photo: file
+    }
     try {
-        let user = await User.create(req.body)
+        let user = await User.create(data)
         return res.status(201).json({
             success: true,
             massage: 'user registered',
