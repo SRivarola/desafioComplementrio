@@ -3,7 +3,7 @@ import { Router } from 'express';
 import Product from '../dao/models/products.js';
 //imports manager for fs
 import ProductManager from "../dao/manager/ProductManager.js";
-import __dirname from '../utils.js';
+import __dirname from '../../utils.js';
 import uploader from '../services/uploader.js';
 
 const productsRouter = Router();
@@ -14,11 +14,18 @@ const productsRouter = Router();
 
 //CREATE
 productsRouter.post('/', uploader.single('file'), async (req, res, next) => {
-    const data = req.body;
-    const files = req.file
+    const { title, description, price, stock, code, status } = req.body;
+    const file = req.file.filename
+    const data = {
+        title,
+        description,
+        price,
+        stock,
+        code,
+        status,
+        thumbnail: [file]
+    }
 
-    console.log(files, data)
-    
     try {
         let product = await Product.create(data);
         return res.status(201).json({
@@ -28,8 +35,8 @@ productsRouter.post('/', uploader.single('file'), async (req, res, next) => {
         })
     } catch (error) {
         next(error)
-        
     }
+
      //Esto es para FS
     /* const body = req.body;
     const product = await manager.addProduct(body)

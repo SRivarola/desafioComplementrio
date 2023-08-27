@@ -8,7 +8,7 @@ import Product from './dao/models/products.js';
 // import ProductManager from './dao/manager/ProductManager.js';
 import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
-import __dirname from './utils.js';
+import __dirname from '../utils.js';
 
 // const manager = new ProductManager(`${__dirname}/files/products.json`); 
 

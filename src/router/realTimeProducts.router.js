@@ -3,7 +3,7 @@ import { Router } from 'express';
 import Product from '../dao/models/products.js';
 //import manager FS
 // import ProductManager from "../dao/manager/ProductManager.js";
-import __dirname from '../utils.js';
+import __dirname from '../../utils.js';
 
 const rtProductsRouter = Router();
 // const manager = new ProductManager(`${__dirname}/files/products.json`);

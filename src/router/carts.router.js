@@ -5,7 +5,7 @@ import Product from '../dao/models/products.js';
 // imports manager for FS
 import CartsManager from '../dao/manager/CartsManager.js';
 import ProductManager from '../dao/manager/ProductManager.js';
-import __dirname from '../utils.js';
+import __dirname from '../../utils.js';
 
 const cartsRouter = Router();
 
