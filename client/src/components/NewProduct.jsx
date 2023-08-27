@@ -13,74 +13,32 @@ import { useState } from "react"
 
 const NewProduct = () => {
 
-    // const [data, setData] = useState(initialValues)
-    // const [img, setImg] = useState()
     const [errorMessage, setErrorMessage] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
-    
-    // const handleChange = (e) => {
-    //     const name = e.target.name
-    //     setData({
-    //         ...data,
-    //         [name]: e.target.value
-    //     })
-    // }
-    
-    // const handleFile = (e) => {
-    //     let formData = new FormData()
-    //     formData.append('file', e.target.files[0])
-    //     console.log(e.target.files[0])
-    //     setImg(formData)
-    //     setData({
-    //         ...data,
-    //         thumbnail: [e.target.files[0].name]
-    //     })
-    // }
 
-    // const handleSelect = (e) => {
-    //     setData({
-    //         ...data,
-    //         status: e.target.value === 'true' ? true : false
-    //     })
-    // }
-
-    const clearMessage = (setState) => {
+    const clearMessage = async (setState) => {
         setTimeout(() => {
             setState('')
-        }, 2000);
+        }, 2500);
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         let formData = new FormData(e.currentTarget)
+        try {
+            const response = await axios.post('http://localhost:8080/api/products', formData)
+            if(response.data.success){
+                setSuccessMessage(response.data.message)
+                clearMessage(setSuccessMessage)
+                e.target.reset()
+            } else {
+                setErrorMessage(res.response.data.message)
+                clearMessage(setErrorMessage)
+            }
+        } catch (error) {
+            console.log(error)
+        }   
 
-        axios.post('http://localhost:8080/api/products', formData)
-        // try {
-            // if(data.title !== '', data.description !== '', data.price !== '', data.stock !== '', data.code !== ''){
-                // setErrorMessage('')
-                // const response = await axios.post('http://localhost:8080/api/products', data)
-                
-                // .then(res => {
-                    //     console.log(res)
-                    //     if(res.data.success){
-                    //         setSuccessMessage(res.data.message)
-                    //         clearMessage(setSuccessMessage)
-                    //     } else {
-                    //         setErrorMessage(res.response.data.message)
-                    //         clearMessage(setErrorMessage)
-                    //     }
-                    // })
-            // } else {
-            //     setErrorMessage('*missing fields')
-            //     clearMessage(setErrorMessage)
-            // }
-        // } catch (error) {
-            
-        // }
-        
-       
-
-        // e.currentTarget.reset()
     }
                         
   return (
@@ -98,11 +56,10 @@ const NewProduct = () => {
                         <p className="w-[120px]">Product Title:</p>
                         <input
                             name="title"
-                            // value={data.title}
-                            // onChange={(e) => handleChange(e)} 
                             type="text" 
                             className="border-b border-b-[#161616] ml-[5px] p-[5px] w-[250px] focus:outline-none focus:border-b-2" 
                             placeholder="product title" 
+                            required
                         />
                     </label>
                 </div>
@@ -111,10 +68,9 @@ const NewProduct = () => {
                         <p className="w-[130px]">Product Description:</p>
                         <textarea
                             name="description"
-                            // value={data.description}
-                            // onChange={(e) => handleChange(e)} 
                             className="flex h-[100px] border border-[#161616] rounded-md ml-[5px] p-[5px] w-[250px] focus:outline-none focus:border-2 resize-none" 
                             placeholder="product description" 
+                            required
                         />
                     </label>
                 </div>
@@ -125,11 +81,10 @@ const NewProduct = () => {
                         <p className="w-[120px]">Product Price:</p>
                         <input
                             name="price"
-                            // value={data.price}
-                            // onChange={(e) => handleChange(e)} 
                             type="number" 
                             className="border-b border-b-[#161616] ml-[5px] p-[5px] w-[250px] focus:outline-none focus:border-b-2" 
-                            placeholder="product price" 
+                            placeholder="product price"
+                            required
                         />
                     </label>
                 </div>
@@ -138,7 +93,6 @@ const NewProduct = () => {
                         <p className="w-[130px]">Product image:</p>
                         <input
                             name="file"
-                            // onChange={(e) => handleFile(e)}
                             type="file" 
                             className="border-b border-b-[#161616] ml-[5px] p-[5px] w-[250px]" 
                         />
@@ -151,11 +105,10 @@ const NewProduct = () => {
                         <p className="w-[120px]">Product Stock:</p>
                         <input
                             name="stock"
-                            // value={data.stock}
-                            // onChange={(e) => handleChange(e)}
                             type="number" 
                             placeholder="product stock" 
                             className="border-b border-b-[#161616] ml-[5px] p-[5px] w-[250px] focus:outline-none focus:border-b-2" 
+                            required
                         />
                     </label>
                 </div>
@@ -163,12 +116,11 @@ const NewProduct = () => {
                     <label className="flex items-center">
                         <p className="w-[130px]">Product Code:</p>
                         <input
-                            name="code"
-                            // value={data.code}
-                            // onChange={(e) => handleChange(e)} 
+                            name="code" 
                             type="text" 
                             placeholder="product code" 
                             className="border-b border-b-[#161616] ml-[5px] p-[5px] w-[250px] focus:outline-none focus:border-b-2" 
+                            required
                         />
                     </label>
                 </div>
