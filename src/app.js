@@ -1,3 +1,4 @@
+import 'dotenv/config.js'
 import express from 'express';
 import { connect } from 'mongoose';
 import errorHandler from './middlewares/errorHandler.js'
@@ -9,10 +10,23 @@ import Product from './dao/models/products.js';
 import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
 import __dirname from '../utils.js';
-
+import cookieParser from 'cookie-parser';
+import expressSession from 'express-session';
+import MongoStore from 'connect-mongo';
 // const manager = new ProductManager(`${__dirname}/files/products.json`); 
 
 const app = express();
+
+app.use(cookieParser(process.env.SECRET_COOKIE))
+app.use(expressSession({
+    store: MongoStore.create({
+        mongoUrl: process.env.LINK_MDB,
+        ttl:60*60*24*7
+    }),
+    secret: process.env.SECRET_SESSION,
+    resave: true,
+    saveUninitialized: true
+}))
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -29,15 +43,14 @@ app.use('/', indexRouter)
 app.use(errorHandler)
 app.use(notFoundHandler)
 
-const PORT = 8080
 const ready = () => {
-    console.log(`Server ready on port: ${PORT}`)
-    connect('mongodb+srv://srivarola:1234@srivarola.glbd6br.mongodb.net/deafiocomplementario')
+    console.log(`Server ready`)
+    connect(process.env.LINK_MDB)
         .then(() => console.log('database connected'))
         .catch(err => console.log(err))
 }
 
-const server = app.listen(PORT, ready);
+const server = app.listen(process.env.PORT, ready);
 
 const io = new Server(server);
 
