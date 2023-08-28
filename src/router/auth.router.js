@@ -21,14 +21,15 @@ authRouter.post('/register', is_form_ok, is_8_char, async (req, res, next) => {
 })
 
 authRouter.post('/login', is_8_char, is_valid_user, async (req, res, next) => {
-    const mail = req.body.mail
+    const email = req.body.mail
     try {
-        req.session.mail = mail
-        let user = await User.findOne({mail: mail})
+        req.session.mail = email
+        let user = await User.findOne({mail: email})
         req.session.role = user.role
         return res.status(200).json({
             session: req.session,
-            message: req.session.mail + " has started session"
+            message: req.session.mail + " has started session",
+            success: true
         })
     } catch (error) {
         next(error);

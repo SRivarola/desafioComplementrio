@@ -35,7 +35,6 @@ const ProductsContainer = () => {
         axios.get(`http://localhost:8080/api/products/${query.title ? `?title=${query.title}` : ''}${query.page ? `${query.title ? '&' : '?'}page=${query.page}` : ''}`)
             .then(res => {
                 setData(res.data.payload)
-                console.log(res.data.payload)
             })
     }, [query.title, query.page]);
 

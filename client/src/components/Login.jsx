@@ -30,7 +30,10 @@ const Login = () => {
         if(isLogin){
             if(data.mail && data.password){
                 try {
-                    
+                    const response = await axios.post('http://localhost:8080/api/auth/login', data)
+                    if(response.data.success){
+                        navigate('/new_product')
+                    }
                 } catch (error) {
                     setErrorMessage(error.response.data.message)
                 }
@@ -41,9 +44,8 @@ const Login = () => {
             if(data.name && data.mail && data.password) {
                 try {
                     const response = await axios.post('http://localhost:8080/api/auth/register', data)
-                    console.log(response)
                     if(response.status === 201){
-                        navigate('/')
+                        navigate('/products')
                     }
                 } catch (error) {
                     setErrorMessage(error.response.data.message)
