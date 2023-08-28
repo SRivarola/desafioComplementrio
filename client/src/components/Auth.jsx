@@ -17,7 +17,15 @@ const Auth = () => {
                     <Register />
             }
             <div className="text-sm mt-5 flex justify-end">
-                <p className="font-semibold">New in WhiskeyShop, for register user</p>  
+                <p className="font-semibold">
+                    {
+                        isLogin ? (
+                            'New in WhiskeyShop?, for register user'
+                        ) : (
+                            'Already have an account?, for login'
+                        )
+                    }
+                </p>  
                 <button 
                     onClick={() => setIsLogin(!isLogin)} 
                     className="italic text-blue-700 font-semibold pl-1"
