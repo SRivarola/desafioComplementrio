@@ -15,6 +15,7 @@ const productsRouter = Router();
 
 //CREATE
 productsRouter.post('/', is_admin, uploader.single('file'), async (req, res, next) => {
+    
     const { title, description, price, stock, code, status } = req.body;
     const file = req.file?.filename ? [req.file.filename] : []
     const data = {

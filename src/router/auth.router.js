@@ -21,10 +21,9 @@ authRouter.post('/register', is_form_ok, is_8_char, async (req, res, next) => {
 })
 
 authRouter.post('/login', is_8_char, is_valid_user, async (req, res, next) => {
-    const email = req.body.mail
     try {
-        req.session.mail = email
-        let user = await User.findOne({mail: email})
+        req.session.mail = req.body.mail
+        let user = await User.findOne({mail: req.body.mail})
         req.session.role = user.role
         return res.status(200).json({
             session: req.session,
