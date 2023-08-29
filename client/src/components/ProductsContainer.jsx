@@ -39,7 +39,7 @@ const ProductsContainer = () => {
     }, [query.title, query.page]);
 
   return (
-    <div className="flex flex-col p-10 caprismo">
+    <div className="flex flex-col p-10 caprismo mt-16">
         <div className="flex flex-col">
             <h1 className=" font-caprasimo text-center text-white text-3xl">Our Whiskey's Selection</h1>
              <form id="filter_form" className="flex flex-wrap gap-10 self-center justify-center w-[50%] mt-10 p-4 bg-white rounded-2xl font-poppins">
