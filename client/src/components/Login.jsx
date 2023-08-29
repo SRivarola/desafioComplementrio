@@ -26,7 +26,7 @@ const Login = () => {
         e.preventDefault()
         if(data.mail && data.password){
             try {
-                const response = await axios.post('http://localhost:8080/api/auth/login', data)
+                const response = await axios.post('http://localhost:8080/api/auth/login', data, { withCredentials: true})
                 if(response.data.success){
                     navigate('/new_product')
                 }
@@ -37,24 +37,12 @@ const Login = () => {
             setErrorMessage('Mail and password are required')
         }
 
-        // else {
-        //     if(data.name && data.mail && data.password) {
-        //         try {
-        //             const response = await axios.post('http://localhost:8080/api/auth/register', data)
-        //             if(response.status === 201){
-        //                 navigate('/products')
-        //             }
-        //         } catch (error) {
-        //             setErrorMessage(error.response.data.message)
-        //         }
-        //     } else {
-        //         setErrorMessage('Name, mail and password are required')
-        //     }
-        // }
     } 
 
   return (
-        <form className="w-full mt-4 px-10 flex flex-col gap-2" onSubmit={(e) => handleSubmit(e)}>
+        <form className="w-full mt-4 px-10 flex flex-col gap-2"
+        //  onSubmit={(e) => handleSubmit(e)}
+        >
             <div className="flex relative">
                 <label className="font-semibold">Email</label>
                 <input 
@@ -87,11 +75,12 @@ const Login = () => {
                 )
             }
             <div className="w-full flex justify-center mt-5">
-                <input 
-                    type="submit" 
+                <button 
+                    onClick={(e) => handleSubmit(e)}
+                    type="button" 
                     className="cursor-pointer text-white bg-black px-3 py-1 rounded font-semibold" 
-                    value='LOGIN'
-                />
+                    value=''
+                >LOGIN</button>
             </div>
         </form>
   )

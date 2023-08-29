@@ -26,7 +26,7 @@ const NewProduct = () => {
         e.preventDefault()
         let formData = new FormData(e.currentTarget)
         try {
-            const response = await axios.post('http://localhost:8080/api/products', formData)
+            const response = await axios.post('http://localhost:8080/api/products', formData, {withCredentials: true})
             if(response.data.success){
                 setSuccessMessage(response.data.message)
                 clearMessage(setSuccessMessage)
