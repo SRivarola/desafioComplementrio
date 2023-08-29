@@ -6,10 +6,11 @@ import NewProduct from './components/NewProduct';
 import Carts from './components/Carts';
 import Auth from './components/Auth';
 import NavBar from './components/NavBar';
+import AuthContextProvider from './context/authContext';
 
 function App() {
   return (
-    <>
+    <AuthContextProvider>
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -19,7 +20,7 @@ function App() {
         <Route path='/new_product' element={<NewProduct />} />
         <Route path='/carts' element={<Carts />} />
       </Routes>
-    </>
+    </AuthContextProvider>
   )
 }
 

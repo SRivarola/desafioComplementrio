@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from "../context/authContext";
 
 const initialValues = {
     mail: '',
@@ -10,7 +11,8 @@ const initialValues = {
 const Login = () => {
 
     const [data, setData] = useState(initialValues)
-    const [errorMessage, setErrorMessage] = useState(null) 
+    const [errorMessage, setErrorMessage] = useState(null)
+    const {setIsLogin} = useContext(AuthContext) 
 
     const navigate = useNavigate()
 
@@ -28,6 +30,7 @@ const Login = () => {
             try {
                 const response = await axios.post('http://localhost:8080/api/auth/login', data, { withCredentials: true})
                 if(response.data.success){
+                    setIsLogin(true)
                     navigate('/new_product')
                 }
             } catch (error) {
