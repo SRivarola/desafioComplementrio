@@ -42,12 +42,12 @@ const NewProduct = () => {
     }
                         
   return (
-    <div className="flex flex-col py-20">
+    <div className="flex flex-col pt-24">
         <h1 className="text-center text-white font-caprasimo text-2xl">Products Admin</h1>
         <form 
             id="set_form" 
             onSubmit={handleSubmit}
-            className="self-center w-[60%] mt-[50px] p-[30px] bg-white rounded-xl font-poppins flex flex-col gap-[20px]"
+            className="self-center w-[60%] mt-[20px] p-[30px] bg-white rounded-xl font-poppins flex flex-col gap-[20px]"
         >
             <h2 className="text-center text-xl font-semibold">Add Product</h2>
             <div className="flex justify-between items-start">

@@ -5,17 +5,21 @@ import ProductDetailContainer from './components/ProductDetailContainer';
 import NewProduct from './components/NewProduct';
 import Carts from './components/Carts';
 import Auth from './components/Auth';
+import NavBar from './components/NavBar';
 
 function App() {
   return (
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/login' element={<Auth />} />
-      <Route path='/products' element={<ProductsContainer />} />
-      <Route path='/products/:pid' element={<ProductDetailContainer />} />
-      <Route path='/new_product' element={<NewProduct />} />
-      <Route path='/carts' element={<Carts />} />
-    </Routes>
+    <>
+      <NavBar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Auth />} />
+        <Route path='/products' element={<ProductsContainer />} />
+        <Route path='/products/:pid' element={<ProductDetailContainer />} />
+        <Route path='/new_product' element={<NewProduct />} />
+        <Route path='/carts' element={<Carts />} />
+      </Routes>
+    </>
   )
 }
 
