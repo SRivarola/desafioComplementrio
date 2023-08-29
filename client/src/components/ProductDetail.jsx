@@ -10,7 +10,7 @@ const ProductDetail = ({_id, title, description, price, thumbnail}) => {
             <h3>{price}</h3>
             <div>
                 <button>
-                    AGREGAR AL CARRITO
+                    ADD TO CART
                 </button>
             </div>
         </div>

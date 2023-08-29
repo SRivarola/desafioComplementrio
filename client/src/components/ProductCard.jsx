@@ -14,7 +14,7 @@ const ProductCard = ({_id, thumbnail, title, price}) => {
           <div className="pt-[10px] text-lg text-center font-semibold">{title}</div>
           <div className="text-center text-[#1b1b80] font-bold text-lg">${price}</div>
           <div className="mt-[15px] flex justify-center items-center w-full">
-              <button className="bg-black text-white font-semibold border-none rounded-full py-[5px] px-[20px]">AGREGAR AL CARRITO</button>
+              <button className="bg-black text-white font-semibold border-none rounded-full py-[5px] px-[20px]">ADD TO CART</button>
           </div>
         </div>
     </Link>
