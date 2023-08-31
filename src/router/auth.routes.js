@@ -48,4 +48,16 @@ authRouter.post('/signout', async (req, res, next) => {
     }
 })
 
+authRouter.get('/check-session', (req, res, next) => {
+    if(req.session.mail){
+        return res.status(200).json({
+            success: true
+        })
+    } else {
+        return res.status(401).json({
+            success: false
+        })
+    }
+})
+
 export default authRouter

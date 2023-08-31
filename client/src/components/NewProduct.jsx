@@ -1,15 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 
-// const initialValues = {
-//     title: '',
-//     description: '',
-//     price: '',
-//     thumbnail: [],
-//     stock: '',
-//     code: '',
-//     status: true
-// }
+axios.defaults.withCredentials = true;
 
 const NewProduct = () => {
 
@@ -26,7 +18,7 @@ const NewProduct = () => {
         e.preventDefault()
         let formData = new FormData(e.currentTarget)
         try {
-            const response = await axios.post('http://localhost:8080/api/products', formData, {withCredentials: true})
+            const response = await axios.post('http://localhost:8080/api/products', formData)
             if(response.data.success){
                 setSuccessMessage(response.data.message)
                 clearMessage(setSuccessMessage)

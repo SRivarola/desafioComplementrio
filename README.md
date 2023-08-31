@@ -23,7 +23,6 @@ todos los productos o busqueda -> localhost:5173/products
 crear producto -> localhost:5173/new_product
 detalle del producto -> localhost:5173/products/:pid (se puede acceder clickeando en cualquier producto desde la vista de productos)  
 
-
  
 ## Cart Router 
 
@@ -37,6 +36,18 @@ delete cart -> localhost:8080/api/carts/:cid
 
 ENDPOINS DE LAS VISTAS (CLIENTE)
 cart -> localhost:5173/cart
+
+## User Router
+
+ENDPOINT DE LA API
+create user -> localhost:8080/api/auth/register
+login user -> localhost:8080/api/auth/login
+signout user -> localhost:8080/api/auth/signout
+check session -> localhost:8080/api/auth/check-session
+
+ENDPOINS DE LAS VISTAS (CLIENTE)
+login -> localhost:5173/login
+signout -> para signout esta visible el icono en la barra de navegacion
 
 ## Real Time Products
 

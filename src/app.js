@@ -4,7 +4,7 @@ import { connect } from 'mongoose';
 import errorHandler from './middlewares/errorHandler.js'
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import cors from 'cors'
-import indexRouter from './router/index.router.js';
+import indexRouter from './router/index.routes.js';
 import Product from './dao/models/products.js';
 // import ProductManager from './dao/manager/ProductManager.js';
 import { Server } from 'socket.io';
@@ -25,7 +25,7 @@ app.use(expressSession({
     }),
     secret: process.env.SECRET_SESSION,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: false
 }))
 
 app.use(express.json());

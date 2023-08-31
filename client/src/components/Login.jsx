@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from "../context/authContext";
 
+axios.defaults.withCredentials = true;
+
 const initialValues = {
     mail: '',
     password: ''
@@ -28,7 +30,7 @@ const Login = () => {
         e.preventDefault()
         if(data.mail && data.password){
             try {
-                const response = await axios.post('http://localhost:8080/api/auth/login', data, { withCredentials: true})
+                const response = await axios.post('http://localhost:8080/api/auth/login', data)
                 if(response.data.success){
                     setIsLogin(true)
                     navigate('/new_product')

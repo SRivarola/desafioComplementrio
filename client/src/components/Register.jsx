@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 
+axios.defaults.withCredentials = true;
+
 const initialValues = {
     name: '',
     mail: '',
@@ -28,7 +30,7 @@ const Register = () => {
         e.preventDefault()
         if(data.name && data.mail && data.password) {
             try {
-                const response = await axios.post('http://localhost:8080/api/auth/register', data, { withCredentials: true })
+                const response = await axios.post('http://localhost:8080/api/auth/register', data)
                 if(response.status === 201){
                     navigate('/products')
                 }

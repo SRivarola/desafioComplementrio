@@ -1,8 +1,8 @@
 import { Router } from "express";
-import authRouter from "./auth.router.js";
-import productsRouter from "./products.router.js";
-import cartsRouter from "./carts.router.js";
-import rtProductsRouter from "./realTimeProducts.router.js";
+import authRouter from "./auth.routes.js";
+import productsRouter from "./products.routes.js";
+import cartsRouter from "./carts.routes.js";
+import rtProductsRouter from "./realTimeProducts.routes.js";
 // import sessionsRouter from "./sessions.router.js";
 
 const indexRouter = Router()
