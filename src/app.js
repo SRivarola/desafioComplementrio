@@ -13,6 +13,8 @@ import __dirname from '../utils.js';
 import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
 import MongoStore from 'connect-mongo';
+import passport from 'passport';
+import inicializePassport from './middlewares/passport.js';
 // const manager = new ProductManager(`${__dirname}/files/products.json`); 
 
 const app = express();
@@ -28,6 +30,9 @@ app.use(expressSession({
     saveUninitialized: false
 }))
 
+inicializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static((`${__dirname}/public`)))

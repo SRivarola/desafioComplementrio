@@ -24,7 +24,7 @@ const AuthContextProvider = ({children}) => {
     } 
 
     useEffect( () => {
-        authCheck()
+    /*     authCheck() */
     }, [])
 
     return (
