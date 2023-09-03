@@ -5,7 +5,8 @@ import Product from '../dao/models/products.js';
 import ProductManager from "../dao/manager/ProductManager.js";
 import __dirname from '../../utils.js';
 import uploader from '../services/uploader.js';
-import is_admin from '../middlewares/is_admin.js';
+// import is_admin from '../middlewares/is_admin.js';
+import verify_token from '../middlewares/verify_token.js';
 
 const productsRouter = Router();
 
@@ -14,7 +15,7 @@ const productsRouter = Router();
 
 
 //CREATE
-productsRouter.post('/', is_admin, uploader.single('file'), async (req, res, next) => {
+productsRouter.post('/', verify_token, uploader.single('file'), async (req, res, next) => {
     
     const { title, description, price, stock, code, status } = req.body;
     const file = req.file?.filename ? [req.file.filename] : []

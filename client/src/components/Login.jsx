@@ -2,6 +2,9 @@ import { useState, useContext } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from "../context/authContext";
+import { BsEyeSlashFill } from "react-icons/bs"
+import { AiFillGithub } from "react-icons/ai"
+
 
 axios.defaults.withCredentials = true;
 
@@ -15,6 +18,7 @@ const Login = () => {
     const [data, setData] = useState(initialValues)
     const [errorMessage, setErrorMessage] = useState(null)
     const {setIsLogin} = useContext(AuthContext) 
+    const [seePass, setSeePass] = useState(false)
 
     const navigate = useNavigate()
 
@@ -24,6 +28,14 @@ const Login = () => {
             ...data,
             [name]: e.target.value
         })
+    }
+
+    const handleMouseDown = () => {
+        setSeePass(true)
+    }
+
+    const handleMouseUp = () => {
+        setSeePass(false)
     }
 
     const handleSubmit = async (e) => {
@@ -44,10 +56,10 @@ const Login = () => {
 
     } 
 
+
+
   return (
-        <form className="w-full mt-4 px-10 flex flex-col gap-2"
-        //  onSubmit={(e) => handleSubmit(e)}
-        >
+        <form className="w-full mt-4 px-10 flex flex-col gap-2">
             <div className="flex relative">
                 <label className="font-semibold">Email</label>
                 <input 
@@ -65,13 +77,13 @@ const Login = () => {
                 <input 
                     className="px-4 w-full ml-3 border-b-2 transition-all duration-75 focus:outline-none focus:border-b-black"
                     name="password" 
-                    type="password"
+                    type={seePass ? "text" : "password"}
                     placeholder="insert a password"
                     value={data.password}
                     onChange={(e) => handleChange(e)}
                     required
                 />
-            </div>
+                <BsEyeSlashFill className="absolute right-[8px] top-[2px]" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} />            </div>
             {
                 errorMessage ? (
                     <p className="text-center mt-2 text-red-600">*{errorMessage}</p>
@@ -79,13 +91,21 @@ const Login = () => {
                     ''
                 )
             }
-            <div className="w-full flex justify-center mt-5">
+            <div className="w-full flex gap-10 justify-center items-center mt-5">
                 <button 
                     onClick={(e) => handleSubmit(e)}
                     type="button" 
-                    className="cursor-pointer text-white bg-black px-3 py-1 rounded font-semibold" 
+                    className="cursor-pointer w-[150px] text-white bg-black px-3 py-1 rounded font-semibold" 
                     value=''
                 >LOGIN</button>
+                <p className="font-semibold">or</p>
+                <a 
+                    href='http://localhost:8080/api/auth/github'
+                    className="flex items-center justify-center gap-3 cursor-pointer w-[150px] text-white bg-black px-3 py-1 rounded font-semibold"
+                    target="_blank"
+                >
+                    LOGIN WITH <AiFillGithub className="text-[20px]"/>
+                </a>
             </div>
         </form>
   )

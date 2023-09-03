@@ -47,4 +47,32 @@ export default function () {
             }
         )
     )
+    passport.use(
+        'github',
+        new GhStrategy(
+            {
+                clientID: process.env.GH_CLIENT_ID,
+                clientSecret: process.env.GH_CLIENT_SECRET,
+                callbackURL: process.env.GH_CB
+            },
+            async (accessToken, refreshToken, profile, done) => {
+                try {
+                    let user = await User.findOne({ mail: profile._json.login })
+                    if(user){
+                        return done(null, user)
+                    } else {
+                        let one = await User.create({
+                            name: profile.username,
+                            photo: profile._json.avatar_url,
+                            mail: profile._json.login,
+                            password: profile._json.profileUrl
+                        })
+                        return done(null, one)
+                    }
+                } catch (error) {
+                    return done(error)
+                }
+            }
+        )
+    )
 }
