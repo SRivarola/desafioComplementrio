@@ -48,7 +48,8 @@ const Login = () => {
                     navigate('/new_product')
                 }
             } catch (error) {
-                setErrorMessage(error.response.data.message)
+                console.log(error)
+                // setErrorMessage(error.response.data.message)
             }
         } else {
             setErrorMessage('Mail and password are required')
@@ -83,7 +84,8 @@ const Login = () => {
                     onChange={(e) => handleChange(e)}
                     required
                 />
-                <BsEyeSlashFill className="absolute right-[8px] top-[2px]" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} />            </div>
+                <BsEyeSlashFill className="absolute right-[8px] top-[2px] cursor-pointer" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} />            
+            </div>
             {
                 errorMessage ? (
                     <p className="text-center mt-2 text-red-600">*{errorMessage}</p>

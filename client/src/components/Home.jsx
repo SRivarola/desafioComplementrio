@@ -1,7 +1,8 @@
 import { useContext, useEffect } from 'react'
-import banner from '../public/images/bannerJD.jpg'
 import { AuthContext } from '../context/authContext'
 import { useNavigate } from 'react-router-dom'
+import SliderHome from './SliderHome'
+import SelectedBrands from './SelectedBrands'
 
 const Home = () => {
   
@@ -15,11 +16,9 @@ const Home = () => {
   }, [isLogin]);
 
   return (
-    <div className="z-10">
-      <div className='relative w-screen'>
-        <img className='w-full' src={banner} alt='banner' />
-      </div>
-
+    <div className='flex flex-col r'>
+      <SliderHome />
+      <SelectedBrands />
     </div>
   )
 }

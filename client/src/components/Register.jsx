@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from "../context/authContext";
+import { BsEyeSlashFill } from "react-icons/bs"
 
 axios.defaults.withCredentials = true;
 
@@ -17,6 +18,7 @@ const Register = () => {
     const [data, setData] = useState(initialValues)
     const [errorMessage, setErrorMessage] = useState(null) 
     const { setIsLogin } = useContext(AuthContext)
+    const [seePass, setSeePass] = useState(false)
 
     const navigate = useNavigate()
 
@@ -26,6 +28,14 @@ const Register = () => {
             ...data,
             [name]: e.target.value
         })
+    }
+
+    const handleMouseDown = () => {
+        setSeePass(true)
+    }
+
+    const handleMouseUp = () => {
+        setSeePass(false)
     }
 
     const handleSubmit = async (e) => {
@@ -76,12 +86,13 @@ const Register = () => {
             <input 
                 className="px-4 w-full ml-3 border-b-2 transition-all duration-75 focus:outline-none focus:border-b-black"
                 name="password" 
-                type="password"
+                type={seePass ? "text" : "password"}
                 placeholder="insert a password"
                 value={data.password}
                 onChange={(e) => handleChange(e)}
                 required
             />
+            <BsEyeSlashFill className="absolute right-[8px] top-[2px] cursor-pointer" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} />
         </div>
         <div className="flex relative">
             <label className="font-semibold">Age</label>
