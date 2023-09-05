@@ -54,7 +54,6 @@ authRouter.post('/signout', async (req, res, next) => {
 })
 
 authRouter.get('/check-session', (req, res, next) => {
-    console.log(req.session)
     if(req.session.mail){
         return res.status(200).json({
             success: true

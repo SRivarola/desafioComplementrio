@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 axios.defaults.withCredentials = true;
 
 const AuthContextProvider = ({children}) => {
-    const [isLogin, setIsLogin] = useState(true);
+    const [isLogin, setIsLogin] = useState(false);
 
     const authCheck = async () => {
         try {
@@ -18,13 +18,12 @@ const AuthContextProvider = ({children}) => {
                 setIsLogin(false)
             }
         } catch (error) {
-            console.log(error)
             setIsLogin(false)
         }
     } 
 
     useEffect( () => {
-    /*     authCheck() */
+        authCheck()
     }, [])
 
     return (

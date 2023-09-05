@@ -45,7 +45,7 @@ const Login = () => {
                 const response = await axios.post('http://localhost:8080/api/auth/login', data)
                 if(response.data.success){
                     setIsLogin(true)
-                    navigate('/new_product')
+                    navigate('/products')
                 }
             } catch (error) {
                 console.log(error)
