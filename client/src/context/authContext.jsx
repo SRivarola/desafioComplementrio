@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 axios.defaults.withCredentials = true;
 
 const AuthContextProvider = ({children}) => {
+
     const [isLogin, setIsLogin] = useState(false);
 
     const authCheck = async () => {
