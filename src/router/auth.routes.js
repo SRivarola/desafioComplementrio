@@ -70,9 +70,7 @@ authRouter.get('/github/callback', passport.authenticate('github', {}), (req, re
     try {
         req.session.mail = req.user.mail;
         req.session.role = req.user.role;
-        return res.status(200).redirect('http://localhost:5173/', { user: req.user }, function(err, html) {
-            res.send(html);
-        })
+        return res.status(200).redirect('http://localhost:5173/products')
     } catch (error) {
         next(error)
     }
