@@ -1,5 +1,5 @@
 import { Router } from "express";
-// import authRouter from "./auth.routes.js";
+import { authRouter } from "./auth.routes.js";
 import productsRouter from "./products.routes.js";
 import cartsRouter from "./carts.routes.js";
 import rtProductsRouter from "./realTimeProducts.routes.js";
@@ -13,6 +13,7 @@ const indexRouter = Router()
 
 // configurar las rutas de recursos
 indexRouter.use('/api/auth', user_router)
+indexRouter.use('/api/auth', authRouter)
 indexRouter.use('/api/products', productsRouter)
 indexRouter.use('/api/carts', cartsRouter)
 indexRouter.use('/api/realtimeproducts', rtProductsRouter)

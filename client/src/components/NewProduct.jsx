@@ -39,7 +39,7 @@ const NewProduct = () => {
         <form 
             id="set_form" 
             onSubmit={handleSubmit}
-            className="self-center w-[60%] mt-[20px] p-[30px] bg-white rounded-xl font-poppins flex flex-col gap-[20px]"
+            className="self-center w-[900px] mt-[20px] p-[30px] bg-white rounded-xl font-poppins flex flex-col gap-[20px]"
         >
             <h2 className="text-center text-xl font-semibold">Add Product</h2>
             <div className="flex justify-between items-start">
