@@ -1,7 +1,7 @@
 export default function (req, res, next){
     try {
-        let { name, mail, password } = req.body;
-        if (name && mail && password){
+        let { first_name, last_name, mail, password } = req.body;
+        if (first_name && last_name && mail && password){
             next()
         } else {
             return res.status(400).json({

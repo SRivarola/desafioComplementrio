@@ -1,13 +1,15 @@
-import {model, Schema} from 'mongoose';
+import {model, Schema, Types } from 'mongoose';
 
 let collection = 'users';
 let schema = new Schema({
-    name: { type: String, required: true},
-    photo: { type: String, default: "avatar.png"},
+    first_name: { type: String, required: true},
+    last_name: { type: String, required: true},
     mail:{ type: String, unique: true, index: true, requied: true},
+    photo: { type: String, default: "avatar.png"},
     age: {type: Number},
-    role: {type: Number, default: 0},
-    password: {type: String, requied: true}
+    password: {type: String, requied: true},
+    cart: { type: Types.ObjectId, ref: 'carts' },
+    role: {type: String, default: 'USER'}
 });
 
 let User = model(collection, schema);

@@ -21,6 +21,7 @@ export default function () {
                         let user = await User.create(req.body);
                         return done(null, user);
                     } else {
+                        console.log('first')
                         return done(null, false);
                     }
                 } catch (error) {

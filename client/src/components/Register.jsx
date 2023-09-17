@@ -7,7 +7,8 @@ import { BsEyeSlashFill } from "react-icons/bs"
 axios.defaults.withCredentials = true;
 
 const initialValues = {
-    name: '',
+    first_name: '',
+    last_name: '',
     mail: '',
     password: '',
     age: ''
@@ -58,13 +59,25 @@ const Register = () => {
   return (
     <form className="w-full mt-4 px-10 flex flex-col gap-2" onSubmit={(e) => handleSubmit(e)}>
         <div className="flex relative">
-            <label className="font-semibold">Name:</label>
+            <label className="w-[100px] font-semibold">First Name:</label>
             <input 
                 className="px-4 w-full ml-3 border-b-2 transition-all duration-75 focus:outline-none focus:border-b-black placeholder:italic"
-                name="name" 
+                name="fisrt_name" 
                 type="text"
                 placeholder="insert your name"
-                value={data.name}
+                value={data.first_name}
+                onChange={(e) => handleChange(e)}
+                required
+            />
+        </div>
+        <div className="flex relative">
+            <label className="w-[100px] font-semibold">Last Name:</label>
+            <input 
+                className="px-4 w-full ml-3 border-b-2 transition-all duration-75 focus:outline-none focus:border-b-black placeholder:italic"
+                name="last_name" 
+                type="text"
+                placeholder="insert your name"
+                value={data.last_name}
                 onChange={(e) => handleChange(e)}
                 required
             />
