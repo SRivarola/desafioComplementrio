@@ -86,7 +86,8 @@ export default function () {
                         return done(null, user)
                     } else {
                         let one = await User.create({
-                            name: profile.username,
+                            first_name: profile.username,
+                            last_name: profile.username,
                             photo: profile._json.avatar_url,
                             mail: profile._json.login,
                             password: profile._json.profileUrl

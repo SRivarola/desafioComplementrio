@@ -104,7 +104,6 @@ const Login = () => {
                 <a 
                     href='http://localhost:8080/api/auth/github'
                     className="flex items-center justify-center gap-3 cursor-pointer w-[150px] text-white bg-black px-3 py-1 rounded font-semibold"
-                    target="_blank"
                 >
                     LOGIN WITH <AiFillGithub className="text-[20px]"/>
                 </a>
