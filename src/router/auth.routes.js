@@ -35,7 +35,7 @@ export default class UserRouter extends MyRouter {
                 next(error);
             }
         })
-        this.post('/signout', ["USER", "ADMIN"], passport.authenticate('current'), async (req, res, next) => {
+        this.post('/signout', ["USER", "ADMIN"], async (req, res, next) => {
             try {
                 req.session.destroy()
                 return res.status(200).clearCookie('token').json({

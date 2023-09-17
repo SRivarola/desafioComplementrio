@@ -41,7 +41,7 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(data.name && data.mail && data.password) {
+        if(data.first_name && data.last_name && data.mail && data.password) {
             try {
                 const response = await axios.post('http://localhost:8080/api/auth/register', data)
                 if(response.status === 201){
@@ -62,7 +62,7 @@ const Register = () => {
             <label className="w-[100px] font-semibold">First Name:</label>
             <input 
                 className="px-4 w-full ml-3 border-b-2 transition-all duration-75 focus:outline-none focus:border-b-black placeholder:italic"
-                name="fisrt_name" 
+                name="first_name" 
                 type="text"
                 placeholder="insert your name"
                 value={data.first_name}
