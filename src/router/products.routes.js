@@ -83,26 +83,3 @@ export default class ProductRouter extends MyRouter {
         })
     };
 }
-
-//Delete
-// productsRouter.delete('/:pid', async (req, res, next) => {
-//     try {
-//         let { pid } = req.params
-//         let product = await Product.findByIdAndDelete(pid)
-//         return res.status(200).json({
-//             success: true,
-//             message: `Product id: ${product._id} has been deleted`,
-//             payload: product
-//         })
-//     } catch (error) {
-//         next(error)
-        
-//     }
-//      //Esto es para FS
-//     /* const productId = Number(req.params.pid);
-//     const product = await manager.deleteProduct(productId)
-//     if(!product) {
-//         return res.status(400).send({ error: `Can't find the product with id: ${productId}` })
-//     } 
-//     res.send({ status: 'success', payload: product }) */
-// })
