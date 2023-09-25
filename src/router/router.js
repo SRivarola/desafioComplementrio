@@ -33,21 +33,22 @@ export default class MyRouter {
         if (policies.includes('USER')) {
             return next()
         } else {
-            const authHeaders = req.headers.authorization
+            const authHeaders = req.headers.cookie
             if(!authHeaders) {
                 return res.sendNotAuthenticatedError('Unauthenticated')
             } else {
                 const tokenArray = authHeaders.split(' ')
-                const token = tokenArray[1]
-                const payload = jwt.verify(token, process.env.SECRET_KEY)
+                const tokenString = tokenArray[1]
+                const token = tokenString.split('=')
+                const payload = jwt.verify(token[1], process.env.SECRET_KEY)
                 const user = await User.findOne(
                     { mail: payload.mail },
                     'mail role'
                 )
                 const role = user.role;
                 if (
-                    (policies.includes("USER") && role === 0) ||
-                    (policies.includes("ADMIN") && role === 1)
+                    (policies.includes("USER") && role === "USER") ||
+                    (policies.includes("ADMIN") && role === "ADMIN")
                 ) {
                     req.user = user
                     return next()
@@ -90,6 +91,14 @@ export default class MyRouter {
             path,
             this.responses,
             this.handlePolicies(policies),
+            this.applyCbs(cbs)
+        )
+    }
+    // use
+    use(path, ...cbs){
+        this.router.use(
+            path, 
+            this.responses,
             this.applyCbs(cbs)
         )
     }

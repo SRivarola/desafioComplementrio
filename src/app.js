@@ -4,7 +4,6 @@ import { connect } from 'mongoose';
 import errorHandler from './middlewares/errorHandler.js'
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import cors from 'cors'
-import indexRouter from './router/index.routes.js';
 import Product from './dao/models/products.js';
 // import ProductManager from './dao/manager/ProductManager.js';
 import { Server } from 'socket.io';
@@ -16,6 +15,9 @@ import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import inicializePassport from './middlewares/passport.js';
 // const manager = new ProductManager(`${__dirname}/files/products.json`); 
+
+import IndexRouter from './router/index.routes.js';
+const router = new IndexRouter()
 
 const app = express();
 
@@ -49,7 +51,8 @@ app.engine('handlebars', handlebars.engine())
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'handlebars');
 
-app.use('/', indexRouter)
+
+app.use('/api', router.getRouter())
 
 
 app.use(errorHandler)
