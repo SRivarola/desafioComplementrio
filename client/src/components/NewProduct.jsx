@@ -24,7 +24,7 @@ const NewProduct = () => {
                 clearMessage(setSuccessMessage)
                 e.target.reset()
             } else {
-                setErrorMessage(res.response.data.message)
+                setErrorMessage(response.data.message)
                 clearMessage(setErrorMessage)
             }
         } catch (error) {

@@ -9,13 +9,12 @@ export default class ProductMongo {
             response: { product: product._id }
         };
     };
-    async read(data) {
-        let all = await Product.paginate(data)
-        console.log(all)
+    async read(query, data) {
+        let all = await Product.paginate(query, data)
         if(all.docs.length > 0) {
             return {
                 message: "Products found",
-                response: { products: all }
+                response: all
             }
         } else {
             return null

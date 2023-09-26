@@ -3,7 +3,6 @@
 import MyRouter from './router.js';
 
 import Cart from '../dao/models/carts.js';
-import Product from '../dao/models/products.js';
 import passport from 'passport';
 
 

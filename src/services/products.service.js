@@ -8,8 +8,8 @@ export default class ProductsService {
         let response = this.model.create(data);
         return response;
     }
-    read(data) {
-        let response = this.model.read(data);
+    read(query, data) {
+        let response = this.model.read(query, data);
         return response;
     }
     readOne(id) {

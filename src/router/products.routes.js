@@ -4,17 +4,25 @@ import ProductsController from '../contollers/products.controller.js';
 //import uploader
 import uploader from '../services/uploader.js';
 // import is_admin from '../middlewares/is_admin.js';
-import verify_token from '../middlewares/verify_token.js';
+import passport from 'passport';
 
 const productsController = new ProductsController();
 
 export default class ProductRouter extends MyRouter {
     init() {
-        this.post('/', ["ADMIN"],  verify_token, uploader.single('file'), async (req, res, next) => {
+        this.post('/', ["ADMIN"], passport.authenticate("current"), uploader.single('file'), async (req, res, next) => {
+            const { title, description, price, stock, code, status } = req.body;
+            const file = req.file?.filename ? [req.file.filename] : []
+            const data = {
+                title,
+                description,
+                price,
+                stock,
+                code,
+                status,
+                thumbnail: file
+            }
             try {
-                const data = req.body;
-                const file = req.file?.filename ? [req.file.filename] : []
-                data.thumbnail = file
                 let product = await productsController.create(data);
                 return res.sendSuccessCreate(product)
             } catch (error) {
@@ -33,7 +41,7 @@ export default class ProductRouter extends MyRouter {
                 }
                 return res.status(200).json({
                     success: true,
-                    payload: products
+                    payload: products.response
                 })
             } catch (error) {
                 next(error);
@@ -52,7 +60,7 @@ export default class ProductRouter extends MyRouter {
                 next(error)
             }   
         });
-        this.put('/:pid', ["ADMIN"], verify_token, async (req, res, next) => {
+        this.put('/:pid', ["ADMIN"], passport.authenticate("current"), async (req, res, next) => {
             try {
                 let { pid } = req.params
                 let data = req.body
@@ -67,7 +75,7 @@ export default class ProductRouter extends MyRouter {
                 
             }    
         });
-        this.delete('/:pid', ["ADMIN"], verify_token, async (req, res, next) => {
+        this.delete('/:pid', ["ADMIN"], passport.authenticate("current"), async (req, res, next) => {
             try {
                 let { pid } = req.params
                 let product = await productsController.delete(pid)

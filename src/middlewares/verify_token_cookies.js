@@ -1,5 +1,6 @@
 import User from "../dao/models/user.js";
 import jwt from "jsonwebtoken";
+import config from "../config/config.js";
 
 export default (req, res, next) => {
     const auth = req.cookies;
@@ -10,7 +11,7 @@ export default (req, res, next) => {
         });
     }
     const token = auth.token
-    jwt.verify(token, process.env.SECRET_KEY, async (error, credentials) => {
+    jwt.verify(token, config.SECRET_KEY, async (error, credentials) => {
         try {
             let user = await User.findOne({ mail: credentials.mail });
             req.user = user;
