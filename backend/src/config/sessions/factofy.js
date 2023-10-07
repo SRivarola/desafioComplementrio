@@ -11,7 +11,7 @@ switch(args.persistence) {
         const FileStore = sessionFileStore(expressSession)
         sessions = expressSession({
             store: new FileStore({
-                path: "./src/config/sessions/files",
+                path: "./src/config/sessions/files/",
                 ttl: 60 * 60 * 24 * 7,
                 retries: 0
             }),

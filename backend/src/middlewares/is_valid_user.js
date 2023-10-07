@@ -1,9 +1,11 @@
-import User from "../dao/models/user.js";
+import dao from "../dao/factory";
+
+const { User } = dao
 
 export default async function (req, res, next){
     try {
         let { mail, password } = req.body;
-        let user =  await User.findOne({ mail })
+        let user =  await User.readOne(mail)
         if (user && user.password === password){
             next()
         } else {

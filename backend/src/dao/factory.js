@@ -8,15 +8,15 @@ switch (args.persistence) {
     case "FS":
         console.log("file system: connected");
         const { default: ProductManager } = await import('./manager/ProductManager.js');
-
-        dao = { Product: ProductManager }
+        const { default: UserManager } = await import('./manager/UserManager.js');
+        dao = { Product: ProductManager, User: UserManager };
         break;
     default: //MONGO
         const mongo = new MongoConnect(env.LINK_MDB);
         mongo.connect_mongo();
         const { default: ProductMongo } = await import('./mongo/products.mongo.js');
-        
-        dao = { Product: ProductMongo }
+        const { default: UserMongo } = await import('./mongo/users.mongo.js');
+        dao = { Product: ProductMongo, User: UserMongo };
         break;
 }
 

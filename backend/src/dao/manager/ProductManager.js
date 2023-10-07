@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-class ProductManager {
+export default class ProductManager {
     constructor(path) {
         this.path = path;
     };
@@ -234,5 +234,3 @@ export const initializeProducts = async(manager) => {
     }
 
 };
-
-export default ProductManager;

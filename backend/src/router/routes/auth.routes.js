@@ -10,17 +10,26 @@ import is_valid_pass from "../../middlewares/is_valid_pass.js";
 
 export default class AuthRouter extends MyRouter {
     init() {
-        this.post('/register', ["USER"], is_form_ok, is_8_char, create_hash, passport.authenticate("register"), async (req, res, next) => {
+        this.post(
+            '/register', 
+            ["USER"], 
+            is_form_ok, 
+            is_8_char, 
+            create_hash, 
+            // passport.authenticate("register"), 
+            async (req, res, next) => {
+
             try {
                 return res.status(201).json({
                     success: true,
                     massage: 'user registered',
-                    user_id: req.user._id
+                    // user_id: req.user._id
                 })
             } catch (error) {
                 next(error);
             }
-        })
+            }
+        )
         this.post('/login', ["USER", "ADMIN"], is_8_char, passport.authenticate("login"), is_valid_pass, create_token,  async (req, res, next) => {
             try {
                 req.session.mail = req.body.mail

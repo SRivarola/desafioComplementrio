@@ -1,6 +1,6 @@
 import { Router} from 'express'
 import jwt from 'jsonwebtoken'
-import User from '../dao/models/user.js'
+import User from '../dao/mongo/models/user.js'
 import env from '../config/env.js';
 
 export default class MyRouter {

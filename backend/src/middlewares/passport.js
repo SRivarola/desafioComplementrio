@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy } from "passport-local";
 import GhStrategy from "passport-github2";
-import User from "../dao/models/user.js";
+import User from "../dao/mongo/models/user.js";
 import jwt from 'passport-jwt';
 import env from '../config/env.js';
 
