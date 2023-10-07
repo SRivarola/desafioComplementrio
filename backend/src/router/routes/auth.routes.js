@@ -1,12 +1,12 @@
-import MyRouter from "./router.js";
+import MyRouter from "../router.js";
 // import User from '../dao/models/user.js';
 import passport from "passport";
 import { Router } from "express";
-import is_form_ok from '../middlewares/is_form_ok.js';
-import is_8_char from '../middlewares/is_8_char.js';
-import create_hash from '../middlewares/create_hash.js';
-import create_token from '../middlewares/create_token.js';
-import is_valid_pass from "../middlewares/is_valid_pass.js";
+import is_form_ok from '../../middlewares/is_form_ok.js';
+import is_8_char from '../../middlewares/is_8_char.js';
+import create_hash from '../../middlewares/create_hash.js';
+import create_token from '../../middlewares/create_token.js';
+import is_valid_pass from "../../middlewares/is_valid_pass.js";
 
 export default class AuthRouter extends MyRouter {
     init() {

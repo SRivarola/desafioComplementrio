@@ -1,7 +1,7 @@
 import { Router} from 'express'
 import jwt from 'jsonwebtoken'
 import User from '../dao/models/user.js'
-import config from '../config/config.js';
+import env from '../config/env.js';
 
 export default class MyRouter {
     constructor() {
@@ -34,16 +34,11 @@ export default class MyRouter {
         if (policies.includes('USER')) {
             return next()
         } else {
-            const authHeaders = req.headers.cookie
-            if(!authHeaders) {
+            const token = req.cookies.token;
+            if(!token) {
                 return res.sendNotAuthenticatedError('Unauthenticated')
             } else {
-                const tokenArray = authHeaders.split(' ')
-                const tokenString = tokenArray[0]
-                const token = tokenString.split('=')
-                let finalToken = token[1]
-                finalToken = finalToken.substring(0, finalToken.length - 1)
-                const payload = jwt.verify(finalToken, config.SECRET_KEY)
+                const payload = jwt.verify(token, env.SECRET_KEY)
                 const user = await User.findOne(
                     { mail: payload.mail },
                     'mail role'

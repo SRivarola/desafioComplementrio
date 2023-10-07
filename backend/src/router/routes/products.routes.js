@@ -1,8 +1,8 @@
-import MyRouter from './router.js';
+import MyRouter from '../router.js';
 //import controller
-import ProductsController from '../contollers/products.controller.js';
+import ProductsController from "../../controllers/products.controller.js";
 //import uploader
-import uploader from '../services/uploader.js';
+import uploader from '../../services/uploader.js';
 // import is_admin from '../middlewares/is_admin.js';
 import passport from 'passport';
 
@@ -10,7 +10,7 @@ const productsController = new ProductsController();
 
 export default class ProductRouter extends MyRouter {
     init() {
-        this.post('/', ["ADMIN"], passport.authenticate("current"), uploader.single('file'), async (req, res, next) => {
+        this.post('/', ["ADMIN"], uploader.single('file'), async (req, res, next) => {
             const { title, description, price, stock, code, status } = req.body;
             const file = req.file?.filename ? [req.file.filename] : []
             const data = {

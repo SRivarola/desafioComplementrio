@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
-import config from "../config/config.js";
+import env from "../config/env.js";
 
 export default function (req, res, next) {
     let token = jwt.sign(
         { mail: req.body.mail },
-        `${config.SECRET_KEY}`,
+        `${env.SECRET_KEY}`,
         { expiresIn: 60*60*24*7 }
     );
     req.session.token = token;

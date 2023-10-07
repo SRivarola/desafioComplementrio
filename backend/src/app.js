@@ -1,44 +1,46 @@
-import 'dotenv/config.js'
 import express from 'express';
+import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
+import passport from 'passport';
+import cors from 'cors';
+
+import env from "./config/env.js";
+import __dirname from '../utils.js';
+
 import errorHandler from './middlewares/errorHandler.js'
 import notFoundHandler from './middlewares/notFoundHandler.js';
-import cors from 'cors'
-import Product from './dao/models/products.js';
-// import ProductManager from './dao/manager/ProductManager.js';
-import MongoConnect from './config/mongo.js';
-import { Server } from 'socket.io';
-import handlebars from 'express-handlebars';
-import __dirname from '../utils.js';
-import cookieParser from 'cookie-parser';
+import inicializePassport from './middlewares/passport.js';
 import expressSession from 'express-session';
 import MongoStore from 'connect-mongo';
-import passport from 'passport';
-import inicializePassport from './middlewares/passport.js';
+
+// import Product from './dao/models/products.js';
+// import ProductManager from './dao/manager/ProductManager.js';
+// import MongoConnect from './config/mongo.js';
+// import { Server } from 'socket.io';
+// import handlebars from 'express-handlebars';
 // const manager = new ProductManager(`${__dirname}/files/products.json`); 
-import config from "./config/config.js";
+
+
 import IndexRouter from './router/index.routes.js';
 const router = new IndexRouter()
 
 const app = express();
 
-app.use(cookieParser(config.SECRET_COOKIE))
+app.use(cookieParser(env.SECRET_COOKIE))
 app.use(expressSession({
     store: MongoStore.create({
-        mongoUrl: config.LINK_MDB,
+        mongoUrl: env.LINK_MDB,
         ttl:60*60*24*7
     }),
-    secret: config.SECRET_SESSION,
+    secret: env.SECRET_SESSION,
     resave: true,
     saveUninitialized: false
 }))
-
 inicializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(express.static((`${__dirname}/public`)))
 // app.use(cors())
+app.use(express.json());
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', 'http://localhost:5173')
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
@@ -46,18 +48,20 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Credentials', 'true')
     next()
 })
-
-app.engine('handlebars', handlebars.engine())
-app.set('views', `${__dirname}/views`);
-app.set('view engine', 'handlebars');
+app.use(morgan('dev'));
+app.use(express.static((`${__dirname}/public`)))
+app.use(express.urlencoded({extended: true}));
+// app.engine('handlebars', handlebars.engine())
+// app.set('views', `${__dirname}/views`);
+// app.set('view engine', 'handlebars');
 
 app.use('/api', router.getRouter())
 
 app.use(errorHandler)
 app.use(notFoundHandler)
 
-const mongo1 = new MongoConnect(config.LINK_MDB)
-mongo1.connect_mongo()
+// const mongo1 = new MongoConnect(config.LINK_MDB)
+// mongo1.connect_mongo()
 
 /* const io = new Server(server);
 

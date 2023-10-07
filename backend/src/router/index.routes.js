@@ -1,10 +1,10 @@
 import MyRouter from "./router.js";
-import AuthRouter from "./auth.routes.js";
-import { authRouter } from "./auth.routes.js";
-import productsRouter from "./products.routes.js";
-import cartsRouter from "./carts.routes.js";
-import rtProductsRouter from "./realTimeProducts.routes.js";
-import ProductRouter from "./products.routes.js";
+import AuthRouter from "./routes/auth.routes.js";
+import { authRouter } from "./routes/auth.routes.js";
+import cartsRouter from "./routes/carts.routes.js";
+import ProductRouter from "./routes/products.routes.js";
+// import productsRouter from "./products.routes.js";
+// import rtProductsRouter from "./realTimeProducts.routes.js";
 
 const auth = new AuthRouter();
 const product = new ProductRouter();
