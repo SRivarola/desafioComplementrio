@@ -2,7 +2,7 @@ import AuthRepository from '../repositories/users.rep.js';
 
 export default class AuthService {
     constructor() {
-        this.repository = new UsersRepository();
+        this.repository = new AuthRepository();
     }
     register = (data) => this.repository.register(data);
     login = () => this.repository.login();

@@ -22,7 +22,8 @@ export default class AuthMongo {
         }
     }
     async readOne(mail) {
-        let one = await User.findOne({ mail });
+        let one = await User.findOne({ mail: mail });
+        console.log(one)
         if(one) {
             return one
         } else {

@@ -1,19 +1,19 @@
-import dao from "../dao/factory";
-
-const { User } = dao
+import AuthController from "../controllers/users.controller.js";
 
 export default async function (req, res, next){
     try {
+        const User = new AuthController()
         let { mail, password } = req.body;
+        console.log(mail)
         let user =  await User.readOne(mail)
-        if (user && user.password === password){
+        if (!user){
             next()
         } else {
             return res.status(400).json({
                 status: 400,
                 method: req.method,
                 path: req.url,
-                message: 'Invalid Credentials.'
+                message: 'Invalid user.'
             })
         }  
     } catch (error) {
