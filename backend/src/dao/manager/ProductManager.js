@@ -1,32 +1,24 @@
 import fs from 'fs';
 
-class ProductManager {
-
+export default class ProductManager {
     constructor(path) {
         this.path = path;
     };
-
-    addProduct = async(product) => {
-
+    create = async (data) => {
         try {
-
-            const products = await this.getProducts();
-            console.log(product)
+            const products = await this.read();
             //validacion de que existen todos los campos! 
-            if(!product.title || !product.description || !product.price || !product.code || product.stock == undefined){
+            if(!data.title || !data.description || !data.price || !data.code || data.stock == undefined){
                 return null;
             };
-            
             //verificacion de que el campo code no exista en otro producto
-            const codeRepetido = products.find(p => p.code == product.code);
+            const codeRepetido = products.find(p => p.code == data.code);
             if(codeRepetido) {
                 return null;
             };
-
-            if(!product.thumbnail) product.thumbnail = []
-
-            if(!product.status) product.status = true
-
+            //si no existen las propiedades thumbnail & status les crea un valor por default
+            if(!data.thumbnail) data.thumbnail = []
+            if(!data.status) data.status = true
             //metodo para agregar automaticamente un id autoincremental!
             let id;
             if(products.length == 0) {
@@ -35,48 +27,54 @@ class ProductManager {
                 id = products[products.length -1].id + 1
             }
 
-            product.id = id
+            data.id = id
             //pusheo mi producto al array y actualizo el archivo .json
             products.push({
-                ...product
+                ...data
             });
 
             await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'));
 
-            return product
+            return {
+                message: "Product created",
+                response: data.id
+            }
 
         } catch (err) {
             console.log(err);
         };                   
 
     };
-
-    getProducts = async() => {
+    read = async (query, data) => {
         try {
             //si existe mi archivo obtengo sus datos y los retorno, y sino retorno un array vacio. 
             if(fs.existsSync(this.path)) {
+                const response = await fs.promises.readFile(this.path, 'utf-8');
+                const parseResponse = JSON.parse(response);
 
-                const data = await fs.promises.readFile(this.path, 'utf-8');
-                const parseData = JSON.parse(data);
-
-                return parseData;
-
+                return {
+                    message: "Product found",
+                    response: parseResponse
+                };
             } else {
-                return [];
+                return null;
             };
         } catch (err) {
             console.log(err);
         };
     };
 
-    getProductsById = async(id) => {
+    readOne = async (id) => {
         try {
             let resultado = await this.getProducts();
             let product = resultado.find( p => p.id == id );
 
             //si encuentro un producto con el id ingresado retorno el producto sino un null
             if(product) {
-                return product;
+                return {
+                    message: "Product found", 
+                    response: product
+                };
             } else {
                 return null;
             };
@@ -85,38 +83,33 @@ class ProductManager {
         };
     };
 
-    updateProduct = async(product) => {
+    update = async(id, product) => {
         try {
-
             const products = await this.getProducts();
-            const productToUpdate = products.find( p => p.id == product.id );
-            
+            const productToUpdate = products.find( p => p.id == id );
             //si no encontro este producto en nuestro .json retorno que no se encontro este producto
             if(!productToUpdate) {
                 return null;
             };
-            
             //busco el indice del producto para actualizar, actualizo ese producto, ya sea 1 campo o todos y actualizo el .json
             const indexOfProduct = products.findIndex( p => p.id == product.id );
-
             products[indexOfProduct] = {
                 ...productToUpdate,
                 ...product
             };
-
             await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'));
-
-            return products[indexOfProduct];
-
+            return {
+                message: "Product updated",
+                response: products[indexOfProduct]
+            };
         } catch (err) {
             console.log(err);
         };
 
     };
 
-    deleteProduct = async(id) => {
+    delete = async(id) => {
         try {
-
             const products = await this.getProducts();
             const indexProduct = products.findIndex( p => p.id === id );
             //validacion para ver si encontro el producto, de no ser asi retorna que no encontro el producto con ese id.
@@ -129,7 +122,10 @@ class ProductManager {
             products.splice(indexProduct, 1);
             await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'));
 
-            return deletedProduct;
+            return {
+                message: "Product deleted",
+                response: deletedProduct
+            };
 
         } catch(err) {
             console.log(err);
@@ -238,5 +234,3 @@ export const initializeProducts = async(manager) => {
     }
 
 };
-
-export default ProductManager;

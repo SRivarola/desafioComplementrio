@@ -4,7 +4,8 @@ const program = new Command();
 
 program
     .option("-p <port>", "port", 7000)
-    .option("--mode <mode>", "mode", "dev" )
+    .option("--persistence <persistence>", "persistence", "MONGO")
+    .option("--mode <mode>", "mode", "dev" );
 
 program.parse();
 

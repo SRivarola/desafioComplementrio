@@ -5,9 +5,9 @@
   "main": "./src/app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/server.js --mode prod",
-    "dev": "nodemon ./src/server.js -p 8080"
+    "dev": "nodemon ./src/server.js",
+    "fs": "node ./src/server.js -p 8000 --persistence FS"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +32,7 @@
     "passport-github2": "^0.1.12",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
+    "session-file-store": "^1.5.0",
     "socket.io": "^4.7.1"
   }
 }
