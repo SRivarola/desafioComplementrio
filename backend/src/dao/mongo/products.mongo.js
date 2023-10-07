@@ -6,7 +6,7 @@ export default class ProductMongo {
         let product = await Product.create(data);
         return {
             message:"Product created",
-            response: { product: product._id }
+            response: product._id
         };
     };
     async read(query, data) {

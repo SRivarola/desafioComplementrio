@@ -6,12 +6,11 @@ import cors from 'cors';
 
 import env from "./config/env.js";
 import __dirname from '../utils.js';
+import sessions from './config/sessions/factofy.js';
 
 import errorHandler from './middlewares/errorHandler.js'
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import inicializePassport from './middlewares/passport.js';
-import expressSession from 'express-session';
-import MongoStore from 'connect-mongo';
 
 // import Product from './dao/models/products.js';
 // import ProductManager from './dao/manager/ProductManager.js';
@@ -27,15 +26,7 @@ const router = new IndexRouter()
 const app = express();
 
 app.use(cookieParser(env.SECRET_COOKIE))
-app.use(expressSession({
-    store: MongoStore.create({
-        mongoUrl: env.LINK_MDB,
-        ttl:60*60*24*7
-    }),
-    secret: env.SECRET_SESSION,
-    resave: true,
-    saveUninitialized: false
-}))
+app.use(sessions)
 inicializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
