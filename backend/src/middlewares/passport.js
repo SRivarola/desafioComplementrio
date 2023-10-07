@@ -3,7 +3,7 @@ import { Strategy } from "passport-local";
 import GhStrategy from "passport-github2";
 import User from "../dao/models/user.js";
 import jwt from 'passport-jwt';
-import config from '../config/config.js';
+import env from '../config/env.js';
 
 export default function () {
     passport.serializeUser((user, done) => done(null, user._id));
@@ -56,7 +56,7 @@ export default function () {
                 jwtFromRequest: jwt.ExtractJwt.fromExtractors([
                     (req) => req?.cookies["token"],
                 ]),
-                secretOrKey: config.SECRET_KEY,
+                secretOrKey: env.SECRET_KEY,
             },
             async (payload, done) => {
                 try {

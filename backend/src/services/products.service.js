@@ -1,27 +1,12 @@
-import ProductMongo from "../dao/mongo/products.mongo.js";
+import ProductsRepository from "../repositories/products.rep.js";
 
 export default class ProductsService {
     constructor() {
-        this.model = new ProductMongo();
+        this.repository = new ProductsRepository();
     }
-    create(data) {
-        let response = this.model.create(data);
-        return response;
-    }
-    read(query, data) {
-        let response = this.model.read(query, data);
-        return response;
-    }
-    readOne(id) {
-        let response = this.model.readOne(id);
-        return response;
-    }
-    update(id, data) {
-        let response = this.model.update(id, data);
-        return response;
-    }
-    delete(id) {
-        let response = this.model.delete(id);
-        return response;
-    }
+    create = (data) => this.repository.create(data);
+    read = (query, data) => this.repository.read(query, data);
+    readOne = (id) => this.repository.readOne(id);
+    update = (id, data) => this.repository.update(id, data);
+    delete = (id) => this.repository.delete(id);
 }
