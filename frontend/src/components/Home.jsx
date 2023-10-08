@@ -10,7 +10,7 @@ const Home = () => {
 
   const authCheck = async () => {
       try {
-          const response = await axios.get('http://localhost:8080/api/auth/check-session'); 
+          const response = await axios.get('http://localhost:7000/api/auth/check-session'); 
           if(!response.data.success){
             navigate('/login')
           }

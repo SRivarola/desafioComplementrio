@@ -11,7 +11,7 @@ const SignoutButton = () => {
   const navigate = useNavigate();
   const handleClick = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/signout')
+      const response = await axios.post('http://localhost:7000/api/auth/signout')
       if(response.data.success) {
         setIsLogin(false)
         navigate('/')
