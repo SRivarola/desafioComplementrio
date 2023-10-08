@@ -1,25 +1,27 @@
 //import { Router } from 'express';
 //imports models for mongoose
 import MyRouter from '../router.js';
-
-import Cart from '../../dao/mongo/models/carts.js';
+import CartsController from '../../controllers/carts.controller.js';
 import passport from 'passport';
 
+const controller = new CartsController();
 
-export default class CartsTouter extends MyRouter {
+
+export default class CartsRouter extends MyRouter {
     init() {
-        this.post('/', ["ADMIN", "USER"], passport.authenticate("current"), async (req, res, next) => {
+        this.post('/', ["USER"], passport.authenticate("current"), async (req, res, next) => {
             try {
                 let user = req.user;
                 let data = req.body;
                 data.user_id = user._id;
-                let response = await Cart.create( data )
+                console.log(data)
+                let response = await controller.create(data);
                     return res.sendSuccessCreate(response); 
             } catch (error) {
                 next(error)
             }
         })
-        this.read('/', ["USER", "ADMIN"], passport.authenticate("current"), async (req, res, next) => {
+        /* this.read('/', ["USER", "ADMIN"], passport.authenticate("current"), async (req, res, next) => {
             try {
                 let user_id = req.user._id;
                 let state = "pending";
@@ -72,7 +74,7 @@ export default class CartsTouter extends MyRouter {
                     next(error);
                 }
             }
-        )
+        ) */
     }
 }
 /* 

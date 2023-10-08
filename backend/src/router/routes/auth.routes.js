@@ -22,12 +22,10 @@ export default class AuthRouter extends MyRouter {
             is_valid_user,
             async (req, res, next) => {
                 try {
-                    return res.status(201).json({
-                        success: true,
-                        massage: 'user registered'
-                    })
+                    let response = await controller.register(req.body)
+                    return response ? res.sendSuccessCreate(response) : res.sendNotFound('user');
                 } catch (error) {
-                    next(error);
+                    next(error)
                 }
             }
         )
@@ -42,14 +40,10 @@ export default class AuthRouter extends MyRouter {
                 try {
                     req.session.mail = req.body.mail
                     req.session.role = req.user.role
-                    return res.status(200).cookie('token', req.session.token, { maxAge: 60*60*24*7*1000, httpOnly: true }).json({
-                        success: true,
-                        user: req.user,
-                        message: req.session.mail + " has started session",
-                        token: req.session.token
-                    })
+                    let response = await controller.login()
+                    return response ? res.cookie('token', req.session.token, { maxAge: 60*60*24*7*1000, httpOnly: true }).sendSuccess(response) : res.sendNotFound('user');
                 } catch (error) {
-                    next(error);
+                    next(error)
                 }
             }
         )
@@ -60,11 +54,8 @@ export default class AuthRouter extends MyRouter {
             async (req, res, next) => {
                 try {
                     req.session.destroy()
-                    return res.status(200).clearCookie('token').json({
-                        success: true,
-                        message: 'You have been signed out',
-                        dataSession: req.session
-                    })
+                    let response = await controller.signout();
+                    return response ? res.clearCookie('token').sendSuccess(response) : res.clearCookie('token').sendNotFound('user');
                 } catch (error) {
                     next(error);
                 }
