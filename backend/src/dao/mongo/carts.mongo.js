@@ -55,7 +55,6 @@ export default class CartMongo {
     }
     async deleteAll(user_id) {
         let all = await Cart.deleteMany({ user_id: user_id })
-        console.log(all)
         if(all.deletedCount > 0) {
             return {
                 message: "carts deleted.",
