@@ -9,48 +9,51 @@ const controller = new CartsController();
 
 export default class CartsRouter extends MyRouter {
     init() {
-        this.post('/', ["USER"], passport.authenticate("current"), async (req, res, next) => {
-            try {
-                let user = req.user;
-                let data = req.body;
-                data.user_id = user._id;
-                console.log(data)
-                let response = await controller.create(data);
-                    return res.sendSuccessCreate(response); 
-            } catch (error) {
-                next(error)
-            }
-        })
-        /* this.read('/', ["USER", "ADMIN"], passport.authenticate("current"), async (req, res, next) => {
-            try {
-                let user_id = req.user._id;
-                let state = "pending";
-                if (req.query.state) {
-                    state = req.query.state;
+        this.post(
+            '/', 
+            ["USER"], 
+            passport.authenticate("current"), 
+            async (req, res, next) => {
+                try {
+                    let user = req.user;
+                    let data = req.body;
+                    data.user_id = user._id;
+                    console.log(data)
+                    let response = await controller.create(data);
+                        return res.sendSuccessCreate(response); 
+                } catch (error) {
+                    next(error)
                 }
-                let response = await Cart.find({user_id, state}, "product_id user_id quantity state").populate('user_id', 'first_name last_name mail photo').populate('product_id', '-createdAt -updatedAt -__v');
-                if (response.length > 0) {
-                    return res.sendSuccess(response)
-                } else {
-                    return res.sendNotFound()
-                }
-            } catch (error) {
-                next(error);
             }
-        })
+        )
+        this.read(
+            '/', 
+            ["USER"], 
+            passport.authenticate("current"), 
+            async (req, res, next) => {
+                try {
+                    let user_id = req.user._id;
+                    let state = "pending";
+                    if (req.query.state) {
+                        state = req.query.state;
+                    }
+                    let response = await controller.readByUser(user_id, state);
+                    response ? res.sendSuccess(response) : res.sendNotFound('cart');
+                } catch (error) {
+                    next(error);
+                }
+            }
+        )
         this.put(
-            '/:id', ["USER", "ADMIN"],
+            '/:cid', 
+            ["USER"],
             passport.authenticate("current"),
             async (req, res, next) => {
                 try {
-                    let cart_id = req.params.id;
+                    let cart_id = req.params.cid;
                     let data = req.body;
-                    let response = await Cart.findByIdAndUpdate(cart_id, data, { new: true });
-                    if (response) {
-                        return res.sendSuccess(response);
-                    } else {
-                        return res.sendNotFound();
-                    }
+                    let response = await controller.update(cart_id, data);
+                    response ? res.sendSuccess(response) : res.sendNotFound('product in cart');
                 } catch (error) {
                     next(error);
                 }
@@ -58,23 +61,34 @@ export default class CartsRouter extends MyRouter {
         )
 
         this.delete(
-            '/:id',
-            ["USER", "ADMIN"],
+            '/:cid',
+            ["USER"],
             passport.authenticate("current"),
             async (req, res, next) => {
                 try {
-                    let cart_id = req.params.id;
-                    let response = await Cart.findByIdAndDelete(cart_id).select("product_id user_id quantity state").populate("user_id", "first_name last_name mail photo").populate("product_id", "-createdAt -updatedAt -__v");
-                    if (response) {
-                        res.sendSuccess(response);
-                    } else {
-                        return res.sendNotFound();
-                    }
+                    let cart_id = req.params.cid;
+                    let response = await controller.delete(cart_id);
+                    response ? res.sendSuccess(response) : res.sendNotFound('cart');
                 } catch (error) {
                     next(error);
                 }
             }
-        ) */
+        )
+
+        this.delete(
+            '/',
+            ["USER"],
+            passport.authenticate("current"),
+            async (req, res, next) => {
+                try {
+                    let user = req.user;
+                    let response = await controller.deleteAll(user._id);
+                    response ? res.sendSuccess(response) : res.sendNotFound('cart');
+                } catch (error) {
+                    next(error);
+                }
+            }
+        )
     }
 }
 /* 
