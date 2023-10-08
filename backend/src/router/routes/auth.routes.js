@@ -18,6 +18,7 @@ export default class AuthRouter extends MyRouter {
             '/register', 
             ["USER"], 
             is_8_char,
+            is_form_ok,
             is_valid_user,
             async (req, res, next) => {
                 try {
@@ -34,7 +35,6 @@ export default class AuthRouter extends MyRouter {
         this.post(
             '/login', 
             ["USER", "ADMIN"],
-            is_form_ok,
             is_user,
             is_valid_pass, 
             create_token, 
