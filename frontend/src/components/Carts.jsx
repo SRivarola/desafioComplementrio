@@ -11,11 +11,11 @@ const Carts = () => {
     const [cart, setCart] = useState(null)
 
     useEffect(() => {
-      axios.get(`http://localhost:8080/api/carts/${cartId}`)
+      axios.get(`http://localhost:7000/api/carts/${cartId}`)
         .then(res => {
           setCart(res.data.payload)
         })
-      axios.get(`http://localhost:8080/api/carts/bills/${cartId}`)
+      axios.get(`http://localhost:7000/api/carts/bills/${cartId}`)
         .then(res => {
           setTotalAmount(res.data.payload)
         })

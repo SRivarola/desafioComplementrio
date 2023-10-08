@@ -42,7 +42,7 @@ const Login = () => {
         e.preventDefault()
         if(data.mail && data.password){
             try {
-                const response = await axios.post('http://localhost:8080/api/auth/login', data)
+                const response = await axios.post('http://localhost:7000/api/auth/login', data)
                 if(response.data.success){
                     setIsLogin(true)
                     navigate('/products')

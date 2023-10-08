@@ -9,7 +9,7 @@ const ProductDetailContainer = () => {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/products/${pid}`, {
+    axios.get(`http://localhost:7000/api/products/${pid}`, {
       params: {
         pid: pid
       }

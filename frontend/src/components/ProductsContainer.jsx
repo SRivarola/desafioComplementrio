@@ -32,7 +32,7 @@ const ProductsContainer = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/products/${query.title ? `?title=${query.title}` : ''}${query.page ? `${query.title ? '&' : '?'}page=${query.page}` : ''}`)
+        axios.get(`http://localhost:7000/api/products/${query.title ? `?title=${query.title}` : ''}${query.page ? `${query.title ? '&' : '?'}page=${query.page}` : ''}`)
             .then(res => {
                 setData(res.data.payload)
             })

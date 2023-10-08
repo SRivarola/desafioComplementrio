@@ -43,7 +43,7 @@ const Register = () => {
         e.preventDefault()
         if(data.first_name && data.last_name && data.mail && data.password) {
             try {
-                const response = await axios.post('http://localhost:8080/api/auth/register', data)
+                const response = await axios.post('http://localhost:7000/api/auth/register', data)
                 if(response.status === 201){
                     setIsLogin(true)
                     navigate('/products')
