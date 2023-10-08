@@ -9,4 +9,5 @@ export default class CartsController {
     update = (id, data) => this.service.update(id, data);
     delete = (id) => this.service.delete(id);
     deleteAll = (user_id) => this.service.deleteAll(user_id);
+    getTotal = (id) => this.service.getTotal(id);
 }

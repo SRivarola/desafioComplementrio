@@ -1,4 +1,4 @@
-import { response } from "express";
+import { Types } from "mongoose";
 import Cart from "./models/carts.js";
 
 export default class CartMongo {
@@ -62,6 +62,18 @@ export default class CartMongo {
             }
         } else {
             return null;
+        }
+    }
+    async getTotal(id) {
+        let total = await Cart.aggregate([
+            { $match: { user_id: new Types.ObjectId(id) } },
+            { $set: { subtotal: { $multiply: [ '$price', '$quantity'] } } },
+            { $group: { _id: "$user_id", total: { $sum: '$subtotal' } } },
+            //{}
+        ])
+        return {
+            message: "Total obtanined.",
+            response: total
         }
     }
         
