@@ -17,7 +17,8 @@ switch (args.persistence) {
         const { default: ProductMongo } = await import('./mongo/products.mongo.js');
         const { default: UserMongo } = await import('./mongo/users.mongo.js');
         const { default: CartMongo } = await import('./mongo/carts.mongo.js');
-        dao = { Product: ProductMongo, User: UserMongo, Cart: CartMongo };
+        const { default: OrderMongo } = await import('./mongo/orders.mongo.js');
+        dao = { Product: ProductMongo, User: UserMongo, Cart: CartMongo, Order: OrderMongo };
         break;
 }
 

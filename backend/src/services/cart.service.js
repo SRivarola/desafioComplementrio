@@ -9,4 +9,5 @@ export default class CartsService {
     update = (id, data) => this.repository.update(id, data);
     delete = (id) => this.repository.delete(id);
     deleteAll = (user_id) => this.repository.deleteAll(user_id);
+    getTotal = (id) => this.repository.getTotal(id);
 }

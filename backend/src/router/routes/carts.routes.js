@@ -2,10 +2,11 @@
 //imports models for mongoose
 import MyRouter from '../router.js';
 import CartsController from '../../controllers/carts.controller.js';
+import ProductsController from '../../controllers/products.controller.js';
 import passport from 'passport';
 
 const controller = new CartsController();
-
+const productsController = new ProductsController();
 
 export default class CartsRouter extends MyRouter {
     init() {
@@ -18,7 +19,8 @@ export default class CartsRouter extends MyRouter {
                     let user = req.user;
                     let data = req.body;
                     data.user_id = user._id;
-                    console.log(data)
+                    let product = await productsController.readOne(data.product_id)
+                    data.price = product.response.price
                     let response = await controller.create(data);
                         return res.sendSuccessCreate(response); 
                 } catch (error) {
@@ -39,6 +41,20 @@ export default class CartsRouter extends MyRouter {
                     }
                     let response = await controller.readByUser(user_id, state);
                     response ? res.sendSuccess(response) : res.sendNotFound('cart');
+                } catch (error) {
+                    next(error);
+                }
+            }
+        )
+        this.read(
+            '/total',
+            ["USER"],
+            passport.authenticate("current"),
+            async (req, res, next) => {
+                try {
+                    let id = req.user._id;
+                    let total = await controller.getTotal(id);
+                    total ? res.sendSuccess(total) : res.sendNotFound(0);
                 } catch (error) {
                     next(error);
                 }
