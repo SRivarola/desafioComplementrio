@@ -9,4 +9,5 @@ export default class OrdersRepository {
     create = (data) =>  this.model.create(data);
     readOne = (id) =>  this.model.readOne(id);
     readAll = (page) =>  this.model.readAll(page);
+    //readAllTickets = (user_id) =>  this.model.readAllTickets(user_id);
 }
