@@ -1,5 +1,5 @@
 import Order from './models/orders.js';
-import { Types } from 'mongoose';
+// import { Types } from 'mongoose';
 
 export default class OrderMongo {
     constructor() {}
@@ -21,13 +21,22 @@ export default class OrderMongo {
     }
 
     async readAll(page) {
-        let all = await Order.paginate({}, { page, limit: 10 });
-        return all.length > 0 ? {
-            message: "products found.",
+        let all = await Order.paginate({}, { page: page, limit: 10 });
+        console.log(all)
+        return all.docs.length > 0 ? {
+            message: "orders found.",
             response: all
         } : null;
     }
     
+    async readByUser(purchaser) {
+        let all = await Order.find({ purchaser })
+        return all.length > 0 ? {
+            message: "orders found.",
+            response: all
+        } : null;
+    }
+
     /*async readAllTickets(id) {
         let user = new Types.ObjectId(id)
         let all = await Order.find({ user }, 

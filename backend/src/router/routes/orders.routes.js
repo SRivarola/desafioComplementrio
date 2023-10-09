@@ -35,8 +35,22 @@ export default class OrdersRouter extends MyRouter {
             passport.authenticate("current"),
             async (req, res, next) => {
                 try {
-                    let user = req.user._id;
-                    let order = await controller.readAllTickets(user);
+                    let mail = req.user.mail;
+                    let response = await controller.readByUser(mail);
+                    response ? res.sendSuccess(response) : res.sendNotFound('orders');
+                } catch (error) {
+                    next(error);
+                }
+            }
+        )
+        this.read(
+            '/all',
+            ["ADMIN"],
+            passport.authenticate("current"),
+            async (req, res, next) => {
+                try {
+                    let page = req.body.page ? req.body.page : 1
+                    let order = await controller.readAll(page);
                     order ? res.sendSuccess(order) : res.sendNotFound('order');
                 } catch (error) {
                     next(error);

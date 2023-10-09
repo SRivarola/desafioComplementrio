@@ -8,5 +8,6 @@ export default class OrdersController {
     create = (data) =>  this.service.create(data);
     readOne = (id) =>  this.service.readOne(id);
     readAll = (page) =>  this.service.readAll(page);
+    readByUser = (mail) =>  this.service.readByUser(mail);
     //readAllTickets = (user_id) =>  this.service.readAllTickets(user_id);
 }
