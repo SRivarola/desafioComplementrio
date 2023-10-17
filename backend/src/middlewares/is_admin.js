@@ -3,12 +3,7 @@ export default function (req, res, next){
         if (req.session.role === 1){
             next()
         } else {
-            return res.status(403).json({
-                status: 403,
-                method: req.method,
-                path: req.url,
-                message: 'Forbidden.'
-            })
+            return res.sendForbidden();
         }
     } catch (error) {
         next(error)

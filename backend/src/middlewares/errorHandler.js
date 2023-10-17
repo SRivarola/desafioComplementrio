@@ -1,7 +1,7 @@
 export default (error, req, res, next) => {
-    console.log(error)
-    return res.status(500).json({
-        success: false,
+    return res.status(error.statusCode).json({
+        method: req.method,
+        path: req.url,
         message: error.message
     })
-}
+};

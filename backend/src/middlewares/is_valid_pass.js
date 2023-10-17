@@ -10,11 +10,6 @@ export default async function(req, res, next) {
     if(verified){
         return next()
     } else {
-        return res.status(401).json({
-            status: 401,
-            method: req.method,
-            path: req.url,
-            response: 'Invalid credentials'
-        })
+        return res.sendInvalidCred();
     }
 }

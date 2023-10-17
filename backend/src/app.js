@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import cors from 'cors';
-
+import compression from 'express-compression';
 import env from "./config/env.js";
 import __dirname from '../utils.js';
 import sessions from './config/sessions/factofy.js';
@@ -45,7 +45,11 @@ app.use(express.urlencoded({extended: true}));
 // app.engine('handlebars', handlebars.engine())
 // app.set('views', `${__dirname}/views`);
 // app.set('view engine', 'handlebars');
-
+app.use(
+    compression({
+        brotli: { enable: true, zlib: {} }
+    })
+); 
 app.use('/api', router.getRouter())
 
 app.use(errorHandler)

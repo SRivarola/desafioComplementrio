@@ -10,6 +10,29 @@ const productsController = new ProductsController();
 
 export default class ProductRouter extends MyRouter {
     init() {
+        this.read(
+            '/mockingproducts',
+            ["USER"],
+            async (req, res, next) => {
+                const { title, page } = req.query;
+                let products
+                try {
+                    if(title){
+                        const lookfor = new RegExp(title, "i");
+                        products = await productsController.read({title: lookfor}, {lean: true, limit: 4, page: page ? page : 1});
+                        console.log(lookfor)
+                    } else {
+                        products = await productsController.read({}, {lean: true, limit: 4, page: page ? page : 1});
+                    }
+                    return res.status(200).json({
+                        success: true,
+                        payload: products.response
+                    })
+                } catch (error) {
+                    next(error);
+                }
+            }
+        )
         this.post('/', ["ADMIN"], uploader.single('file'), async (req, res, next) => {
             const { title, description, price, stock, code, status } = req.body;
             const file = req.file?.filename ? [req.file.filename] : []

@@ -2,6 +2,8 @@ import { Router} from 'express'
 import jwt from 'jsonwebtoken'
 import User from '../dao/mongo/models/user.js'
 import env from '../config/env.js';
+import MyError from '../config/MyError.js';
+import errors from '../config/errors.js';
 
 export default class MyRouter {
     constructor() {
@@ -22,12 +24,13 @@ export default class MyRouter {
         })
     }
     responses = (req, res, next) => {
-        res.sendSuccessCreate = (payload) => res.status(201).json(payload)
-        res.sendSuccess = (payload) => res.status(200).json(payload)
-        res.sendNotFound = () => res.status(404).json({ success: false, response: 'Not found' })
-        res.sendNotAuthenticatedError = (error) => res.status(401).json({ status: 'error', error })
-        res.sendNotAuthorizatedError = (error) => res.status(403).json({ status: 'error', error })
-
+        res.sendSuccessCreate = (payload) => res.status(201).json(payload);
+        res.sendSuccess = (payload) => res.status(200).json(payload);
+        res.sendFailed = () => MyError.newError(errors.failed);
+        res.sendNoAuth = () => MyError.newError(errors.auth);
+        res.sendInvalidCred = () => MyError.newError(errors.credentials);
+        res.sendForbidden = () => MyError.newError(errors.forbidden);
+        res.sendNotFound = (payload) => MyError.newError(errors.notFound(payload));
         return next()
     }
     handlePolicies = (policies) => async (req, res, next) => {
@@ -36,7 +39,7 @@ export default class MyRouter {
         } else {
             const token = req.cookies.token;
             if(!token) {
-                return res.sendNotAuthenticatedError('Unauthenticated')
+                return res.sendForbidden();
             } else {
                 const payload = jwt.verify(token, env.SECRET_KEY)
                 const user = await User.findOne(
@@ -51,7 +54,7 @@ export default class MyRouter {
                     req.user = user
                     return next()
                 } else {
-                    return res.sendNotAuthorizatedError('Unauthorized')
+                    return res.sendInvalidCred();
                 }
             }
         }
