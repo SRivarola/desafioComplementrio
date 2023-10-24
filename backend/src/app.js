@@ -1,13 +1,13 @@
 import express from 'express';
-import morgan from 'morgan';
+//import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import cors from 'cors';
-
+import compression from 'express-compression';
 import env from "./config/env.js";
 import __dirname from '../utils.js';
 import sessions from './config/sessions/factofy.js';
-
+import winston from './middlewares/winston.js';
 import errorHandler from './middlewares/errorHandler.js'
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import inicializePassport from './middlewares/passport.js';
@@ -39,13 +39,18 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Credentials', 'true')
     next()
 })
-app.use(morgan('dev'));
+app.use(winston);
+//app.use(morgan('dev'));
 app.use(express.static((`${__dirname}/public`)))
 app.use(express.urlencoded({extended: true}));
 // app.engine('handlebars', handlebars.engine())
 // app.set('views', `${__dirname}/views`);
 // app.set('view engine', 'handlebars');
-
+app.use(
+    compression({
+        brotli: { enable: true, zlib: {} }
+    })
+); 
 app.use('/api', router.getRouter())
 
 app.use(errorHandler)

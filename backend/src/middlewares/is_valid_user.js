@@ -4,7 +4,6 @@ export default async function (req, res, next){
     try {
         const User = new AuthController()
         let { mail, password } = req.body;
-        console.log(mail)
         let user =  await User.readOne(mail)
         if (!user){
             next()
