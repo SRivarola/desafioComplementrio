@@ -5,10 +5,7 @@ import config from "../config/config.js";
 export default (req, res, next) => {
     const auth = req.cookies;
     if(!auth.token) {
-        return res.status(401).json({
-            success: false,
-            message: 'Invalid credentials'
-        });
+        return res.sendInvalidCred();
     }
     const token = auth.token
     jwt.verify(token, config.SECRET_KEY, async (error, credentials) => {
@@ -17,10 +14,7 @@ export default (req, res, next) => {
             req.user = user;
             return next();
         } catch (error) {
-            return res.status(401).json({
-                success: false,
-                message: 'Invalid credentials'
-            })
+            return res.sendInvalidCred();
         }
     })
 }
