@@ -6,7 +6,6 @@ import ProductRouter from "./routes/products.routes.js";
 import OrdersRouter from "./routes/orders.routes.js";
 import LoggersRoute from "./routes/loggers.routes.js";
 import mailsController from '../controllers/mails.controller.js';
-import logger from '../config/logger/logger.js';
 // import productsRouter from "./products.routes.js";
 // import rtProductsRouter from "./realTimeProducts.routes.js";
 
@@ -25,20 +24,7 @@ export default class IndexRouter extends MyRouter {
         this.use('/carts', cart.getRouter());
         this.use('/orders', order.getRouter());
         this.post('/mail', ["USER"], mailsController);
-<<<<<<< HEAD
         this.use('/loggers', logger.getRouter())
-=======
-        this.use('/logger', ["USER"], (req, res, next) => {
-            try {
-                req.logger.HTTP(
-                    `${req.method} ${req.url} - ${new Date().toLocaleTimeString()}`
-                )
-                return res.status(200).send('Log request succesfully.')
-            } catch (error) {
-                next(error);
-            }
-        })
->>>>>>> 38bf6af6af4540e942b79780e7df62b06d3b5282
     }
 }
 

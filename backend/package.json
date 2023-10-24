@@ -39,11 +39,8 @@
     "socket.io": "^4.7.1",
     "uuid": "^9.0.1",
     "winston": "^3.11.0"
-<<<<<<< HEAD
-=======
   },
   "devDependencies": {
     "@faker-js/faker": "^8.2.0"
->>>>>>> 38bf6af6af4540e942b79780e7df62b06d3b5282
   }
 }
