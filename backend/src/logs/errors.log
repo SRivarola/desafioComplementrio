@@ -11,3 +11,6 @@
 [33mERROR[39m: GET /api/ordersails - 16:05:59 - not found path.
 [33mERROR[39m: POST /api/auth/login - 17:05:19 - Invalid Credentials
 [33mERROR[39m: POST /api/auth/login - 17:25:56 - Invalid Credentials
+[33mERROR[39m: GET / - 17:39:06
+[31mFATAL[39m: GET / - 17:39:06
+[33mERROR[39m: POST /api/auth/login - 17:39:25 - Invalid Credentials

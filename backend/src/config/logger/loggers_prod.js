@@ -19,6 +19,7 @@ export default createLogger({
     levels,
     format: colorize(),
     transports: [
+        new transports.Console({ level: "HTTP", format: simple() }),
         new transports.File({
             level: "ERROR",
             format: simple(),
