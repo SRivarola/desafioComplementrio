@@ -4,6 +4,7 @@ import MyRouter from '../router.js';
 import CartsController from '../../controllers/carts.controller.js';
 import ProductsController from '../../controllers/products.controller.js';
 import passport from 'passport';
+import cart_user_role from '../../middlewares/cart_user_role.js';
 
 const controller = new CartsController();
 const productsController = new ProductsController();
@@ -12,8 +13,8 @@ export default class CartsRouter extends MyRouter {
     init() {
         this.post(
             '/', 
-            ["USER"], 
-            passport.authenticate("current"), 
+            ["USER"],
+            cart_user_role,
             async (req, res, next) => {
                 try {
                     let user = req.user;

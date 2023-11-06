@@ -9,7 +9,7 @@ let schema = new Schema({
     age: {type: Number},
     password: {type: String, requied: true},
     cart: { type: Types.ObjectId, ref: 'carts' },
-    role: {type: String, default: 'USER'}
+    role: {type: String, enum: ['USER', 'ADMIN', 'PREMIUM'], default: 'USER'}
 });
 
 let User = model(collection, schema);

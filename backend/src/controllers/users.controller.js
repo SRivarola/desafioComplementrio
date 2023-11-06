@@ -9,4 +9,5 @@ export default class AuthController {
     signout = () => this.service.signout();
     readOne = (mail) => this.service.readOne(mail);
     readById = (id) => this.service.readById(id);
+    update = (id, data) => this.service.update(id, data);
 }

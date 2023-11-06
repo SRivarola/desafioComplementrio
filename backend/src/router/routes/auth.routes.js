@@ -32,7 +32,7 @@ export default class AuthRouter extends MyRouter {
 
         this.post(
             '/login', 
-            ["USER", "ADMIN"],
+            ["USER"],
             is_user,
             is_valid_pass, 
             create_token, 
@@ -61,6 +61,24 @@ export default class AuthRouter extends MyRouter {
                 }
         })
 
+        this.put(
+            '/premium/:uid', 
+            ["ADMIN"],
+            async (req, res, next) => {
+                const { uid } = req.params; 
+                try {
+                    const response = await controller.update(uid, { role: "PREMIUM" })
+
+                    return response
+                        ? res.sendSuccess(response)
+                        : res.sendNotFound()
+                } catch (error) {
+                    next(error)
+                    
+                }    
+            }
+        );
+        
         this.read('/current', ["USER", "ADMIN"], passport.authenticate('current'), async (req, res, next) => {
             try {
                 return res.status(200).json({

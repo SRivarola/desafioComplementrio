@@ -49,6 +49,7 @@ export default class MyRouter {
                 const role = user.role;
                 if (
                     (policies.includes("USER") && role === "USER") ||
+                    (policies.includes("PREMIUM") && role === "PREMIUM") ||
                     (policies.includes("ADMIN") && role === "ADMIN")
                 ) {
                     req.user = user
