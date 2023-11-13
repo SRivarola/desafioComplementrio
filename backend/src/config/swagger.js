@@ -1,4 +1,4 @@
-import __dirname from "../utils.js";
+import __dirname from "../../utils.js";
 
 const options = {
     definition: {
@@ -8,7 +8,7 @@ const options = {
             description: "Documentation of API"
         }
     },
-    apis: [`${__dirname}/docs/*.yaml`]
+    apis: [`${__dirname}/src/docs/**/*.yaml`]
 }
 
 export default options;

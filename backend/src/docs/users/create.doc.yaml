@@ -69,7 +69,8 @@ components:
           type: string
           description: Descripción del error
         code:
-          type: number
+          type: integer
+          format: int64
           description: código de error
       example:
         message: Invalid credentials
@@ -81,40 +82,41 @@ components:
           type: string
           description: Descripción del error
         code:
-          type: number
+          type: integer
+          format: int64
           description: código de error
       example:
         message: Unauthorized
         code: 403
-  paths:
-    /api/auth/register
-      post:
-        summary: Registrar un usario
-        tags:
-          - Auth
-        requestBody:
-          required: true
-          description: Objeto con las propiedades necesarias/mínimas para registrar un usuario
+paths:
+  /api/auth/register:
+    post:
+      summary: Registrar un usario
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        description: Objeto con las propiedades necesarias/mínimas para registrar un usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Usuario registrado
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        responses:
-          '201':
-            description: Usuario registrado
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/responses/register'
-          '401':
-            description: Credenciales inválidas
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/responses/credentials'
-          '403':
-            description: Unauthorized
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/responses/forbidden'
+                $ref: '#/components/responses/register'
+        '401':
+          description: Credenciales inválidas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/credentials'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/forbidden'
