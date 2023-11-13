@@ -1,0 +1,84 @@
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          description: Nombre del producto
+          type: string
+        description:
+          description: Descripción del producto
+          type: string
+        price:
+          description: Precio del producto
+          type: number
+        thumbnail:
+          description: Fotos del producto
+          type: array
+        code:
+          description: Código del producto
+          type: string
+        status:
+          description: Estado del producto
+          type: boolean
+        stock:
+          description: Cantidad de producto restante
+          type: number
+      example:
+        title: Chivas Regal
+        description: botella de whiskey 18 años
+        price: 35000
+        thumbnail: [chivasRegal18.jpg]
+        code: asc100
+        status: true
+        stock: 500
+    Create:
+      type: object
+      properties:
+        title:
+          description: Nombre del producto
+          type: string
+        description:
+          description: Descripción del producto
+          type: string
+        price:
+          description: Precio del producto
+          type: number
+        thumbnail:
+          description: Fotos del producto
+          type: array
+        code:
+          description: Código del producto
+          type: string
+        status:
+          description: Estado del producto
+          type: boolean
+        stock:
+          description: Cantidad de producto restante
+          type: number
+      example:
+        title: Chivas Regal 12
+        description: whiskey
+        price: 25000
+        thumbnail: [chivasR12.jpg]
+        code: dsa101
+        status: true
+        stock: 505
+  responses:
+    create:
+      type: object
+      properties:
+        success: indicador de éxito
+        message: producto creado correctamente
+        payload: documento del producto creado
+      example:
+        success: true
+        message: producto creado correctamente
+        payload: 
+          _id: 652dde2cee2ad0c3cb650346
+          title: Chivas Regal
+          description: Whiskey
+          thumbnail: [whiskeyChivas.jpg]
+          code: asdaf12354
+          status: true
+          stock: 200

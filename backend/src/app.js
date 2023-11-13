@@ -11,6 +11,9 @@ import winston from './middlewares/winston.js';
 import errorHandler from './middlewares/errorHandler.js'
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import inicializePassport from './middlewares/passport.js';
+import swaggerJSDoc from "swagger-jsdoc";
+import { serve, setup } from "swagger-ui-express";
+import options from "./config/swagger.js";
 
 // import Product from './dao/models/products.js';
 // import ProductManager from './dao/manager/ProductManager.js';
@@ -24,6 +27,7 @@ import IndexRouter from './router/index.routes.js';
 const router = new IndexRouter()
 
 const app = express();
+const specs = swaggerJSDoc(options);
 
 app.use(cookieParser(env.SECRET_COOKIE))
 app.use(sessions)
@@ -49,10 +53,11 @@ app.use(express.urlencoded({extended: true}));
 app.use(
     compression({
         brotli: { enable: true, zlib: {} }
-    })
-); 
+        })
+    ); 
+app.use("/api/docs", serve, setup(specs))
 app.use('/api', router.getRouter())
-
+    
 app.use(errorHandler)
 app.use(notFoundHandler)
 
