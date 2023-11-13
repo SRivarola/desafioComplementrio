@@ -1,0 +1,127 @@
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          description: Nombre del producto
+          type: string
+        description:
+          description: Descripción del producto
+          type: string
+        price:
+          description: Precio del producto
+          type: integer
+          format: int64
+        thumbnail:
+          description: Fotos del producto
+          type: array
+        code:
+          description: Código del producto
+          type: string
+        status:
+          description: Estado del producto
+          type: boolean
+        stock:
+          description: Cantidad de producto restante
+          type: integer
+          format: int64
+      example:
+        title: Chivas Regal
+        description: botella de whiskey 18 años
+        price: 35000
+        thumbnail: [chivasRegal18.jpg]
+        code: asc100
+        status: true
+        stock: 500
+    Update:
+      type: object
+      properties:
+        title:
+          description: Nombre del producto
+          type: string
+        description:
+          description: Descripción del producto
+          type: string
+        price:
+          description: Precio del producto
+          type: number
+        thumbnail:
+          description: Fotos del producto
+          type: array
+        code:
+          description: Código del producto
+          type: string
+        status:
+          description: Estado del producto
+          type: boolean
+        stock:
+          description: Cantidad de producto restante
+          type: number
+      example:
+        title: Chivas Regal 12
+        description: whiskey
+        price: 25000
+        thumbnail: [chivasR12.jpg]
+        code: dsa101
+        status: true
+        stock: 505
+  responses:
+    update:
+      type: object
+      properties:
+        success: indicador de éxito
+        message: producto modificado correctamente
+        payload: documento del producto modificado
+      example:
+        success: true
+        message: product modified.
+        payload: 
+          _id: 652dde2cee2ad0c3cb650346
+          title: Chivas Regal
+          description: Whiskey
+          thumbnail: [whiskeyChivas.jpg]
+          code: asdaf12354
+          status: true
+          stock: 200
+paths:
+  /api/products/{pid}:
+    put:
+      summary: Modificar un producto
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ObjectId del producto a modificar
+          schema:
+            $type: string
+      requestBody:
+        required: true
+        description: Objeto con las propiedades necesarias/mínimas para modificar un producto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Producto modificado corrrectamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/update'
+        '401':
+          description: Credenciales inválidas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/credentials'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/forbidden'

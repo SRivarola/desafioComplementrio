@@ -1,6 +1,6 @@
 components:
   schemas:
-    UserLogin:
+    User:
       type: object
       properties:
         mail:
@@ -76,7 +76,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserLogin'
+              $ref: '#/components/schemas/Login'
       responses:
         '200':
           description: Usuario logueado
