@@ -60,8 +60,8 @@ components:
         message: Mensaje para el usuario
         response: id del usuario creado.
       example: 
-        message: Usuario creado correctamente.
-        response: 6alsdnasldkjnaskdjbkda
+        message: User created successfully.
+        response: 65525e619210a9aae45dd76e
     credentials:
       type: object
       properties:
