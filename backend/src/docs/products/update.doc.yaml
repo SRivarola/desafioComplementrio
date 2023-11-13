@@ -84,6 +84,30 @@ components:
           code: asdaf12354
           status: true
           stock: 200
+    notFound:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        message:
+          type: string
+          description: Indicador de qué error se cometió
+      example:
+        status: error
+        message: Not found documents
+    fatal:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        message:
+          type: string
+          description: Indicador de qué error se cometió
+      example:
+        status: fatal
+        message: dat is not defined
 paths:
   /api/products/{pid}:
     put:
@@ -105,7 +129,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/Update'
       responses:
         '200':
           description: Producto modificado corrrectamente.
@@ -125,3 +149,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/responses/forbidden'
+        '404':
+          description: Documento/s no encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/notFound'
+        '500':
+          description: Falla del servidor al modificar los productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/fatal'

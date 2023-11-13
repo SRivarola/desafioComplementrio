@@ -84,12 +84,26 @@ components:
           code: asdaf12354
           status: true
           stock: 200
+    fatal:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        message:
+          type: string
+          description: Indicador de qué error se cometió
+      example:
+        status: fatal
+        message: dat is not defined
 paths:
   /api/products:
     post:
       summary: Crear un producto
       tags:
         - Product
+      security:
+        - cookieAuth: []
       requestBody:
         required: true
         description: Objeto con las propiedades necesarias/mínimas para crear un producto
@@ -116,3 +130,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/responses/forbidden'
+        '500':
+          description: Falla del servidor al crear un producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/fatal'

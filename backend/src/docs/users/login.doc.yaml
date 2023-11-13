@@ -64,6 +64,18 @@ components:
       example:
         message: Unauthorized
         code: 403
+    fatal:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: fatal
+        message: dat is not defined
 paths:
   /api/auth/login:
     post:
@@ -96,3 +108,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/responses/forbidden'
+        '500':
+          description: Servidor caído
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/fatal'
