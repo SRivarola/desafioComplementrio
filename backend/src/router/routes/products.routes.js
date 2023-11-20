@@ -35,6 +35,21 @@ export default class ProductRouter extends MyRouter {
                 }
             }
         )
+        this.read(
+            '/',
+            ["USER", "ADMIN"],
+            async (req, res, next) => {
+                try {
+                        let products = await productsController.read();
+                    return res.status(200).json({
+                        success: true,
+                        payload: products.response
+                    })
+                } catch (error) {
+                    next(error);
+                }
+            }
+        )
 
         this.post(
             '/', 

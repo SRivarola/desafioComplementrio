@@ -10,4 +10,5 @@ export default class AuthService {
     readOne = (mail) => this.repository.readOne(mail);
     readById = (id) => this.repository.readById(id);
     update = (id, data) => this.repository.update(id, data);
+    delete = (id) => this.repository.delete(id);
 }

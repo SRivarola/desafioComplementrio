@@ -102,6 +102,18 @@ export default class AuthRouter extends MyRouter {
             }
         })
 
+        this.delete(
+            '/:uid',
+            ["ADMIN"],
+            async (req, res, next) => {
+                try {
+                    let { uid } = req.params;
+                    let user = await controller.delete(uid);
+                    return user ? res.sendSuccess(user) : res.sendNotFound('user');
+                } catch (error) {
+                    next(error)
+                }
+            })
     }
 }
 

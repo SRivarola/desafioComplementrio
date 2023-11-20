@@ -10,4 +10,5 @@ export default class AuthController {
     readOne = (mail) => this.service.readOne(mail);
     readById = (id) => this.service.readById(id);
     update = (id, data) => this.service.update(id, data);
+    delete = (id) => this.service.delete(id);
 }

@@ -50,4 +50,16 @@ export default class AuthMongo {
             return null;
         };
     }
+
+    async delete(id) {
+        let one = await User.findByIdAndDelete(id);
+        if(one) {
+            return {
+                message: "User removed",
+                response: one
+            };
+        } else {
+            return null;
+        }
+    }
 }

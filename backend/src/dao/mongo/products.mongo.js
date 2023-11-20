@@ -31,6 +31,17 @@ export default class ProductMongo {
             return null;
         };
     };
+    async readAll() {
+        let one = await Product.find();
+        if(one){
+            return {
+                message: "Products found",
+                response: one
+            };
+        } else {
+            return null;
+        };
+    };
     async update(id, data) {
         let one = await Product.findByIdAndUpdate(id, data, { new: true });
         if(one){
