@@ -3,7 +3,7 @@ import __dirname from '../../utils.js'
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, `${__dirname}/client/src/public/images`)
+        cb(null, `${__dirname}/frontend/src/public/images`)
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-${file.originalname}`)

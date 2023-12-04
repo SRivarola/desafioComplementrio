@@ -1,5 +1,3 @@
-//import { Router } from 'express';
-//imports models for mongoose
 import MyRouter from '../router.js';
 import CartsController from '../../controllers/carts.controller.js';
 import ProductsController from '../../controllers/products.controller.js';
@@ -13,7 +11,7 @@ export default class CartsRouter extends MyRouter {
     init() {
         this.post(
             '/', 
-            ["USER"],
+            ["USER", "PREMIUM"],
             cart_user_role,
             async (req, res, next) => {
                 try {
@@ -22,8 +20,24 @@ export default class CartsRouter extends MyRouter {
                     data.user_id = user._id;
                     let product = await productsController.readOne(data.product_id)
                     data.price = product.response.price
-                    let response = await controller.create(data);
-                        return res.sendSuccessCreate(response); 
+                    let oldCart = await controller.readByUser(
+                      user._id,
+                      "pending"
+                    );
+
+                    let response;
+
+                    if(!oldCart) {
+                      response = await controller.create(data);
+                    } else {
+                      const filteredCart = oldCart.response.find( item => item.product_id._id.toString() == product.response._id.toString() );
+                      if(!filteredCart) {
+                        response = await controller.create(data);
+                      } else {
+                        response = await controller.update(filteredCart._id, { quantity: filteredCart.quantity + data.quantity });
+                      }
+                    }
+                    return res.sendSuccessCreate(response); 
                 } catch (error) {
                     next(error)
                 }
@@ -31,7 +45,7 @@ export default class CartsRouter extends MyRouter {
         )
         this.read(
             '/', 
-            ["USER"], 
+            ["USER", "PREMIUM"], 
             passport.authenticate("current"), 
             async (req, res, next) => {
                 try {
@@ -48,64 +62,66 @@ export default class CartsRouter extends MyRouter {
             }
         )
         this.read(
-            '/total',
-            ["USER"],
-            passport.authenticate("current"),
-            async (req, res, next) => {
-                try {
-                    let id = req.user._id;
-                    let total = await controller.getTotal(id);
-                    total ? res.sendSuccess(total) : res.sendNotFound(0);
-                } catch (error) {
-                    next(error);
-                }
+          "/total",
+          ["USER", "PREMIUM"],
+          passport.authenticate("current"),
+          async (req, res, next) => {
+            try {
+              let id = req.user._id;
+              let total = await controller.getTotal(id);
+              total ? res.sendSuccess(total) : res.sendNotFound(0);
+            } catch (error) {
+              next(error);
             }
-        )
+          }
+        );
         this.put(
-            '/:cid', 
-            ["USER"],
-            passport.authenticate("current"),
-            async (req, res, next) => {
-                try {
-                    let cart_id = req.params.cid;
-                    let data = req.body;
-                    let response = await controller.update(cart_id, data);
-                    response ? res.sendSuccess(response) : res.sendNotFound('product in cart');
-                } catch (error) {
-                    next(error);
-                }
+          "/:cid",
+          ["USER", "PREMIUM"],
+          passport.authenticate("current"),
+          async (req, res, next) => {
+            try {
+              let cart_id = req.params.cid;
+              let data = req.body;
+              let response = await controller.update(cart_id, data);
+              response
+                ? res.sendSuccess(response)
+                : res.sendNotFound("product in cart");
+            } catch (error) {
+              next(error);
             }
-        )
+          }
+        );
 
         this.delete(
-            '/:cid',
-            ["USER"],
-            passport.authenticate("current"),
-            async (req, res, next) => {
-                try {
-                    let cart_id = req.params.cid;
-                    let response = await controller.delete(cart_id);
-                    response ? res.sendSuccess(response) : res.sendNotFound('cart');
-                } catch (error) {
-                    next(error);
-                }
+          "/:cid",
+          ["USER", "PREMIUM"],
+          passport.authenticate("current"),
+          async (req, res, next) => {
+            try {
+              let cart_id = req.params.cid;
+              let response = await controller.delete(cart_id);
+              response ? res.sendSuccess(response) : res.sendNotFound("cart");
+            } catch (error) {
+              next(error);
             }
-        )
+          }
+        );
 
         this.delete(
-            '/',
-            ["USER"],
-            passport.authenticate("current"),
-            async (req, res, next) => {
-                try {
-                    let user = req.user;
-                    let response = await controller.deleteAll(user._id);
-                    response ? res.sendSuccess(response) : res.sendNotFound('cart');
-                } catch (error) {
-                    next(error);
-                }
+          "/",
+          ["USER", "PREMIUM"],
+          passport.authenticate("current"),
+          async (req, res, next) => {
+            try {
+              let user = req.user;
+              let response = await controller.deleteAll(user._id);
+              response ? res.sendSuccess(response) : res.sendNotFound("cart");
+            } catch (error) {
+              next(error);
             }
-        )
+          }
+        );
     }
 }
 /* 

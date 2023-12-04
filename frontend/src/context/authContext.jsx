@@ -9,12 +9,14 @@ axios.defaults.withCredentials = true;
 const AuthContextProvider = ({children}) => {
 
     const [isLogin, setIsLogin] = useState(false);
+    const [user, setUser] = useState(null)
 
     const authCheck = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/auth/check-session'); 
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/auth/current`); 
             if(response.data.success){
                 setIsLogin(true)
+                setUser(response.data.user)
             } else {
                 setIsLogin(false)
             }
@@ -25,12 +27,14 @@ const AuthContextProvider = ({children}) => {
 
     useEffect( () => {
         authCheck()
-    }, [])
+    }, [isLogin])
 
     return (
         <AuthContext.Provider value={{
             isLogin, 
-            setIsLogin
+            setIsLogin,
+            setUser,
+            user
         }}>
             {children}
         </AuthContext.Provider>

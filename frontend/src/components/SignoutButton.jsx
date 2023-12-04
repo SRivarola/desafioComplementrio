@@ -7,12 +7,16 @@ import { AuthContext } from '../context/authContext';
 axios.defaults.withCredentials = true;
 
 const SignoutButton = () => {
+
   const { setIsLogin } = useContext(AuthContext)
+
   const navigate = useNavigate();
+
   const handleClick = async () => {
     try {
-      const response = await axios.post('http://localhost:7000/api/auth/signout')
-      if(response.data.success) {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/signout`);
+      console.log(response)
+      if(response.status === 200) {
         setIsLogin(false)
         navigate('/')
       }
@@ -21,7 +25,7 @@ const SignoutButton = () => {
     }
   }
   return (
-    <button className='flex items-center gap-2' onClick={handleClick}>Singout <PiSignOutBold/></button>
+    <button className='flex items-center gap-2' onClick={handleClick}><PiSignOutBold className='text-2xl'/></button>
   )
 }
 export default SignoutButton;

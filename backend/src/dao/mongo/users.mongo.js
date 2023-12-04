@@ -40,7 +40,7 @@ export default class AuthMongo {
     }
 
     async update(id, data) {
-        let one = await User.findByIdAndUpdate(id, data)
+        let one = await User.findByIdAndUpdate(id, data, { new: true });
         if(one){
             return {
                 message: "User updated!",

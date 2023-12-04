@@ -1,7 +1,6 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
-import { AuthContext } from "../context/authContext";
 import { BsEyeSlashFill } from "react-icons/bs"
 
 axios.defaults.withCredentials = true;
@@ -14,11 +13,10 @@ const initialValues = {
     age: ''
 }
 
-const Register = () => {
+const Register = ({ setIsRegister }) => {
 
     const [data, setData] = useState(initialValues)
-    const [errorMessage, setErrorMessage] = useState(null) 
-    const { setIsLogin } = useContext(AuthContext)
+    const [errorMessage, setErrorMessage] = useState(null)
     const [seePass, setSeePass] = useState(false)
 
     const navigate = useNavigate()
@@ -43,10 +41,9 @@ const Register = () => {
         e.preventDefault()
         if(data.first_name && data.last_name && data.mail && data.password) {
             try {
-                const response = await axios.post('http://localhost:7000/api/auth/register', data)
+                const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/register`, data)
                 if(response.status === 201){
-                    setIsLogin(true)
-                    navigate('/products')
+                    setIsRegister(prev => !prev)
                 }
             } catch (error) {
                 setErrorMessage(error.response.data.message)

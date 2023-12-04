@@ -2,23 +2,23 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import Cart from "./Cart"
 
-const cartId = '64db8adf75b9ce7063832702'
-
 const Carts = () => {
 
-
     const [totalAmount, setTotalAmount] = useState(null)
-    const [cart, setCart] = useState(null)
+    const [cart, setCart] = useState([])
 
+    const getCart = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/carts/`)
+        if(response.status === 200) {
+          setCart(response.data.response)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
     useEffect(() => {
-      axios.get(`http://localhost:7000/api/carts/${cartId}`)
-        .then(res => {
-          setCart(res.data.payload)
-        })
-      axios.get(`http://localhost:7000/api/carts/bills/${cartId}`)
-        .then(res => {
-          setTotalAmount(res.data.payload)
-        })
+      getCart()
     }, [])
 
 
@@ -27,9 +27,10 @@ const Carts = () => {
     <div className="p-20">
       <h1 className="text-center font-caprasimo text-white text-2xl">CARRITO DE COMPRAS</h1>
       {
-        cart && totalAmount && <Cart cart={cart} total={totalAmount} />
+        cart.length && <Cart cart={cart} /> 
       }
     </div>
   )
 }
+
 export default Carts

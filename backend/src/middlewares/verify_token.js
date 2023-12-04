@@ -8,7 +8,6 @@ export default function (req, res, next) {
     }
     const token = auth;
     jwt.verify(token, `${process.env.SECRET_KEY}`, async (error, credentials) => {
-        console.log(credentials)
         try {
             let user = await User.findOne({ mail: credentials.mail })
             req.user = user;

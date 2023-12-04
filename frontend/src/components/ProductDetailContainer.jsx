@@ -8,16 +8,21 @@ const ProductDetailContainer = () => {
   const { pid } = useParams()
   const [data, setData] = useState(null)
 
-  useEffect(() => {
-    axios.get(`http://localhost:7000/api/products/${pid}`, {
-      params: {
-        pid: pid
+  const getProduct = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/products/${pid}`)
+      if(response){
+        setData(response.data.response)
       }
-    })
-      .then(res => {
-        setData(res.data.payload)
-      })
-  }, [])
+    } catch (error) {
+      
+    }
+  }
+  console.log(pid)
+
+  useEffect(() => {
+    getProduct()
+  }, [pid])
   
   return (
     <div>

@@ -7,6 +7,7 @@ import Carts from './components/Carts';
 import Auth from './components/Auth';
 import NavBar from './components/NavBar';
 import AuthContextProvider from './context/authContext';
+import Premium from './pages/Premium';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/products/:pid' element={<ProductDetailContainer />} />
         <Route path='/new_product' element={<NewProduct />} />
         <Route path='/carts' element={<Carts />} />
+        <Route path='/premium' element={<Premium />} />
       </Routes>
     </AuthContextProvider>
   )

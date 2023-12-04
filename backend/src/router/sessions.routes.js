@@ -46,4 +46,4 @@ sessionsRouter.post('/signout', (req, res, next) => {
     }
 })
 
-export default sessionsRouter
+export default sessionsRouter;

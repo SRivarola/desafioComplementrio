@@ -18,7 +18,7 @@ const NewProduct = () => {
         e.preventDefault()
         let formData = new FormData(e.currentTarget)
         try {
-            const response = await axios.post('http://localhost:7000/api/products', formData)
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/products`, formData)
             if(response.data.success){
                 setSuccessMessage(response.data.message)
                 clearMessage(setSuccessMessage)

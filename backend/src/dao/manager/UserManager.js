@@ -8,7 +8,6 @@ export default class AuthManager {
         try {
             if(fs.existsSync(this.path)){
                 const response = await fs.promises.readFile(this.path, 'uft-8');
-                console.log(response)
                 const parseResponse = JSON.parse(response);
                 return {
                     message: "User found",

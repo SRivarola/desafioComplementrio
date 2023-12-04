@@ -6,8 +6,6 @@ import ProductRouter from "./routes/products.routes.js";
 import OrdersRouter from "./routes/orders.routes.js";
 import LoggersRoute from "./routes/loggers.routes.js";
 import mailsController from '../controllers/mails.controller.js';
-// import productsRouter from "./products.routes.js";
-// import rtProductsRouter from "./realTimeProducts.routes.js";
 
 const auth = new AuthRouter();
 const product = new ProductRouter();
@@ -22,21 +20,8 @@ export default class IndexRouter extends MyRouter {
         this.use('/auth', authRouter)
         this.use('/products', product.getRouter());
         this.use('/carts', cart.getRouter());
-        this.use('/orders', order.getRouter());
+        this.use('/tickets', order.getRouter());
         this.post('/mail', ["USER"], mailsController);
         this.use('/loggers', logger.getRouter())
     }
 }
-
-
-// const user_router = user.getRouter()
-
-// const indexRouter = Router()
-
-// configurar las rutas de recursos
-// indexRouter.use('/api/auth', user_router)
-// indexRouter.use('/api/auth', authRouter)
-// indexRouter.use('/api/products', productsRouter)
-// indexRouter.use('/api/carts', cartsRouter)
-// indexRouter.use('/api/realtimeproducts', rtProductsRouter)
-// indexRouter.use('/api/sessions', sessionsRouter)

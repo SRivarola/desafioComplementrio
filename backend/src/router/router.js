@@ -34,7 +34,7 @@ export default class MyRouter {
         return next()
     }
     handlePolicies = (policies) => async (req, res, next) => {
-        if (policies.includes('USER')) {
+        if (policies.includes('PUBLIC')) {
             return next()
         } else {
             const token = req.cookies.token;

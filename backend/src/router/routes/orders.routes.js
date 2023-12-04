@@ -11,7 +11,7 @@ export default class OrdersRouter extends MyRouter {
     init() {
         this.post(
             '/',
-            ["USER"],
+            ["USER", "PREMIUM"],
             passport.authenticate("current"),
             async (req, res, next) => {
                 try {
@@ -30,19 +30,19 @@ export default class OrdersRouter extends MyRouter {
             }
         )
         this.read(
-            '/',
-            ["USER"],
-            passport.authenticate("current"),
-            async (req, res, next) => {
-                try {
-                    let mail = req.user.mail;
-                    let response = await controller.readByUser(mail);
-                    response ? res.sendSuccess(response) : res.sendNotFound('orders');
-                } catch (error) {
-                    next(error);
-                }
+          "/",
+          ["USER", "PREMIUM"],
+          passport.authenticate("current"),
+          async (req, res, next) => {
+            try {
+              let mail = req.user.mail;
+              let response = await controller.readByUser(mail);
+              response ? res.sendSuccess(response) : res.sendNotFound("orders");
+            } catch (error) {
+              next(error);
             }
-        )
+          }
+        );
         this.read(
             '/all',
             ["ADMIN"],

@@ -5,7 +5,6 @@ import { AuthContext } from "../context/authContext";
 import { BsEyeSlashFill } from "react-icons/bs"
 import { AiFillGithub } from "react-icons/ai"
 
-
 axios.defaults.withCredentials = true;
 
 const initialValues = {
@@ -15,12 +14,12 @@ const initialValues = {
 
 const Login = () => {
 
+    const navigate = useNavigate()
+
     const [data, setData] = useState(initialValues)
     const [errorMessage, setErrorMessage] = useState(null)
-    const {setIsLogin} = useContext(AuthContext) 
+    const { setIsLogin, setUser } = useContext(AuthContext) 
     const [seePass, setSeePass] = useState(false)
-
-    const navigate = useNavigate()
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -42,8 +41,8 @@ const Login = () => {
         e.preventDefault()
         if(data.mail && data.password){
             try {
-                const response = await axios.post('http://localhost:7000/api/auth/login', data)
-                if(response.data.success){
+                const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login`, data)
+                if(response.status === 200){
                     setIsLogin(true)
                     navigate('/products')
                 }

@@ -17,7 +17,7 @@ export default function () {
         new jwt.Strategy(
             {
                 jwtFromRequest: jwt.ExtractJwt.fromExtractors([
-                    (req) => req?.cookies["token"],
+                    (req) => req?.cookies.token,
                 ]),
                 secretOrKey: env.SECRET_KEY,
             },
