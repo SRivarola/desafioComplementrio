@@ -132,13 +132,13 @@ export default class AuthRouter extends MyRouter {
             }
         );
 
-        this.put(
+        /* this.put(
             '/',
             ["USER", "PREMIUM"],
             async (req, res, next) => {
                 
             }
-        )
+        ) */
         
 
         this.delete(

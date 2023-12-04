@@ -66,6 +66,11 @@ components:
         code: dsa101
         status: true
         stock: 505
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
   responses:
     update:
       type: object

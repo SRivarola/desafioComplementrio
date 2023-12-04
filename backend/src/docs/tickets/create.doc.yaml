@@ -1,0 +1,69 @@
+components:
+  schemas:
+    Ticket:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Código único del ticket
+        amount:
+          type: number
+          description: Monto total del ticket
+        purchaser:
+          type: string
+          description: Correo del comprador
+      example:
+        code: "123456789"
+        amount: 150000
+        purchaser: "pepe@coder.com"
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+  responses:
+    successCreateTicket:
+      type: object
+      properties:
+        message: Mensaje para el usuario
+        response: Datos del ticket creado
+      example:
+        message: Ticket created successfully
+        response:
+          code: "123456789"
+          amount: 150000
+          purchaser: "pepe@coder.com"
+paths:
+  /api/tickets:
+    post:
+      summary: Crear un nuevo ticket
+      tags:
+        - Tickets
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        description: Objeto con las propiedades necesarias para crear un ticket
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+      responses:
+        '201':
+          description: Ticket creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/successCreateTicket'
+        '401':
+          description: Credenciales inválidas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/credentials'
+        '500':
+          description: Servidor caído
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/fatal'

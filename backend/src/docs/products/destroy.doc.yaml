@@ -34,6 +34,11 @@ components:
         code: asc100
         status: true
         stock: 500
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
   responses:
     delete:
       type: object

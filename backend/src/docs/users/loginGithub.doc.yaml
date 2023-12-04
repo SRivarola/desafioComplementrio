@@ -12,18 +12,18 @@ components:
       example:
         mail: pepe@coder.com
         password: Test1234
-    Login:
-      type: object
+    LoginGithub:
+      type:
       properties:
         mail:
-          description: Correo del usuario
+          description: Correo de Github
           type: string
         password:
           description: Contraseña del usuario
           type: string
       example:
-        mail: pepe@coder.com
-        password: Test1234
+        mail: testforgithub@hotmail.com
+        password: Testing1234-
   securitySchemes:
     cookieAuth:
       type: apiKey
@@ -90,9 +90,9 @@ components:
         status: fatal
         message: dat is not defined
 paths:
-  /api/auth/login:
+  /api/auth/github:
     post:
-      summary: Loguear un usario
+      summary: Iniciar sesión con GitHub
       tags:
         - Auth
       requestBody:
@@ -101,10 +101,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Login'
+              $ref: '#/components/schemas/LoginGithub'
       responses:
         '200':
-          description: Usuario logueado
+          description: Inicio de sesión exitoso con GitHub. Debido a restricciones de seguridad, esta operación no se puede probar directamente en Swagger UI.
           content:
             application/json:
               schema:

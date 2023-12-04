@@ -12,6 +12,8 @@ describe("Testing Products with auth", () => {
     first_name: "SuperTestGonza",
     last_name: "SuperTestRodriguez",
     mail: "supertest@coder.com",
+    photo: "avatar.png",
+    age: 33,
     password: "Test1234",
     role: "ADMIN",
   };
@@ -52,6 +54,7 @@ describe("Testing Products with auth", () => {
     expect(statusCode).to.be.equals(200);
   });
   it("Must create a product", async () => {
+    //this.timeout(5000);
     const responseProduct = await requester.post("/products")
     .send(dataProduct)
     .set("Cookie", [token.key + "=" + token.value]);
