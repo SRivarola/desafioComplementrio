@@ -28,11 +28,8 @@ components:
         message: Mensaje para el usuario
         response: Datos del ticket creado
       example:
-        message: Ticket created successfully
-        response:
-          code: "123456789"
-          amount: 150000
-          purchaser: "pepe@coder.com"
+        message: Order created successfully.
+        response: 656e526a339d6840c2dc4f76
     credentials:
       type: object
       properties:

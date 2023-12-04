@@ -28,11 +28,15 @@ components:
         message: Mensaje para el usuario
         response: Datos del ticket solicitado
       example:
-        message: Ticket retrieved successfully
+        message: orders found.
         response:
-          code: "123456789"
-          amount: 150000
-          purchaser: "pepe@coder.com"
+          _id: 656e5156339d6840c2dc4f6c
+          code: 77cd6def-499a-4e5d-9620-f2e3f79982db
+          amount: 71680
+          purchaser: pepe@coder.com
+          createdAt: 2023-12-04T22:23:18.708Z
+          updatedAt: 2023-12-04T22:23:18.708Z
+          __v: 0
     credentials:
       type: object
       properties:

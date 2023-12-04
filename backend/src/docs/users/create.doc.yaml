@@ -103,7 +103,7 @@ components:
 paths:
   /api/auth/register:
     post:
-      summary: Registrar un usario
+      summary: Registrar un usuario
       tags:
         - Auth
       requestBody:
