@@ -15,7 +15,7 @@ describe("Testing Products with auth", () => {
     photo: "avatar.png",
     age: 33,
     password: "Test1234",
-    role: "ADMIN",
+    role: "USER",
   };
   const dataProduct = {
     title: "WhiskeyTest",
@@ -46,12 +46,19 @@ describe("Testing Products with auth", () => {
     idUser = _body.response;
     expect(statusCode).to.be.equals(201);
   });
-  it("Must log in an admin user", async () => {
+  it("Must log in an user", async () => {
     const response = await requester.post("/auth/login").send(dataUser);
     const { statusCode, headers } = response;
     token.key = headers["set-cookie"][0].split("=")[0];
     token.value = headers["set-cookie"][0].split("=")[1];
     expect(statusCode).to.be.equals(200);
+  });
+  it("Must Upgrade the user in Premium", async ()=> {
+    let responsePremium = await requester.put("/auth/premium/" + idUser)
+    .set("Cookie", [token.key + "=" + token.value]);
+    const {_body, statusCode } = responsePremium;
+    idUser = _body.response;
+    expect(statusCode).to.be.equals(200); 
   });
   it("Must create a product", async () => {
     //this.timeout(5000);
@@ -83,6 +90,16 @@ describe("Testing Products with auth", () => {
     .set("Cookie", [token.key + "=" + token.value]);
     const {statusCode } = responseProduct;
     expect(statusCode).to.be.equals(200);
+  });
+  it("Must Upgrade the user Premium to Admin for destroy itself", async ()=> {
+    let before = await requester.get("/auth/current/")
+    .set("Cookie", [token.key + "=" + token.value]);
+    const {_body } = before;
+    idUser = _body.user._id;
+    let responseAdmin = await requester.put("/auth/admin/" + idUser)
+    .set("Cookie", [token.key + "=" + token.value]);
+    const { statusCode } = responseAdmin;
+    expect(statusCode).to.be.equals(200); 
   });
   it("Must sign out an admin user", async () => {
     const response = await requester

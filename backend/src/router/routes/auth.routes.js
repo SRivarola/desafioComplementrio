@@ -131,6 +131,32 @@ export default class AuthRouter extends MyRouter {
                 }    
             }
         );
+        this.put(
+            '/admin/:uid', 
+            ["PREMIUM", "ADMIN"],
+            async (req, res, next) => {
+                const { uid } = req.params; 
+                try {
+                    const response = await controller.update(uid, { role: "ADMIN"})
+                    const result = response.response
+                    const { first_name, last_name, role, mail, _id, photo } = result;
+
+                    return response
+                      ? res.sendSuccess({
+                          first_name,
+                          last_name,
+                          role,
+                          mail,
+                          _id,
+                          photo
+                        })
+                      : res.sendNotFound();
+                } catch (error) {
+                    next(error)
+                    
+                }    
+            }
+        );
 
         /* this.put(
             '/',
