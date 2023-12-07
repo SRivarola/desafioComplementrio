@@ -26,6 +26,14 @@ describe("Testing Products with auth", () => {
     code: "546546",
     stock: "45555",
   };
+  const dataProductCart = {
+    product_id: "64d025d04a8a67858fc659a2",
+    quantity: 3,
+  };
+  const dataProductCartUpdate = {
+    product_id: "64d025d04a8a67858fc659a2",
+    quantity: 6,
+  };
   const dataProductToUpdate = {
     title: "SuperChangeTest",
     description: "ChangeDescription",
@@ -37,6 +45,7 @@ describe("Testing Products with auth", () => {
   };
   let idProduct = null;
   let idUser = null;
+  let idCart = null;
   let token = {};
   it("Must register an User", async () => {
     const responseCreate = await requester
@@ -53,53 +62,86 @@ describe("Testing Products with auth", () => {
     token.value = headers["set-cookie"][0].split("=")[1];
     expect(statusCode).to.be.equals(200);
   });
-  it("Must Upgrade the user in Premium", async ()=> {
-    let responsePremium = await requester.put("/auth/premium/" + idUser)
-    .set("Cookie", [token.key + "=" + token.value]);
-    const {_body, statusCode } = responsePremium;
+  it("Must Upgrade the user in Premium", async () => {
+    let responsePremium = await requester
+      .put("/auth/premium/" + idUser)
+      .set("Cookie", [token.key + "=" + token.value]);
+    const { _body, statusCode } = responsePremium;
     idUser = _body.response;
-    expect(statusCode).to.be.equals(200); 
+    expect(statusCode).to.be.equals(200);
   });
   it("Must create a product", async () => {
-    //this.timeout(5000);
-    const responseProduct = await requester.post("/products")
-    .send(dataProduct)
-    .set("Cookie", [token.key + "=" + token.value]);
+    const responseProduct = await requester
+      .post("/products")
+      .send(dataProduct)
+      .set("Cookie", [token.key + "=" + token.value]);
     const { _body, statusCode } = responseProduct;
-    idProduct = _body.response
+    idProduct = _body.response;
     expect(statusCode).to.be.equals(201);
   });
-  it("Must respond with an array of products", async () =>{
-    const responseGetProd = await requester
-    .get("/products");
+  it("Must respond with an array of products", async () => {
+    const responseGetProd = await requester.get("/products");
     const { _body } = responseGetProd;
     expect(Array.isArray(_body.payload.docs)).to.be.equals(true);
-  })
+  });
   it("Must update a product", async () => {
     const before = await model.readOne(idProduct);
     const response = await requester
-    .put("/products/" + idProduct)
-    .send(dataProductToUpdate)
-    .set("Cookie", [token.key + "=" + token.value]);
+      .put("/products/" + idProduct)
+      .send(dataProductToUpdate)
+      .set("Cookie", [token.key + "=" + token.value]);
     const after = await model.readOne(idProduct);
     expect(before === after).to.be.equals(false);
   });
-  it("Must destroy a product", async () => {
-    const responseProduct = await requester
-    .delete("/products/" + idProduct)
-    .set("Cookie", [token.key + "=" + token.value]);
-    const {statusCode } = responseProduct;
+  it("Must create a cart", async () => {
+    const responseCart = await requester
+      .post("/carts")
+      .send(dataProductCart)
+      .set("Cookie", [token.key + "=" + token.value]);
+    const { statusCode } = responseCart;
+    expect(statusCode).to.be.equals(201);
+  });
+  it("Must read a cart", async () => {
+    const responseCart = await requester
+      .get("/carts")
+      .set("Cookie", [token.key + "=" + token.value]);
+    const { _body, statusCode } = responseCart;
+    idCart = _body.response;
     expect(statusCode).to.be.equals(200);
   });
-  it("Must Upgrade the user Premium to Admin for destroy itself", async ()=> {
-    let before = await requester.get("/auth/current/")
-    .set("Cookie", [token.key + "=" + token.value]);
-    const {_body } = before;
+  it("Must update a cart", async () => {
+    let responseCart = await requester
+      .get("/carts")
+      .set("Cookie", [token.key + "=" + token.value]);
+    const { _body } = responseCart;
+    const cartArray = _body.response;
+    const firstCart = cartArray[0];
+    idCart = firstCart._id;
+    let responseUpdateCar = await requester
+      .put("/carts/" + idCart)
+      .send(dataProductCartUpdate)
+      .set("Cookie", [token.key + "=" + token.value]);
+    const { statusCode } = responseUpdateCar;
+    expect(statusCode).to.be.equals(200);
+  });
+  it("Must destroy a product", async () => {
+    const responseProduct = await requester
+      .delete("/products/" + idProduct)
+      .set("Cookie", [token.key + "=" + token.value]);
+    const { statusCode } = responseProduct;
+    expect(statusCode).to.be.equals(200);
+  });
+  it("Must Upgrade the user Premium to Admin for destroy itself", async () => {
+    let before = await requester
+      .get("/auth/current/")
+      .set("Cookie", [token.key + "=" + token.value]);
+    const { _body } = before;
     idUser = _body.user._id;
-    let responseAdmin = await requester.put("/auth/admin/" + idUser)
-    .set("Cookie", [token.key + "=" + token.value]);
+    let responseAdmin = await requester
+      .put("/auth/admin/" + idUser)
+      .set("Cookie", [token.key + "=" + token.value]);
     const { statusCode } = responseAdmin;
-    expect(statusCode).to.be.equals(200); 
+    expect(statusCode).to.be.equals(200);
   });
   it("Must sign out an admin user", async () => {
     const response = await requester
@@ -110,8 +152,8 @@ describe("Testing Products with auth", () => {
   });
   it("Must destroy the user created for SuperTest", async () => {
     let responseCreate = await requester
-    .delete("/auth/" + idUser)
-    .set("Cookie", [token.key + "=" + token.value]);
+      .delete("/auth/" + idUser)
+      .set("Cookie", [token.key + "=" + token.value]);
     const { _body, statusCode } = responseCreate;
     idUser = _body.response;
     expect(statusCode).to.be.equals(200);

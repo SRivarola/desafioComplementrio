@@ -6,7 +6,7 @@ export default async function (req, res, next) {
         const data = req.body;
         const product = await controller.readOne(data.product_id)
         if(req.user.role === 'PREMIUM') {
-            if(product.response.owner.toLocaleString() === req.user._id.toLocaleString()) {
+            if(product.response && product.response.owner && product.response.owner.toLocaleString() === req.user._id.toLocaleString()) {
                 return res.sendForbidden();
             }
         }
