@@ -34,6 +34,10 @@ describe("Testing Products with auth", () => {
     product_id: "64d025d04a8a67858fc659a2",
     quantity: 6,
   };
+  const dataTicket = {
+  code: "77cd6def-499a-4e5d-9620-f2e3f79982db",
+  amount: 71680
+  }
   const dataProductToUpdate = {
     title: "SuperChangeTest",
     description: "ChangeDescription",
@@ -122,6 +126,31 @@ describe("Testing Products with auth", () => {
       .send(dataProductCartUpdate)
       .set("Cookie", [token.key + "=" + token.value]);
     const { statusCode } = responseUpdateCar;
+    expect(statusCode).to.be.equals(200);
+  });
+  it("Must create a ticket", async () => {
+    const responseTicket = await requester
+      .post("/tickets")
+      .send(dataTicket)
+      .set("Cookie", [token.key + "=" + token.value]);
+    const { statusCode } = responseTicket;
+    expect(statusCode).to.be.equals(201);
+  });
+  it("Must read the ticket", async () => {
+    const responseReadTicket = await requester
+      .get("/tickets")
+      .set("Cookie", [token.key + "=" + token.value]);
+    const { _body, statusCode } = responseReadTicket;
+    /* //Muestra el contenido del ticket
+    const ticketContent = _body.response;
+    console.log(ticketContent) */
+    expect(statusCode).to.be.equals(200);
+  });
+  it("Must destroy the cart", async () => {
+    const responseCart = await requester
+      .delete("/carts/" + idCart)
+      .set("Cookie", [token.key + "=" + token.value]);
+    const { statusCode } = responseCart;
     expect(statusCode).to.be.equals(200);
   });
   it("Must destroy a product", async () => {
