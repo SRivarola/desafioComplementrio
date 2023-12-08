@@ -3,7 +3,7 @@ import { generateUniqueToken } from "../../utilsFunctions.js";
 import AuthRepository from "../../repositories/users.rep.js";
 import env from "../../config/env.js";
 
-const { G_MAIL } = env;
+const { G_MAIL, PORT } = env;
 
 const authRepository = new AuthRepository();
 
@@ -15,7 +15,7 @@ export async function sendPasswordResetEmail(email, user_id) {
 
         await authRepository.saveResetToken(user_id, token, expiresIn);
 
-        const resetUrl = `http://localhost:7000/api/auth/forgot-password?user_id=${user_id}&token=${token}`;
+        const resetUrl = `http://localhost:${PORT}/api/auth/forgot-password?user_id=${user_id}&token=${token}`;
         const subject = "Restablecimiento de contraseña";
         const html = `
         <h1>Restablecimiento de contraseña</h1>
