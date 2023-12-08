@@ -10,15 +10,13 @@ export default class CartMongo {
             response: { store_id: cart._id }
         }
     }
-    async readByUser(user_id, state) {
-        let all = await Cart.find(
-            { user_id, state }, 
-            "product_id user_id quantity state"
-        )
-            .populate('user_id', 'first_name last_name mail photo')
-            .populate('product_id', '-createdAt -updatedAt -__v');
+    async readByUser(query, data) {
+        let all = await Cart.paginate(
+            query, 
+            data
+        );
         
-        if (all.length > 0) {
+        if (all.docs.length > 0) {
             return {
                 message: "products found.",
                 response: all

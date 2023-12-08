@@ -29,6 +29,7 @@ export default class OrdersRouter extends MyRouter {
                 }
             }
         )
+
         this.read(
           "/",
           ["USER", "PREMIUM"],
@@ -43,6 +44,7 @@ export default class OrdersRouter extends MyRouter {
             }
           }
         );
+
         this.read(
             '/all',
             ["ADMIN"],
@@ -56,6 +58,7 @@ export default class OrdersRouter extends MyRouter {
                     next(error);
                 }
             }
-        )
+        );
+        
     }
 }

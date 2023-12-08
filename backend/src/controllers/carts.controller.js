@@ -5,7 +5,7 @@ export default class CartsController {
         this.service = new CartsService();
     }
     create = (data) => this.service.create(data);
-    readByUser = (user_id, state) => this.service.readByUser(user_id, state);
+    readByUser = (query, data) => this.service.readByUser(query, data);
     update = (id, data) => this.service.update(id, data);
     delete = (id) => this.service.delete(id);
     deleteAll = (user_id) => this.service.deleteAll(user_id);

@@ -48,14 +48,12 @@ const Login = () => {
                 }
             } catch (error) {
                 console.log(error)
-                // setErrorMessage(error.response.data.message)
             }
         } else {
             setErrorMessage('Mail and password are required')
         }
 
     } 
-
 
 
   return (
@@ -100,8 +98,8 @@ const Login = () => {
                     value=''
                 >LOGIN</button>
                 <p className="font-semibold">or</p>
-                <a 
-                    href='http://localhost:8080/api/auth/github'
+                <a
+                    href={`${import.meta.env.VITE_BASE_URL}/auth/github`}
                     className="flex items-center justify-center gap-3 cursor-pointer w-[150px] text-white bg-black px-3 py-1 rounded font-semibold"
                 >
                     LOGIN WITH <AiFillGithub className="text-[20px]"/>

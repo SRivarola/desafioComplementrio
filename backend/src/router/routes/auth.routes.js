@@ -1,6 +1,5 @@
 import MyRouter from "../router.js";
 import AuthController from "../../controllers/users.controller.js"
-//import PasswordReset from "../../dao/mongo/models/PasswordReset.js";
 import passport from "passport";
 import { Router } from "express";
 import is_user from "../../middlewares/is_user.js";
@@ -133,7 +132,7 @@ export default class AuthRouter extends MyRouter {
                     const response = await controller.update(uid, { role: "PREMIUM"})
                     const result = response.response
                     const { first_name, last_name, role, mail, _id, photo } = result;
-
+                    
                     return response
                       ? res.sendSuccess({
                           first_name,
@@ -214,15 +213,43 @@ export default class AuthRouter extends MyRouter {
 }
 
 
-export const authRouter = Router();
+export const authGithub = Router();
 
-    authRouter.post('/github', passport.authenticate('github', { scope: ['user:mail']}), (req, res) => {})
-    authRouter.post('/github/callback', passport.authenticate('github', {}), (req, res, next) =>{
+authGithub.get(
+    "/github",
+    passport.authenticate("github", { scope: ["user:mail"] }),
+    (req, res) => {}
+);
+
+authGithub.get(
+    "/github/callback",
+    passport.authenticate("github", {}),
+    (req, res, next) => {
+    try {
+        req.session.mail = req.user.mail;
+        req.session.role = req.user.role;
+       
+        return res
+        .status(200).cookie('git_token', JSON.stringify(req.user))
+        .redirect("http://localhost:5173/products");
+    } catch (error) {
+        next(error);
+    }
+    }
+);
+
+authGithub.get(
+    '/github/token',
+    async (req, res, next) => {
         try {
-            req.session.mail = req.user.mail;
-            req.session.role = req.user.role;
-            return res.status(200).redirect('http://localhost:5173/products')
+            const user = await JSON.parse(req.cookies.git_token);
+            
+            if(user){
+                return res.sendSuccess(user);
+            }
+            return res.sendNotFound()
         } catch (error) {
-            next(error)
+            next(error);
         }
-})
+    }
+)

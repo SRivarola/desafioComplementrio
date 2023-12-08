@@ -1,6 +1,6 @@
 import MyRouter from "./router.js";
 import AuthRouter from "./routes/auth.routes.js";
-import { authRouter } from "./routes/auth.routes.js";
+import { authGithub } from "./routes/auth.routes.js";
 import CartsRouter from "./routes/carts.routes.js";
 import ProductRouter from "./routes/products.routes.js";
 import OrdersRouter from "./routes/orders.routes.js";
@@ -17,7 +17,7 @@ export default class IndexRouter extends MyRouter {
     init() {
         this.read('/', (req, res) => res.status(200).send('products store api'));
         this.use('/auth', auth.getRouter());
-        this.use('/auth', authRouter)
+        this.use("/auth", authGithub);
         this.use('/products', product.getRouter());
         this.use('/carts', cart.getRouter());
         this.use('/tickets', order.getRouter());

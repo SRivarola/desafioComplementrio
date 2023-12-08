@@ -58,11 +58,8 @@ export default class ProductRouter extends MyRouter {
             '/', 
             ["ADMIN", "PREMIUM"], 
             uploader.single('file'),
-            async (req, res, next) => {
-              //console.log('first')
-              
+            async (req, res, next) => {       
                 const { title, description, price, stock, code, status } = req.body;
-                console.log(code)
                 const file = req.file?.filename ? [req.file.filename] : []
                 const data = {
                     title,
@@ -83,29 +80,32 @@ export default class ProductRouter extends MyRouter {
             }
         );
 
-        this.read("/", ["PUBLIC"], async (req, res, next) => {
-          const { title, page } = req.query;
-          let products;
-          try {
-            if (title) {
-              const lookfor = new RegExp(title, "i");
-              products = await productsController.read(
-                { title: lookfor },
-                { lean: true, limit: 4, page: page ? page : 1 }
-              );
-            } else {
-              products = await productsController.read(
-                {},
-                { lean: true, limit: 4, page: page ? page : 1 }
-              );
+        this.read(
+          "/", 
+          ["PUBLIC"], 
+          async (req, res, next) => {
+            const { title, page } = req.query;
+            let products;
+            try {
+              if (title) {
+                const lookfor = new RegExp(title, "i");
+                products = await productsController.read(
+                  { title: lookfor },
+                  { lean: true, limit: 4, page: page ? page : 1 }
+                );
+              } else {
+                products = await productsController.read(
+                  {},
+                  { lean: true, limit: 4, page: page ? page : 1 }
+                );
+              }
+              return res.status(200).json({
+                success: true,
+                payload: products.response,
+              });
+            } catch (error) {
+              next(error);
             }
-            return res.status(200).json({
-              success: true,
-              payload: products.response,
-            });
-          } catch (error) {
-            next(error);
-          }
         });
 
         this.read(

@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from 'axios'
 import { DebounceInput } from 'react-debounce-input';
 import banner from '../public/images/banner.jpg'
 import ProductList from "./ProductList";
 import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi'
+import { AuthContext } from "../context/authContext";
 
 const ProductsContainer = () => {
       
     const [data, setData] = useState(null)
     const [query, setQuery] = useState({ title: '', page: null})
+    const { setIsGitLogin, setUser, user } = useContext(AuthContext);
 
     const handleChange = (e) => {
         setQuery({
@@ -37,6 +39,23 @@ const ProductsContainer = () => {
                 setData(res.data.payload)
             })
     }, [query.title, query.page]);
+
+    useEffect(() => {
+        const getUserByGitHub = async() => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/auth/github/token`);
+
+                if(response.status === 200) {
+                    setIsGitLogin(true)
+                    setUser(response.data)
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        getUserByGitHub()
+    }, [])
+    
 
   return (
     <div className="flex flex-col p-10 caprismo mt-16">

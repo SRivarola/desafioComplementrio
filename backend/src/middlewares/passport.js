@@ -35,6 +35,7 @@ export default function () {
             }
         )
     )
+    
     passport.use(
         'github',
         new GhStrategy(
@@ -45,17 +46,20 @@ export default function () {
             },
             async (accessToken, refreshToken, profile, done) => {
                 try {
-                    let user = await User.findOne({ mail: profile._json.login })
+                    let user = await User.findOne({ mail: profile._json.email })
                     if(user){
                         return done(null, user)
+
                     } else {
+                        const name = profile._json.name.split(' ');
+
                         let one = await User.create({
-                            first_name: profile.username,
-                            last_name: profile.username,
-                            photo: profile._json.avatar_url,
-                            mail: profile._json.login,
-                            password: profile._json.profileUrl
-                        })
+                          first_name: name[0],
+                          last_name: name[1],
+                          photo: profile._json.avatar_url,
+                          mail: profile._json.email,
+                          password: profile._json.profileUrl,
+                        });
                         return done(null, one)
                     }
                 } catch (error) {

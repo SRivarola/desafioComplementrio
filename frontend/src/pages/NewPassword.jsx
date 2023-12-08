@@ -35,7 +35,7 @@ const NewPassword = () => {
         try {
             if(data.password){
                 const response = await axios.put(`${import.meta.env.VITE_BASE_URL}/auth/reset_pass`, { token, ...data });
-                console.log(response)
+                
                 if(response.status === 200) {
                     navigate('/login')
                 }

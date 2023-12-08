@@ -5,7 +5,7 @@ export default class CartsService {
         this.repository = new CartsRepository();
     }
     create = (data) => this.repository.create(data);
-    readByUser = (user_id, state) => this.repository.readByUser(user_id, state);
+    readByUser = (query, data) => this.repository.readByUser(query, data);
     update = (id, data) => this.repository.update(id, data);
     delete = (id) => this.repository.delete(id);
     deleteAll = (user_id) => this.repository.deleteAll(user_id);

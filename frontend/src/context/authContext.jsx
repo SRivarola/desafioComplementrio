@@ -9,6 +9,7 @@ axios.defaults.withCredentials = true;
 const AuthContextProvider = ({children}) => {
 
     const [isLogin, setIsLogin] = useState(false);
+    const [isGitLogin, setIsGitLogin] = useState(false)
     const [user, setUser] = useState(null)
 
     const authCheck = async () => {
@@ -34,7 +35,9 @@ const AuthContextProvider = ({children}) => {
             isLogin, 
             setIsLogin,
             setUser,
-            user
+            user, 
+            setIsGitLogin,
+            isGitLogin
         }}>
             {children}
         </AuthContext.Provider>
