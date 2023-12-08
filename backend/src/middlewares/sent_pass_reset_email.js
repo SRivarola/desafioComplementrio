@@ -3,16 +3,19 @@ import { generateUniqueToken } from "../utilsFunctions.js";
 import AuthRepository from "../repositories/users.rep.js";
 import env from "../config/env.js";
 
+
 const { G_MAIL, BASE_URL} = env;
 
 const authRepository = new AuthRepository();
 
 export default async function (req, res, next) {
     try {
+        const { mail } = req.body
+        const user_id = req.user._id
+
         const token = generateUniqueToken();
         const expiresIn = new Date();
         expiresIn.setHours(expiresIn.getHours() + 1);
-
         await authRepository.saveResetToken(user_id, token, expiresIn);
 
         const resetUrl = `${BASE_URL}/auth/forgot-password?user_id=${user_id}&token=${token}`;
@@ -26,11 +29,13 @@ export default async function (req, res, next) {
 
         await transporter.sendMail({
             from: G_MAIL,
-            to: email,
+            to: mail,
             subject,
             html
         });
-        return token;
+        
+        return next();
+
     } catch(error) {
         throw error;
     }

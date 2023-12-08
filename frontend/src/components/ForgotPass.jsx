@@ -6,7 +6,7 @@ import { AuthContext } from "../context/authContext";
 axios.defaults.withCredentials = true;
 
 const initialValues = {
-    email: ''
+    mail: ''
 }
 
 const ForgotPass = () => {
@@ -26,7 +26,7 @@ const ForgotPass = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(data.email){
+        if(data.mail){
             try {
                 const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/forgot-password`, data)
                 if(response.status === 200){
@@ -47,10 +47,10 @@ const ForgotPass = () => {
                 <label className="font-semibold">Email</label>
                 <input 
                     className="px-4 w-full ml-3 border-b-2 transition-all duration-75 focus:outline-none focus:border-b-black"
-                    name="email" 
+                    name="mail" 
                     type="mail"
                     placeholder="instert your mail"
-                    value={data.email}
+                    value={data.mail}
                     onChange={(e) => handleChange(e)}
                     required
                 />

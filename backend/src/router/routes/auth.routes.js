@@ -9,7 +9,7 @@ import is_8_char from '../../middlewares/is_8_char.js';
 import create_token from '../../middlewares/create_token.js';
 import is_valid_pass from "../../middlewares/is_valid_pass.js";
 import is_valid_user from "../../middlewares/is_valid_user.js";
-import helper from "../../middlewares/helper.js";
+import sent_pass_reset_email from "../../middlewares/sent_pass_reset_email.js";
 
 const controller = new AuthController();
 
@@ -73,55 +73,48 @@ export default class AuthRouter extends MyRouter {
         })
 
         this.post(
-            '/forgot-password',
-            ["PUBLIC"],
-            helper,
-            async (req, res, next) => {
-                try {
-                    const { email } = req.body;
-                    const user = await controller.readOne(email);
-
-                    if(user){
-
-                        return res.status(200).json({
-                            message: 'Correo electrónico enviado para restablecimiendo de contraseña'
-                        });
-                    } else {
-                        return res.status(404).json({
-                            message: 'User not found.'
-                        })
-                    }
-                } catch (error) {
-                    next(error)
-                }
+          "/forgot-password",
+          ["PUBLIC"],
+          is_user,
+          sent_pass_reset_email,
+          async (req, res, next) => {
+            try {
+                return res.status(200).json({
+                    message:
+                    "Correo electrónico enviado para restablecimiendo de contraseña",
+                });
+            } catch (error) {
+              next(error);
             }
-        )
+          }
+        );
 
-            this.read(
-              "/forgot-password",
-              ["PUBLIC", "USER", "ADMIN", "PREMIUM"],
-              async (req, res, next) => {
-                try {
+        this.read(
+            "/forgot-password",
+            ["PUBLIC"],
+            async (req, res, next) => {
+            try {
 
-                  const { token } = req.query;
+                const { token } = req.query;
 
-                  const user = await controller.findOne({
-                    resetToken: token,
-                    resetTokenExpiresAt: { $gt: new Date() },
-                  });
+                const user = await controller.findOne({
+                resetToken: token,
+                resetTokenExpiresAt: { $gt: new Date() },
+                });
 
-                  if (!user) {
-                    return res
-                      .status(400)
-                      .json({ message: "Token inválido o expirado" });
-                  }
-
-                  return res.status(200).json({ message: "Token válido" });
-                } catch (error) {
-                  next(error);
+                if (!user) {
+                return res
+                    .status(400)
+                    .json({ message: "Token inválido o expirado" });
                 }
-              }
-            );
+
+                return res.status(200).json({ message: "Token válido" });
+            } catch (error) {
+                next(error);
+            }
+            }
+        );
+        
         this.read(
             "/current",
             ["PUBLIC"],
