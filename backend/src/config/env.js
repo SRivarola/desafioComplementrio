@@ -12,5 +12,5 @@ export default {
     SECRET_KEY: process.env.SECRET_KEY,
     G_MAIL: process.env.G_MAIL,
     G_PASS: process.env.G_PASS,
-    PORT: process.env.PORT
+    BASE_URL: process.env.BASE_URL
 };

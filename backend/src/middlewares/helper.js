@@ -1,13 +1,13 @@
-import transporter from "../../config/transporter.js";
-import { generateUniqueToken } from "../../utilsFunctions.js";
-import AuthRepository from "../../repositories/users.rep.js";
-import env from "../../config/env.js";
+import transporter from "../config/transporter.js";
+import { generateUniqueToken } from "../utilsFunctions.js";
+import AuthRepository from "../repositories/users.rep.js";
+import env from "../config/env.js";
 
-const { G_MAIL, PORT } = env;
+const { G_MAIL, BASE_URL} = env;
 
 const authRepository = new AuthRepository();
 
-export async function sendPasswordResetEmail(email, user_id) {
+export default async function (req, res, next) {
     try {
         const token = generateUniqueToken();
         const expiresIn = new Date();
@@ -15,7 +15,7 @@ export async function sendPasswordResetEmail(email, user_id) {
 
         await authRepository.saveResetToken(user_id, token, expiresIn);
 
-        const resetUrl = `http://localhost:${PORT}/api/auth/forgot-password?user_id=${user_id}&token=${token}`;
+        const resetUrl = `${BASE_URL}/auth/forgot-password?user_id=${user_id}&token=${token}`;
         const subject = "Restablecimiento de contraseña";
         const html = `
         <h1>Restablecimiento de contraseña</h1>

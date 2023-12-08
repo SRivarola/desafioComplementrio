@@ -1,6 +1,5 @@
 import MyRouter from "../router.js";
 import AuthController from "../../controllers/users.controller.js"
-import { sendPasswordResetEmail } from "./helper.js";
 //import PasswordReset from "../../dao/mongo/models/PasswordReset.js";
 import passport from "passport";
 import { Router } from "express";
@@ -10,6 +9,7 @@ import is_8_char from '../../middlewares/is_8_char.js';
 import create_token from '../../middlewares/create_token.js';
 import is_valid_pass from "../../middlewares/is_valid_pass.js";
 import is_valid_user from "../../middlewares/is_valid_user.js";
+import helper from "../../middlewares/helper.js";
 
 const controller = new AuthController();
 
@@ -74,14 +74,14 @@ export default class AuthRouter extends MyRouter {
 
         this.post(
             '/forgot-password',
-            ["PUBLIC", "USER", "ADMIN", "PREMIUM"],
+            ["PUBLIC"],
+            helper,
             async (req, res, next) => {
                 try {
                     const { email } = req.body;
                     const user = await controller.readOne(email);
 
                     if(user){
-                        await sendPasswordResetEmail(email, user._id);
 
                         return res.status(200).json({
                             message: 'Correo electrónico enviado para restablecimiendo de contraseña'
