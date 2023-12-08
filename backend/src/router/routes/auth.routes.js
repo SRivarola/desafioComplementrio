@@ -74,7 +74,7 @@ export default class AuthRouter extends MyRouter {
 
         this.post(
             '/forgot-password',
-            ["USER", "ADMIN", "PREMIUM"],
+            ["PUBLIC", "USER", "ADMIN", "PREMIUM"],
             async (req, res, next) => {
                 try {
                     const { email } = req.body;
@@ -99,7 +99,7 @@ export default class AuthRouter extends MyRouter {
 
             this.read(
               "/forgot-password",
-              ["USER", "ADMIN", "PREMIUM"],
+              ["PUBLIC", "USER", "ADMIN", "PREMIUM"],
               async (req, res, next) => {
                 try {
 
