@@ -38,7 +38,6 @@ export default class AuthMongo {
             return null
         }
     }
-
     async update(id, data) {
         let one = await User.findByIdAndUpdate(id, data, { new: true });
         if(one){

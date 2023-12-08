@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 const RecoverPass = () => {
-    
   return (
     <div className="absolute top-0 w-full h-[100vh] bg-black text-white flex flex-col justify-center items-center gap-10 p-28">
         <h1 className="font-semibold text-2xl">PASS RECOVERY</h1>

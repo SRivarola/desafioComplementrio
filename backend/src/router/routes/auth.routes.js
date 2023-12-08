@@ -10,6 +10,8 @@ import create_token from '../../middlewares/create_token.js';
 import is_valid_pass from "../../middlewares/is_valid_pass.js";
 import is_valid_user from "../../middlewares/is_valid_user.js";
 import sent_pass_reset_email from "../../middlewares/sent_pass_reset_email.js";
+import is_valid_resetpass_token from "../../middlewares/is_valid_resetpass_token.js";
+import bcrypt from "bcryptjs";
 
 const controller = new AuthController();
 
@@ -89,31 +91,20 @@ export default class AuthRouter extends MyRouter {
           }
         );
 
-        this.read(
-            "/forgot-password",
-            ["PUBLIC"],
-            async (req, res, next) => {
-            try {
+        // this.read(
+        //     "/forgot-password",
+        //     ["PUBLIC"],
+        //     async (req, res, next) => {
+        //     try {
 
-                const { token } = req.query;
+        //         const { token } = req.query;
 
-                const user = await controller.findOne({
-                resetToken: token,
-                resetTokenExpiresAt: { $gt: new Date() },
-                });
-
-                if (!user) {
-                return res
-                    .status(400)
-                    .json({ message: "Token inválido o expirado" });
-                }
-
-                return res.status(200).json({ message: "Token válido" });
-            } catch (error) {
-                next(error);
-            }
-            }
-        );
+            
+        //     } catch (error) {
+        //         next(error);
+        //     }
+        //     }
+        // );
         
         this.read(
             "/current",
@@ -132,22 +123,6 @@ export default class AuthRouter extends MyRouter {
                 }
             }
         );
-
-        // this.read(
-        //     "/check-session",
-        //     ["USER", "ADMIN"],
-        //     (req, res, next) => {
-        //     if (req.session.mail) {
-        //         return res.status(200).json({
-        //         success: true,
-        //         });
-        //     } else {
-        //         return res.status(401).json({
-        //         success: false,
-        //         });
-        //     }
-        //     }
-        // );
 
         this.put(
             '/premium/:uid', 
@@ -202,13 +177,25 @@ export default class AuthRouter extends MyRouter {
             }
         );
 
-        /* this.put(
-            '/',
-            ["USER", "PREMIUM"],
-            async (req, res, next) => {
-                
-            }
-        ) */
+        this.put(
+          "/reset_pass",
+          ["PUBLIC"],
+          is_valid_resetpass_token,
+          is_8_char,
+          
+          async (req, res, next) => {
+            const { password } = req.body;
+            const hashpass = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+            
+            const response = await controller.update(req.user._id, {
+              password: hashpass,
+            });
+
+            console.log(response);
+            
+            return res.status(200).json({ message: "Token válido" });
+          }
+        );
         
 
         this.delete(

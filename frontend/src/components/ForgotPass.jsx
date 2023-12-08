@@ -1,7 +1,6 @@
-import { useState, useContext} from "react";
+import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
-import { AuthContext } from "../context/authContext";
 
 axios.defaults.withCredentials = true;
 
@@ -30,7 +29,7 @@ const ForgotPass = () => {
             try {
                 const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/forgot-password`, data)
                 if(response.status === 200){
-                    navigate('/recover_pass')
+                    navigate('/forgot_pass')
                 }
             } catch (error) {
                 console.log(error)
