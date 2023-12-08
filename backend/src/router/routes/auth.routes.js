@@ -1,6 +1,7 @@
 import MyRouter from "../router.js";
 import AuthController from "../../controllers/users.controller.js"
-
+import { sendPasswordResetEmail } from "./helper.js";
+//import PasswordReset from "../../dao/mongo/models/PasswordReset.js";
 import passport from "passport";
 import { Router } from "express";
 import is_user from "../../middlewares/is_user.js";
@@ -71,6 +72,56 @@ export default class AuthRouter extends MyRouter {
                 }
         })
 
+        this.post(
+            '/forgot-password',
+            ["USER", "ADMIN", "PREMIUM"],
+            async (req, res, next) => {
+                try {
+                    const { email } = req.body;
+                    const user = await controller.readOne(email);
+
+                    if(user){
+                        await sendPasswordResetEmail(email, user._id);
+
+                        return res.status(200).json({
+                            message: 'Correo electrónico enviado para restablecimiendo de contraseña'
+                        });
+                    } else {
+                        return res.status(404).json({
+                            message: 'User not found.'
+                        })
+                    }
+                } catch (error) {
+                    next(error)
+                }
+            }
+        )
+
+            this.read(
+              "/forgot-password",
+              ["USER", "ADMIN", "PREMIUM"],
+              async (req, res, next) => {
+                try {
+
+                  const { token } = req.query;
+
+                  const user = await controller.findOne({
+                    resetToken: token,
+                    resetTokenExpiresAt: { $gt: new Date() },
+                  });
+
+                  if (!user) {
+                    return res
+                      .status(400)
+                      .json({ message: "Token inválido o expirado" });
+                  }
+
+                  return res.status(200).json({ message: "Token válido" });
+                } catch (error) {
+                  next(error);
+                }
+              }
+            );
         this.read(
             "/current",
             ["PUBLIC"],

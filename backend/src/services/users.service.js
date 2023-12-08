@@ -11,4 +11,6 @@ export default class AuthService {
     readById = (id) => this.repository.readById(id);
     update = (id, data) => this.repository.update(id, data);
     delete = (id) => this.repository.delete(id);
+    saveResetToken = (user_id, token, expiresIn) => this.repository.saveResetToken(user_id, token, expiresIn);
+    findOne = (query) => this.repository.findOne(query);
 }

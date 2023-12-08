@@ -18,4 +18,6 @@ export default class AuthRepository {
     readById = (id) => this.model.readById(id);
     update = (id, data) => this.model.update(id, data);
     delete = (id) => this.model.delete(id);
+    saveResetToken = (user_id, token, expiresIn) => this.model.saveResetToken(user_id, token, expiresIn);
+    findOne = (query) => this.model.findOne(query);
 }

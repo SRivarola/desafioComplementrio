@@ -62,4 +62,29 @@ export default class AuthMongo {
             return null;
         }
     }
+
+    async saveResetToken(userId, token, expiresAt) {
+        const user = await User.findByIdAndUpdate(
+          userId,
+          { $set: { resetToken: token, resetTokenExpiresAt: expiresAt } },
+          { new: true }
+        );
+    
+        if (user) {
+          return {
+            message: 'Reset token saved successfully',
+            response: user.resetToken,
+          };
+        } else {
+          return {
+            message: 'User not found',
+            response: null,
+          };
+        }
+      }
+
+    async findOne(query){
+        let one = await User.findOne(query);
+        return one;
+    }
 }
