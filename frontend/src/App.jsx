@@ -8,6 +8,7 @@ import Auth from './components/Auth';
 import NavBar from './components/NavBar';
 import AuthContextProvider from './context/authContext';
 import Premium from './pages/Premium';
+import RecoverPass from './pages/RecoverPass';
 
 function App() {
   return (
@@ -19,8 +20,9 @@ function App() {
         <Route path='/products' element={<ProductsContainer />} />
         <Route path='/products/:pid' element={<ProductDetailContainer />} />
         <Route path='/new_product' element={<NewProduct />} />
-        <Route path='/carts' element={<Carts />} />
         <Route path='/premium' element={<Premium />} />
+        <Route path='/recover_pass' element={<RecoverPass />} />
+        <Route path='/carts' element={<Carts />} />
       </Routes>
     </AuthContextProvider>
   )

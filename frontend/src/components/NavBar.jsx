@@ -24,8 +24,12 @@ const NavBar = () => {
   }
 
   useEffect(() => {
-    getCart()
-  }, []) 
+    if(isLogin) {
+      
+      getCart()
+
+    }
+  }, [isLogin]) 
 
   return (
     <nav className="relative flex justify-evenly items-center p-4 h-[100px] bg-[#7d5e3a] border-b-2 border-b-[#d5d6c5] text-white z-20">
