@@ -11,7 +11,7 @@ let schema = new Schema ({
     code: { type: String, requiered: true, unique: true},
     status: { type: Boolean, default: true},
     stock: { type: Number, requiered: true},
-    owner: { type: Types.ObjectId, ref: 'users', default: 'ADMIN' }
+    owner: { type: Types.ObjectId, ref: 'users' }
 })
 
 schema.plugin(mongoosePaginate);

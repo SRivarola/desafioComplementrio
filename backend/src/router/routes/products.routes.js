@@ -71,6 +71,7 @@ export default class ProductRouter extends MyRouter {
                     thumbnail: file
                 }
                 data.owner = req.user._id;
+                
                 try {
                     let product = await productsController.create(data);
                     return res.sendSuccessCreate(product)
