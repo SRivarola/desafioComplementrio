@@ -22,24 +22,25 @@ const Cart = ({cart}) => {
   }, [cart])
   
   return (
-    <div className="p-[50px]">
-        <div className="flex flex-col gap-5">
-            <div className="relative flex items-center text-white font-poppins font-semibold text-xl gap-5">
-                <p className="w-[100px]"></p>
-                <p className="w-[300px]">PRODUCT</p>
-                <p className="w-[150px] text-center">QUANTITY</p>
-                <p className="w-[150px] text-center">PRICE P/U</p>
-                <p className="w-[150px] text-center">TOTAL PRICE</p>
+    <div className="p-[50px] flex justify-center border rounded-xl mt-5 bg-white shadow-xl shadow-black">
+        <div className="flex flex-col gap-5 w-fit ">
+            <div className="relative flex items-center text-black font-poppins font-semibold text-xl w-fit">
+                <p className="w-[400px] text-center border-x border-[#a6a6a6]">PRODUCT</p>
+                <p className="w-[150px] text-center border-x border-[#a6a6a6]">QUANTITY</p>
+                <p className="w-[150px] text-center border-x border-[#a6a6a6]">PRICE P/U</p>
+                <p className="w-[150px] text-center border-x border-[#a6a6a6]">TOTAL PRICE</p>
             </div>
+            <div className="flex bg-[#a6a6a6] h-[1px]"></div>
+
             {
                 cart.map(item => <CartItem key={item._id} product={item} />)
             }
             {
                 total &&
-                <div className="text-white mt-2 w-[920px] flex justify-end px-8">
-                    <h1 className="w-[390px] text-right text-lg flex justify-end gap-8">
-                        <span>total:</span>
-                        <span className="font-semibold">${total.toLocaleString()}</span>
+                <div className="text-black mt-2 flex justify-end px-8 bg-slate-300">
+                    <h1 className=" text-right text-lg flex justify-end gap-8">
+                        <span className="font-semibold">TOTAL:</span>
+                        <span className="font-semibold w-[100px]">${total.toLocaleString()}</span>
                     </h1>
                 </div>
             }

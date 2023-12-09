@@ -28,6 +28,7 @@ const Carts = () => {
   return (
     <div className="p-20">
       <h1 className="text-center font-caprasimo text-white text-2xl">CARRITO DE COMPRAS</h1>
+
       {
         cart.length && <Cart cart={cart} /> 
       }
