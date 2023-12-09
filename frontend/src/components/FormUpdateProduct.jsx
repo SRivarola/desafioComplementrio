@@ -18,8 +18,6 @@ const FormUpdateProduct = () => {
             console.error(error)
         }
     }
-    
-    console.log(products)
 
     useEffect(() => {
        getProducts()
@@ -36,7 +34,7 @@ const FormUpdateProduct = () => {
                 <select>
                     <option>Seleccione un producto</option>
                     {
-                        products.map( product => <option key={product._id} >{product.title}</option> )
+                        products.map( product => <option key={product._id} value={product.id} >{product.title}</option> )
                     }
                 </select>
             </div>
