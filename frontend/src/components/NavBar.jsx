@@ -12,8 +12,6 @@ const NavBar = () => {
   const {isLogin, isGitLogin, user} = useContext(AuthContext);
   const [isCart, setIsCart] = useState(false)
 
-  console.log(user)
-
   const getCart = async () => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/carts/`)

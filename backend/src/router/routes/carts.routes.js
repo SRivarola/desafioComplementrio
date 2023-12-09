@@ -15,11 +15,11 @@ export default class CartsRouter extends MyRouter {
             cart_user_role,
             async (req, res, next) => {
                 try {
-                  console.log(req.user)
                     let user = req.user;
                     let data = req.body;
-                    data.user_id = user._id;
                     let product = await productsController.readOne(data.product_id);
+                  
+                    data.user_id = user._id;
                     data.price = product.response.price;
                     let oldCart = await controller.readByUser(
                       user._id,
@@ -65,12 +65,8 @@ export default class CartsRouter extends MyRouter {
                         },
                         {
                           path: "product_id",
-                          select: "-createdAt -updatedAt -__v",
-                          populate: { 
-                            path: "owner",
-                            select: "role"
-                          }
-                        },
+                          select: "-createdAt -updatedAt -__v"
+                        }
                       ],
                       lean: true,
                       limit: 1,
