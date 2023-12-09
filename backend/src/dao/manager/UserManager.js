@@ -21,7 +21,7 @@ export default class AuthManager {
         }
     }
     async readOne() {
-        console.log("first")
+       
     }
     register(){
     }

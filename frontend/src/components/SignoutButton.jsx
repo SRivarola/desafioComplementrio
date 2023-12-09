@@ -8,16 +8,17 @@ axios.defaults.withCredentials = true;
 
 const SignoutButton = () => {
 
-  const { setIsLogin } = useContext(AuthContext)
+  const { setIsLogin, setUser } = useContext(AuthContext)
 
   const navigate = useNavigate();
 
   const handleClick = async () => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/signout`);
-      console.log(response)
+      
       if(response.status === 200) {
         setIsLogin(false)
+        setUser(null)
         navigate('/')
       }
     } catch (error) {

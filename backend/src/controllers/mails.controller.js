@@ -1,6 +1,6 @@
 import transporter from "../config/transporter.js";
 import env from '../config/env.js';
-import __dirname  from '../../utils.js';
+import __dirname  from '../utils.js';
 
 const { G_MAIL } = env;
 

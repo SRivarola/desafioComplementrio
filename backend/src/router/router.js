@@ -30,7 +30,7 @@ export default class MyRouter {
         res.sendNoAuth = () => MyError.newError(errors.auth);
         res.sendInvalidCred = () => MyError.newError(errors.credentials);
         res.sendForbidden = () => MyError.newError(errors.forbidden);
-        res.sendNotFound = (payload) => MyError.newError(errors.notFound(payload));
+        res.sendNotFound = (payload) => MyError.newError(errors.notFound(payload) );
         return next()
     }
     handlePolicies = (policies) => async (req, res, next) => {
@@ -39,6 +39,7 @@ export default class MyRouter {
         } else {
             const token = req.cookies.token;
             if(!token) {
+                // errors.where = 'politics'
                 return res.sendForbidden();
             } else {
                 const payload = jwt.verify(token, env.SECRET_KEY)

@@ -12,6 +12,8 @@ const NavBar = () => {
   const {isLogin, isGitLogin, user} = useContext(AuthContext);
   const [isCart, setIsCart] = useState(false)
 
+  console.log(user)
+
   const getCart = async () => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/carts/`)
@@ -35,7 +37,13 @@ const NavBar = () => {
     <nav className="relative flex justify-evenly items-center p-4 h-[100px] bg-[#7d5e3a] border-b-2 border-b-[#d5d6c5] text-white z-20">
         <div className='w-[400px] flex gap-12'>
           <NavLink to='/products' className='font-semibold' >Products</NavLink>
-          {user?.role === 'USER' && <NavLink to='/premium' className='font-semibold' >Premium</NavLink>}
+          {
+            user ?
+            <>
+              {user.role === 'USER' && <NavLink to='/premium' className='font-semibold' >Premium</NavLink>}
+              {(user.role === 'PREMIUM' || user.role === 'ADMIN') && <NavLink to='/new_product' className='font-semibold' >Add Products</NavLink>}
+            </> : null
+          }
         </div>
         <div className='relative flex justify-center w-[400px]'>
           <Link to='/' className='relative w-[150px]'>

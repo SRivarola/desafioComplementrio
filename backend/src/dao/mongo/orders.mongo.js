@@ -22,7 +22,6 @@ export default class OrderMongo {
 
     async readAll(page) {
         let all = await Order.paginate({}, { page: page, limit: 10 });
-        console.log(all)
         return all.docs.length > 0 ? {
             message: "orders found.",
             response: all

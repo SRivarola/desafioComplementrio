@@ -19,10 +19,11 @@ const NewProduct = () => {
         let formData = new FormData(e.currentTarget)
         try {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/products`, formData)
-            if(response.data.success){
+            console.log(response)
+            if(response.status === 200){
                 setSuccessMessage(response.data.message)
                 clearMessage(setSuccessMessage)
-                e.target.reset()
+                e.currentTarget.reset()
             } else {
                 setErrorMessage(response.data.message)
                 clearMessage(setErrorMessage)
@@ -135,7 +136,7 @@ const NewProduct = () => {
                     <input 
                         type="submit"
                         value='SET PRODUCT'
-                        className="bg-black text-white rounded-full px-[50px] py-[8px] w-[390px] font-semibold text-lg"
+                        className="cursor-pointer bg-black text-white rounded-full px-[50px] py-[8px] w-[390px] font-semibold text-lg"
                     />
                 </div>
             </div>

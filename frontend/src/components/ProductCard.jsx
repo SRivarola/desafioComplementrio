@@ -35,8 +35,8 @@ const ProductCard = ({_id, thumbnail, title, price}) => {
         to={`/products/${_id}`} 
         className="z-0 relative w-[220px] h-[306px] font-poppins rounded-t-lg overflow-hidden flex flex-col pt-4 bg-white"
       >
-          <div className="relative my-0 mx-[10px] w-fit">
-              <img className="w-full"  src={`/src/public/images/${thumbnail[0]}`} alt={title} />
+          <div className="relative my-0 mx-0 px-[10px] w-full flex justify-center">
+              <img className="max-h-[200px]"  src={`${import.meta.env.VITE_BASE_IMG_URL}/${thumbnail[0]}`} alt={title} />
           </div>
           <hr className="w-[90%] mt-4" />
           <div className="w-full">

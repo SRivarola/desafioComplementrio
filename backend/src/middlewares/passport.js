@@ -49,7 +49,6 @@ export default function () {
                     let user = await User.findOne({ mail: profile._json.email })
                     if(user){
                         return done(null, user)
-
                     } else {
                         const name = profile._json.name.split(' ');
 

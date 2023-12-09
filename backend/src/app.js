@@ -5,7 +5,7 @@ import passport from 'passport';
 import cors from 'cors';
 import compression from 'express-compression';
 import env from "./config/env.js";
-import __dirname from '../utils.js';
+import __dirname from './utils.js';
 import sessions from './config/sessions/factofy.js';
 import winston from './middlewares/winston.js';
 import errorHandler from './middlewares/errorHandler.js'

@@ -69,7 +69,8 @@ export default class AuthRouter extends MyRouter {
                     let response = await controller.signout();
                     return response ? res.clearCookie('token').sendSuccess(response) : res.clearCookie('token').sendNotFound('user');
                 } catch (error) {
-                    next(error);
+                    error.where = 'signout router'
+                    return next(error);
                 }
         })
 
@@ -110,7 +111,6 @@ export default class AuthRouter extends MyRouter {
             ["PUBLIC"],
             passport.authenticate("current"),
             async (req, res, next) => {
-                console.log(req.user)
                 let { mail, role, photo, first_name, last_name, _id } = req.user;
                 try {
                     return res.status(200).json({
@@ -189,8 +189,6 @@ export default class AuthRouter extends MyRouter {
             const response = await controller.update(req.user._id, {
               password: hashpass,
             });
-
-            console.log(response);
             
             return res.status(200).json({ message: "Token válido" });
           }
