@@ -18,14 +18,9 @@ export default class CartsRouter extends MyRouter {
                     let user = req.user;
                     let data = req.body;
                     let product = await productsController.readOne(data.product_id);
-                  
                     data.user_id = user._id;
                     data.price = product.response.price;
-                    let oldCart = await controller.readByUser(
-                      user._id,
-                      "pending"
-                    );
-
+                    let oldCart = await controller.readAllByUser(user._id, "pending");
                     let response;
 
                     if(!oldCart) {
@@ -69,7 +64,7 @@ export default class CartsRouter extends MyRouter {
                         }
                       ],
                       lean: true,
-                      limit: 1,
+                      limit: 10,
                     }
                   );
 

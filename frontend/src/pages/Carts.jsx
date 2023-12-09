@@ -11,7 +11,6 @@ const Carts = () => {
     const getCart = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/carts/`)
-        console.log(response)
         if(response.status === 200) {
           setData(response.data.response)
           setCart(response.data.response.docs)
