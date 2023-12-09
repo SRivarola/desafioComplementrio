@@ -39,7 +39,6 @@ export default class MyRouter {
         } else {
             const token = req.cookies.token;
             if(!token) {
-                // errors.where = 'politics'
                 return res.sendForbidden();
             } else {
                 const payload = jwt.verify(token, env.SECRET_KEY)

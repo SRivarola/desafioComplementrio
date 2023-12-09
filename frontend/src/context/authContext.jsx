@@ -13,17 +13,24 @@ const AuthContextProvider = ({children}) => {
     const [user, setUser] = useState(null)
 
     const authCheck = async () => {
-        try {
-            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/auth/current`); 
-            if(response.data.success){
-                setIsLogin(true)
-                setUser(response.data.user)
-            } else {
-                setIsLogin(false)
+        setTimeout(() => {
+            const getSession = async () => {
+                try {
+                    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/auth/current`); 
+                    
+                    if(response.data.success){
+                        setUser(response.data.user)
+                        setIsLogin(true)
+                    } else {
+                        setIsLogin(false)
+                    }
+                } catch (error) {
+                    setIsLogin(false)
+                }
+
             }
-        } catch (error) {
-            setIsLogin(false)
-        }
+            getSession()
+        }, 500);
     } 
 
     useEffect( () => {

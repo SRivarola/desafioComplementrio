@@ -110,6 +110,30 @@ export default class ProductRouter extends MyRouter {
         });
 
         this.read(
+            '/all',
+            ["ADMIN", "PREMIUM"],
+            async (req, res, next) => {
+                try {
+                    const user = req.user;
+                    let response;
+                    if(user.role === "ADMIN"){
+                        response = await productsController.readAll();
+                    } else {
+                        response = await productsController.readAll({
+                          owner: user._id,
+                        });
+                    }
+                    
+                    response 
+                        ? res.sendSuccess(response)
+                        : res.sendNotFound()
+                } catch (error) {
+                    next(error);
+                }
+            }
+        )
+
+        this.read(
           "/:pid",
           ["PUBLIC"],
           async (req, res, next) => {

@@ -24,7 +24,7 @@ const NavBar = () => {
   }
 
   useEffect(() => {
-    if(isLogin) {
+    if(isLogin && user && user.role !== 'ADMIN') {
       
       getCart()
 
@@ -39,7 +39,7 @@ const NavBar = () => {
             user ?
             <>
               {user.role === 'USER' && <NavLink to='/premium' className='font-semibold' >Premium</NavLink>}
-              {(user.role === 'PREMIUM' || user.role === 'ADMIN') && <NavLink to='/new_product' className='font-semibold' >Add Products</NavLink>}
+              {(user.role === 'PREMIUM' || user.role === 'ADMIN') && <NavLink to='/new_product' className='font-semibold' >Manage Products</NavLink>}
             </> : null
           }
         </div>

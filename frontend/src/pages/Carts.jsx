@@ -1,13 +1,15 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Cart from "../components/Cart"
+import { AuthContext } from "../context/authContext"
 
 const Carts = () => {
 
-    const [totalAmount, setTotalAmount] = useState(null)
-    const [data, setData] = useState(null)
-    const [cart, setCart] = useState([])
-
+    const { user } = useContext(AuthContext);
+    const [totalAmount, setTotalAmount] = useState(null);
+    const [data, setData] = useState(null);
+    const [cart, setCart] = useState([]);
+    console.log(user)
     const getCart = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/carts/`)
@@ -20,7 +22,7 @@ const Carts = () => {
       }
     }
     useEffect(() => {
-      getCart()
+      if(user && user.role !== 'ADMIN') getCart()
     }, [])
 
 

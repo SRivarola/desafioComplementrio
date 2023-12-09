@@ -1,49 +1,47 @@
-import axios from "axios"
-import { useState } from "react"
+import axios from "axios";
+import { useEffect, useState } from "react"
 
 axios.defaults.withCredentials = true;
 
-const NewProduct = () => {
+const FormUpdateProduct = () => {
 
-    const [errorMessage, setErrorMessage] = useState('')
-    const [successMessage, setSuccessMessage] = useState('')
+    const [products, setProducts] = useState([]);
 
-    const clearMessage = async (setState) => {
-        setTimeout(() => {
-            setState('')
-        }, 2500);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        let formData = new FormData(e.currentTarget)
+    const getProducts = async () => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/products`, formData)
-            console.log(response)
-            if(response.status === 200){
-                setSuccessMessage(response.data.message)
-                clearMessage(setSuccessMessage)
-                e.currentTarget.reset()
-            } else {
-                setErrorMessage(response.data.message)
-                clearMessage(setErrorMessage)
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/products/all`);
+            if(response.status === 200) {
+                setProducts(response.data.response)
             }
+            
         } catch (error) {
-            console.log(error)
-        }   
-
+            console.error(error)
+        }
     }
-                        
+    
+    console.log(products)
+
+    useEffect(() => {
+       getProducts()
+    }, []);
+
   return (
-    <div className="flex flex-col pt-24">
-        <h1 className="text-center text-white font-caprasimo text-2xl">Products Admin</h1>
         <form 
             id="set_form" 
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             className="self-center w-[900px] mt-[20px] p-[30px] bg-white rounded-xl font-poppins flex flex-col gap-[20px]"
         >
-            <h2 className="text-center text-xl font-semibold">Add Product</h2>
-            <div className="flex justify-between items-start">
+            <h2 className="text-center text-xl font-semibold">Update Product</h2>
+            <div>
+                <select>
+                    <option>Seleccione un producto</option>
+                    {
+                        products.map( product => <option key={product._id} >{product.title}</option> )
+                    }
+                </select>
+            </div>
+            
+            {/* <div className="flex justify-between items-start">
                 <div>
                     <label className="flex items-center">
                         <p className="w-[120px]">Product Title:</p>
@@ -147,9 +145,8 @@ const NewProduct = () => {
                 {
                     successMessage && <p className="text-center text-green-500 font-semibold italic">{successMessage}</p>
                 }
-            </div>
+            </div> */}
         </form>
-    </div>
   )
 }
-export default NewProduct
+export default FormUpdateProduct

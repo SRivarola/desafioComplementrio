@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import ProductsContainer from './pages/ProductsContainer';
 import ProductDetailContainer from './pages/ProductDetailContainer';
-import NewProduct from './pages/NewProduct';
+import ManageProducts from './pages/ManageProducts';
 import Carts from './pages/Carts';
 import Auth from './pages/Auth';
 import NavBar from './components/NavBar';
@@ -20,7 +20,7 @@ function App() {
         <Route path='/login' element={<Auth />} />
         <Route path='/products' element={<ProductsContainer />} />
         <Route path='/products/:pid' element={<ProductDetailContainer />} />
-        <Route path='/new_product' element={<NewProduct />} />
+        <Route path='/new_product' element={<ManageProducts />} />
         <Route path='/premium' element={<Premium />} />
         <Route path='/forgot_pass' element={<RecoverPass />} />
         <Route path='/recover_pass/:token' element={<NewPassword />} />

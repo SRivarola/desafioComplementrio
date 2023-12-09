@@ -6,7 +6,7 @@ export default class ProductsController {
     }
     create = (data) => this.service.create(data);
     read = (query, data) => this.service.read(query, data);
-    readAll = () => this.service.read();
+    readAll = (data) => this.service.readAll(data);
     readOne = (id) =>  this.service.readOne(id);
     update = (id, data) => this.service.update(id, data);
     delete = (id) => this.service.delete(id);

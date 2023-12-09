@@ -10,7 +10,7 @@ const ProductsContainer = () => {
       
     const [data, setData] = useState(null)
     const [query, setQuery] = useState({ title: '', page: null})
-    const { setIsGitLogin, setUser, user } = useContext(AuthContext);
+    const { setIsGitLogin, setUser, isGitLogin } = useContext(AuthContext);
 
     const handleChange = (e) => {
         setQuery({
@@ -34,7 +34,7 @@ const ProductsContainer = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:7000/api/products/${query.title ? `?title=${query.title}` : ''}${query.page ? `${query.title ? '&' : '?'}page=${query.page}` : ''}`)
+        axios.get(`${import.meta.env.VITE_BASE_URL}/products/${query.title ? `?title=${query.title}` : ''}${query.page ? `${query.title ? '&' : '?'}page=${query.page}` : ''}`)
             .then(res => {
                 setData(res.data.payload)
             })
@@ -52,7 +52,7 @@ const ProductsContainer = () => {
             } catch (error) {
             }
         }
-        getUserByGitHub()
+        if(isGitLogin) getUserByGitHub()
     }, [])
     
 
