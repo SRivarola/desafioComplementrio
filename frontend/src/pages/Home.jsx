@@ -1,5 +1,5 @@
-import SliderHome from './SliderHome'
-import SelectedBrands from './SelectedBrands'
+import SliderHome from '../components/SliderHome'
+import SelectedBrands from '../components/SelectedBrands'
 
 const Home = () => {
 

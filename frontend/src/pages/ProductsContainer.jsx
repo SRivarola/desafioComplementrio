@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from 'axios'
 import { DebounceInput } from 'react-debounce-input';
 import banner from '../public/images/banner.jpg'
-import ProductList from "./ProductList";
+import ProductList from "../components/ProductList";
 import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi'
 import { AuthContext } from "../context/authContext";
 
@@ -50,7 +50,6 @@ const ProductsContainer = () => {
                     setUser(response.data)
                 }
             } catch (error) {
-                console.error(error)
             }
         }
         getUserByGitHub()

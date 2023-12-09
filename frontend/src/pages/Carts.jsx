@@ -1,17 +1,20 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import Cart from "./Cart"
+import Cart from "../components/Cart"
 
 const Carts = () => {
 
     const [totalAmount, setTotalAmount] = useState(null)
+    const [data, setData] = useState(null)
     const [cart, setCart] = useState([])
 
     const getCart = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/carts/`)
+        console.log(response)
         if(response.status === 200) {
-          setCart(response.data.response)
+          setData(response.data.response)
+          setCart(response.data.response.docs)
         }
       } catch (error) {
         console.log(error)

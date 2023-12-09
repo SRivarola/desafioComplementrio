@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { useParams } from "react-router-dom"
-import ProductDetail from "./ProductDetail"
+import ProductDetail from "../components/ProductDetail"
 
 const ProductDetailContainer = () => {
 
@@ -18,7 +18,6 @@ const ProductDetailContainer = () => {
       
     }
   }
-  console.log(pid)
 
   useEffect(() => {
     getProduct()

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Login from "./Login";
-import Register from "./Register";
-import ForgotPass from "./ForgotPass";
+import Login from "../components/Login";
+import Register from "../components/Register";
+import ForgotPass from "../components/ForgotPass";
 
 const Auth = () => {
   const [isRegister, setIsRegister] = useState(false);

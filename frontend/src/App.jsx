@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
-import Home from './components/Home';
-import ProductsContainer from './components/ProductsContainer';
-import ProductDetailContainer from './components/ProductDetailContainer';
-import NewProduct from './components/NewProduct';
-import Carts from './components/Carts';
-import Auth from './components/Auth';
+import Home from './pages/Home';
+import ProductsContainer from './pages/ProductsContainer';
+import ProductDetailContainer from './pages/ProductDetailContainer';
+import NewProduct from './pages/NewProduct';
+import Carts from './pages/Carts';
+import Auth from './pages/Auth';
 import NavBar from './components/NavBar';
 import AuthContextProvider from './context/authContext';
 import Premium from './pages/Premium';
