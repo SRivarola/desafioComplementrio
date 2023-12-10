@@ -6,12 +6,14 @@ import ProductRouter from "./routes/products.routes.js";
 import OrdersRouter from "./routes/orders.routes.js";
 import LoggersRoute from "./routes/loggers.routes.js";
 import mailsController from '../controllers/mails.controller.js';
+import PaymentsRouter from "./routes/payments.routes.js";
 
 const auth = new AuthRouter();
 const product = new ProductRouter();
 const cart = new CartsRouter();
 const order = new OrdersRouter();
 const logger = new LoggersRoute();
+const payments = new PaymentsRouter()
 
 export default class IndexRouter extends MyRouter {
     init() {
@@ -21,7 +23,8 @@ export default class IndexRouter extends MyRouter {
         this.use('/products', product.getRouter());
         this.use('/carts', cart.getRouter());
         this.use('/tickets', order.getRouter());
+        this.use('/loggers', logger.getRouter());
+        this.use('payments', payments.getRouter());
         this.post('/mail', ["USER"], mailsController);
-        this.use('/loggers', logger.getRouter())
     }
 }
