@@ -11,8 +11,6 @@ export default async function (req, res, next) {
             const product = await controller.readOne(pid);
             if((product.response.owner?.toLocaleString() === req.user._id.toLocaleString())){
                 return next();
-            } else {
-                return res.sendForbidden()
             }
         }
         return res.sendForbidden()

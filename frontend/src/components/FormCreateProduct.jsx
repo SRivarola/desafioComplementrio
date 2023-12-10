@@ -3,7 +3,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-const FormCreateProduct = () => {
+const FormCreateProduct = ({ setNewProduct }) => {
 
     const [errorMessage, setErrorMessage] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
@@ -19,7 +19,8 @@ const FormCreateProduct = () => {
         let formData = new FormData(e.currentTarget)
         try {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/products`, formData)
-            if(response.status === 200){
+            if(response.status === 201){
+                setNewProduct(prev => !prev)
                 setSuccessMessage(response.data.message)
                 clearMessage(setSuccessMessage)
                 e.currentTarget.reset()

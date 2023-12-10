@@ -3,7 +3,6 @@ import MyRouter from '../router.js';
 import ProductsController from "../../controllers/products.controller.js";
 //import uploader
 import uploader from '../../services/uploader.js';
-// import is_admin from '../middlewares/is_admin.js';
 import passport from 'passport';
 import update_delete_products from '../../middlewares/update_delete_products.js';
 
@@ -152,24 +151,33 @@ export default class ProductRouter extends MyRouter {
         );
 
         this.put(
-            '/:pid', 
-            ["ADMIN", "PREMIUM"],
-            update_delete_products,
-            async (req, res, next) => {
-                try {
-                    let { pid } = req.params
-                    let data = req.body
-                    let product = await productsController.update(pid, data)
-                    if(product){
-                        return res.sendSuccess(product)
-                    } else {
-                        return res.sendNotFound()
-                    }
-                } catch (error) {
-                    next(error)
-                    
-                }    
+          "/:pid",
+          ["ADMIN", "PREMIUM"],
+          update_delete_products,
+          uploader.single("file"),
+          async (req, res, next) => {
+            try {
+              let { pid } = req.params;
+              let { title, description, price, stock } = req.body;
+              const file = req.file?.filename ? [req.file.filename] : null;
+              let data = {};
+
+              if(title) data.title = title;
+              if(description) data.description = description;
+              if(price) data.price = price;
+              if(stock) data.stock = stock;
+              if(file) data.thumbnail = file;
+
+              let response = await productsController.update(pid, data);
+
+              return response 
+                ?  res.sendSuccess(response)
+                :  res.sendNotFound()
+         
+            } catch (error) {
+              next(error);
             }
+          }
         );
 
         this.delete(
