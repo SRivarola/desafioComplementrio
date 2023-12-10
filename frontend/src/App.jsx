@@ -10,6 +10,7 @@ import AuthContextProvider from './context/authContext';
 import Premium from './pages/Premium';
 import RecoverPass from './pages/RecoverPass';
 import NewPassword from './pages/NewPassword';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path='/forgot_pass' element={<RecoverPass />} />
         <Route path='/recover_pass/:token' element={<NewPassword />} />
         <Route path='/carts' element={<Carts />} />
+        <Route path='/checkout/:oid' element={<Checkout />} />
       </Routes>
     </AuthContextProvider>
   )

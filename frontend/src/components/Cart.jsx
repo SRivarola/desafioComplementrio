@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react"
-import CartItem from "./CartItem"
-import axios from "axios"
+import { useEffect, useState } from "react";
+import CartItem from "./CartItem";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+axios.defaults.withCredentials = true;
 
 const Cart = ({cart}) => {
 
   const [total, setTotal] = useState(null)
+  const navigate = useNavigate()
 
   const getTotal = async () => {
     try {
@@ -14,6 +18,17 @@ const Cart = ({cart}) => {
         }
     } catch (error) {
         console.log(error)
+    }
+  }
+
+  const handleOrder = async () => {
+    try {
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/tickets`);
+        if(response.status === 201){
+            navigate(`/checkout/${response.data.response}`)
+        }
+    } catch (error) {
+        console.error(error)
     }
   }
 
@@ -44,6 +59,9 @@ const Cart = ({cart}) => {
                     </h1>
                 </div>
             }
+            <div className="w-full flex justify-end mt-5">
+                <button onClick={handleOrder} className="rounded-full bg-blue-600 text-white text-lg py-2 px-16 font-semibold shadow-lg shadow-blue-300 border-2 border-blue-700">BUY</button>
+            </div>
         </div>
     </div>
   )

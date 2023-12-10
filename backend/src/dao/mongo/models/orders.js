@@ -1,4 +1,4 @@
-import { model, Schema, Types } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import paginate from 'mongoose-paginate-v2';
 
 let collection = "orders";

@@ -33,7 +33,6 @@ export default class OrdersRouter extends MyRouter {
         this.read(
           "/",
           ["USER", "PREMIUM"],
-          passport.authenticate("current"),
           async (req, res, next) => {
             try {
               let mail = req.user.mail;
@@ -44,6 +43,22 @@ export default class OrdersRouter extends MyRouter {
             }
           }
         );
+
+        this.read(
+            "/:oid",
+            ["USER", "PREMIUM"],
+            async (req, res, next) => {
+                try {
+                    const { oid } = req.params;
+                    let response = await controller.readOne(oid)
+                    return response
+                      ? res.sendSuccess(response)
+                      : res.sendNotFound("order");
+                } catch (error) {
+                    next(error);
+                }
+            }
+        )
 
         this.read(
             '/all',

@@ -9,7 +9,7 @@ const Carts = () => {
     const [totalAmount, setTotalAmount] = useState(null);
     const [data, setData] = useState(null);
     const [cart, setCart] = useState([]);
-    console.log(user)
+    
     const getCart = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/carts/`)

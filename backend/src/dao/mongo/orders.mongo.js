@@ -1,5 +1,4 @@
 import Order from './models/orders.js';
-// import { Types } from 'mongoose';
 
 export default class OrderMongo {
     constructor() {}
