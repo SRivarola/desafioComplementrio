@@ -6,11 +6,12 @@ export default class PaymentsRouter extends MyRouter {
     init() {
 
         this.post(
-            '/paument-intents',
+            '/payment-intents/:amount',
             ["USER", "PREMIUM"],
             async (req, res, next) => {
                 try {
-                    const { id, amount } = req.body;
+                    const { amount } = req.params;
+                    console.log(amount)
 
                     const data = {
                         amount,

@@ -24,7 +24,7 @@ export default class IndexRouter extends MyRouter {
         this.use('/carts', cart.getRouter());
         this.use('/tickets', order.getRouter());
         this.use('/loggers', logger.getRouter());
-        this.use('payments', payments.getRouter());
+        this.use('/payments', payments.getRouter());
         this.post('/mail', ["USER"], mailsController);
     }
 }
