@@ -6,6 +6,10 @@ export default async function (req, res, next) {
             return next();
         }
         if(req.user.role === "PREMIUM") {
+            
+            let { quantity } = req.body;
+            if(quantity) return next();
+
             const controller = new ProductsController()
             const { pid } = req.params;
             const product = await controller.readOne(pid);

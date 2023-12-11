@@ -158,15 +158,19 @@ export default class ProductRouter extends MyRouter {
           async (req, res, next) => {
             try {
               let { pid } = req.params;
-              let { title, description, price, stock } = req.body;
+              let { title, description, price, stock, quantity } = req.body;
               const file = req.file?.filename ? [req.file.filename] : null;
               let data = {};
+
+              let product = await productsController.readOne(pid);
+              console.log(product.response)
 
               if(title) data.title = title;
               if(description) data.description = description;
               if(price) data.price = price;
               if(stock) data.stock = stock;
               if(file) data.thumbnail = file;
+              if(quantity) data.stock = product.response.stock - Number(quantity);
 
               let response = await productsController.update(pid, data);
 

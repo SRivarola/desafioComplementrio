@@ -25,8 +25,10 @@ export default class CartMongo {
   }
 
   async readAllByUser(id, state) {
-    let all = await Cart.find({user_id: id, state: state});
-    console.log(all)
+    let all = await Cart.find({ user_id: id, state: state })
+      .populate("user_id", "first_name last_name mail photo")
+      .populate("product_id", "-createdAt -updatedAt -__v");
+  
     if (all.length > 0) {
       return {
         message: "products found.",

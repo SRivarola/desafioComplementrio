@@ -23,29 +23,21 @@ const Checkout = () => {
             console.error(error)
         }
     }
-    console.log(stripePromise)
+    
     const getPaymentIntent = async () => {
         try {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/payments/payment-intents/${order.amount}`);
             if(response.status === 201) {
                 setIntent(response.data.payload.client_secret)
             }
-            console.log(response)
         } catch (error) {
             console.error(error)
         }
     }
 
-
-
     useEffect(() => {
       oid && getOrder()
     }, [oid]);
-
-    // useEffect(() => {
-    //   order && getPaymentIntent()
-    // }, [order])
-    
     
   return (
     <>
@@ -64,12 +56,11 @@ const Checkout = () => {
                     </div>
                     {
                         (intent) ? (
-                            <div className="bg-">
+                            <div className="bg-white p-10 rounded-lg">
                                 <Elements stripe={stripePromise} options={{clientSecret: intent}} >
                                     <PaymentForm />
                                 </Elements>
                             </div>
-
                         ) : null
                     }
                 </div>

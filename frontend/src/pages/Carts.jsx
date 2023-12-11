@@ -21,6 +21,7 @@ const Carts = () => {
         console.log(error)
       }
     }
+    
     useEffect(() => {
       if(user && user.role !== 'ADMIN') getCart()
     }, [])
@@ -32,7 +33,9 @@ const Carts = () => {
       <h1 className="text-center font-caprasimo text-white text-2xl">CARRITO DE COMPRAS</h1>
 
       {
-        cart.length && <Cart cart={cart} /> 
+        cart.length 
+          ? <Cart cart={cart} /> 
+          : null
       }
     </div>
   )

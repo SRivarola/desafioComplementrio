@@ -41,8 +41,7 @@ export default class CartsRouter extends MyRouter {
         )
         this.read(
             '/', 
-            ["USER", "PREMIUM"], 
-            passport.authenticate("current"), 
+            ["USER", "PREMIUM"],
             async (req, res, next) => {
                 try {
                   let user_id = req.user._id;
@@ -78,6 +77,27 @@ export default class CartsRouter extends MyRouter {
         )
 
         this.read(
+          "/all",
+          ["USER", "PREMIUM"],
+          async (req, res, next) => {
+            try {
+              let user_id = req.user._id;
+              let state = "pending";
+              if (req.query.state) {
+                state = req.query.state;
+              }
+              let response = await controller.readAllByUser(user_id, state);
+
+              response
+                ? res.sendSuccess(response)
+                : res.sendNotFound("cart");
+            } catch (error) {
+              next(error);
+            }
+          }
+        );
+
+        this.read(
           "/total",
           ["USER", "PREMIUM"],
           passport.authenticate("current"),
@@ -95,7 +115,6 @@ export default class CartsRouter extends MyRouter {
         this.put(
           "/:cid",
           ["USER", "PREMIUM"],
-          passport.authenticate("current"),
           async (req, res, next) => {
             try {
               let cart_id = req.params.cid;

@@ -11,10 +11,9 @@ export default class PaymentsRouter extends MyRouter {
             async (req, res, next) => {
                 try {
                     const { amount } = req.params;
-                    console.log(amount)
 
                     const data = {
-                        amount,
+                        amount: amount * 100,
                         currency: 'usd'
                     }
                     const stripe = new Stripe(env.STRIPE_KEY);
