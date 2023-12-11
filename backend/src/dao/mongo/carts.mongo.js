@@ -79,9 +79,9 @@ export default class CartMongo {
   async getTotal(id) {
     let total = await Cart.aggregate([
       { $match: { user_id: new Types.ObjectId(id) } },
+      { $match: { state: 'pending'} },
       { $set: { subtotal: { $multiply: ["$price", "$quantity"] } } },
-      { $group: { _id: "$user_id", total: { $sum: "$subtotal" } } },
-      //{}
+      { $group: { _id: "$user_id", total: { $sum: "$subtotal" } } }
     ]);
     return {
       message: "Total obtanined.",
