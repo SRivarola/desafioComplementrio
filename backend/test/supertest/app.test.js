@@ -118,9 +118,9 @@ describe("Testing Products with auth", () => {
       .get("/carts")
       .set("Cookie", [token.key + "=" + token.value]);
     const { _body } = responseCart;
-    const cartArray = _body.response;
+    const cartArray = _body.response.docs;
     const firstCart = cartArray[0];
-    idCart = firstCart._id;
+    idCart = firstCart._id.toString();
     let responseUpdateCar = await requester
       .put("/carts/" + idCart)
       .send(dataProductCartUpdate)
