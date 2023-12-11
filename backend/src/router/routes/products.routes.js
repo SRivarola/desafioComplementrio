@@ -163,7 +163,6 @@ export default class ProductRouter extends MyRouter {
               let data = {};
 
               let product = await productsController.readOne(pid);
-              console.log(product.response)
 
               if(title) data.title = title;
               if(description) data.description = description;
