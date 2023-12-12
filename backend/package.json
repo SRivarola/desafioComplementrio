@@ -9,6 +9,7 @@
     "dev": "nodemon ./src/server.js",
     "fs": "node ./src/server.js -p 8000 --persistence FS",
     "data": "node ./src/dao/data/data.mocks.js --mode dev",
+    "test": "mocha --timeout 3000",
     "super": "mocha test/supertest"
   },
   "keywords": [],

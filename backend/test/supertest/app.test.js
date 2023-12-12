@@ -47,6 +47,9 @@ describe("Testing Products with auth", () => {
     code: "546546",
     stock: "45555",
   };
+  const dataRecoverMail = {
+    mail: "testforgithub@hotmail.com"
+  }
   let idProduct = null;
   let idUser = null;
   let idCart = null;
@@ -158,6 +161,13 @@ describe("Testing Products with auth", () => {
       .delete("/products/" + idProduct)
       .set("Cookie", [token.key + "=" + token.value]);
     const { statusCode } = responseProduct;
+    expect(statusCode).to.be.equals(200);
+  });
+  it("Must send email to reset pass", async () => {
+    const responseRecover = await requester
+      .post("/auth/forgot-password")
+      .send(dataRecoverMail);
+    const { statusCode } = responseRecover;
     expect(statusCode).to.be.equals(200);
   });
   it("Must Upgrade the user Premium to Admin for destroy itself", async () => {
