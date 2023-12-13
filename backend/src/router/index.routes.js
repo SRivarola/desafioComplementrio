@@ -26,5 +26,19 @@ export default class IndexRouter extends MyRouter {
         this.use('/loggers', logger.getRouter());
         this.use('/payments', payments.getRouter());
         this.post('/mail', ["USER"], mailsController);
+        this.read('/simple',["PUBLIC"], (req, res) => {
+            let total = 1;
+            for (let i = 1; i < 100; i++) {
+                total = i * i;
+            }
+            return res.sendSuccess({total}); 
+        })
+        this.read('/complex',["PUBLIC"], (req, res) => {
+            let total = 1;
+            for (let i = 1; i < 10000000000; i++) {
+                total = i * i;
+            }
+            return res.sendSuccess({total}); 
+        })
     }
 }

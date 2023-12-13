@@ -59,6 +59,47 @@ export default class AuthRouter extends MyRouter {
                 }
             }
         )
+        this.post(
+            '/fake/login',
+            ["PUBLIC"],
+            create_token,
+            async (req, res, next) => {
+                try {
+                    let data = {
+                        mail: "testperformance@coder.com",
+                        password: "Test1234",
+                        role: "ADMIN"
+                    }
+                    let response = await controller.login(data)
+                    return response
+                      ? res
+                          .cookie("token", req.session.token, {
+                            maxAge: 60 * 60 * 24 * 7 * 1000,
+                            httpOnly: true,
+                          })
+                          .sendSuccess({
+                            response,
+                          })
+                      : res.sendNotFound("user");
+                } catch (error) {
+                    next(error)
+                }
+            }
+        )
+
+        this.post(
+            '/fake/signout', 
+            ["PUBLIC"], 
+            async (req, res, next) => {
+                try {
+                    req.session.destroy()
+                    let response = await controller.signout();
+                    return response ? res.clearCookie('token').sendSuccess(response) : res.clearCookie('token').sendNotFound('user');
+                } catch (error) {
+                    error.where = 'signout router'
+                    return next(error);
+                }
+        })
 
         this.post(
             '/signout', 

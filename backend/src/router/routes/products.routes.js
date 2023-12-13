@@ -5,6 +5,7 @@ import ProductsController from "../../controllers/products.controller.js";
 import uploader from '../../services/uploader.js';
 import passport from 'passport';
 import update_delete_products from '../../middlewares/update_delete_products.js';
+import { generateUniqueCode } from '../../uniqueCodeGenerator.js';
 
 const productsController = new ProductsController();
 
@@ -79,6 +80,49 @@ export default class ProductRouter extends MyRouter {
                 }
             }
         );
+        this.post(
+            '/fake/create', 
+            ["ADMIN", "PREMIUM", "PUBLIC"],
+            async (req, res, next) => {
+              let code = generateUniqueCode();
+              console.log(code);     
+                let data = {
+                  title: "Producto Prueba",
+                  description: "Producto Prueba",
+                  price: 99999,
+                  stock: 88888,
+                  code: code,
+                  status: true,
+                  thumbnail: ['productoTest.png']
+                 }
+
+                try {
+                    let product = await productsController.create(data);
+                    return res.sendSuccessCreate(product)
+                } catch (error) {
+                    next(error);
+                }
+            }
+        );
+
+        this.delete(
+          '/fake/:pid', 
+          ["ADMIN", "PREMIUM", "PUBLIC"],  
+          async (req, res, next) => {
+              try {
+                  let { pid } = req.params
+                  let product = await productsController.delete(pid)
+                  if(product){
+                      return res.sendSuccess(product)
+                  } else {
+                      return res.sendNotFound()
+                  }
+              } catch (error) {
+                  next(error)
+                  
+              }
+          }
+      )
 
         this.read(
           "/", 
