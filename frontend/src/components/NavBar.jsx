@@ -53,7 +53,7 @@ const NavBar = () => {
               <div className='flex justify-center items-center gap-2 w-[400px]'>
                 <div className='flex gap-2 items-center'>
                   <div>
-                    <img className={`${isGitLogin ? 'w-[80px]' : ''} rounded-full`} src={user?.photo} alt='avatar'/>
+                    <img className='w-[80px] rounded-full' src={user?.photo} alt='avatar'/>
                   </div>
                   <div>
                     <p className='capitalize font-semibold'>{`${user.first_name} ${user.last_name}`}</p>

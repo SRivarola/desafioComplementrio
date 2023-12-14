@@ -14,15 +14,6 @@ import swaggerJSDoc from "swagger-jsdoc";
 import { serve, setup } from "swagger-ui-express";
 import options from "./config/swagger.js";
 
-
-// import Product from './dao/models/products.js';
-// import ProductManager from './dao/manager/ProductManager.js';
-// import MongoConnect from './config/mongo.js';
-// import { Server } from 'socket.io';
-// import handlebars from 'express-handlebars';
-// const manager = new ProductManager(`${__dirname}/files/products.json`); 
-
-
 import IndexRouter from './router/index.routes.js';
 const router = new IndexRouter()
 
@@ -46,12 +37,11 @@ app.use(function(req, res, next) {
 app.use(winston);
 app.use(express.static((`${__dirname}/public`)))
 app.use(express.urlencoded({extended: true}));
-// app.set('views', `${__dirname}/views`);
 app.use(
     compression({
         brotli: { enable: true, zlib: {} }
-        })
-    ); 
+    })
+); 
 app.use("/api/docs", serve, setup(specs))
 app.use('/api', router.getRouter())
     

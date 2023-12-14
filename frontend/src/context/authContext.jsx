@@ -11,7 +11,7 @@ const AuthContextProvider = ({children}) => {
     const [isLogin, setIsLogin] = useState(false);
     const [isGitLogin, setIsGitLogin] = useState(false)
     const [user, setUser] = useState(null)
-
+    
     const authCheck = async () => {
         setTimeout(() => {
             const getSession = async () => {

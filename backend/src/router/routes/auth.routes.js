@@ -11,6 +11,8 @@ import is_valid_user from "../../middlewares/is_valid_user.js";
 import sent_pass_reset_email from "../../middlewares/sent_pass_reset_email.js";
 import is_valid_resetpass_token from "../../middlewares/is_valid_resetpass_token.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import env from "../../config/env.js";
 
 const controller = new AuthController();
 
@@ -221,8 +223,7 @@ export default class AuthRouter extends MyRouter {
           "/reset_pass",
           ["PUBLIC"],
           is_valid_resetpass_token,
-          is_8_char,
-          
+          is_8_char,       
           async (req, res, next) => {
             const { password } = req.body;
             const hashpass = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -267,10 +268,16 @@ authGithub.get(
     try {
         req.session.mail = req.user.mail;
         req.session.role = req.user.role;
-       
+        let token = jwt.sign(
+            { mail: req.session.mail }, 
+            `${env.SECRET_KEY}`, 
+            {expiresIn: 60 * 60 * 24 * 7}
+        );
+        req.session.token = token
         return res
-        .status(200).cookie('git_token', JSON.stringify(req.user))
-        .redirect("http://localhost:5173/products");
+            .status(200)
+            .cookie('token', token)
+            .redirect("http://localhost:5173/products");
     } catch (error) {
         next(error);
     }
