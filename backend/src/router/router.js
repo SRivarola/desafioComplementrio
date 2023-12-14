@@ -29,7 +29,7 @@ export default class MyRouter {
         res.sendFailed = () => MyError.newError(errors.failed);
         res.sendNoAuth = () => MyError.newError(errors.auth);
         res.sendInvalidCred = () => MyError.newError(errors.credentials);
-        res.sendForbidden = () => MyError.newError(errors.forbidden);
+        res.sendForbidden = () => res.status(403).json({ status: 'Error', message: 'Unauthorized'});
         res.sendNotFound = (payload) => MyError.newError(errors.notFound(payload) );
         return next()
     }

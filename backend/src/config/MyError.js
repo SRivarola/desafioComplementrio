@@ -4,7 +4,6 @@ export default class {
         error.message = message;
         error.statusCode = code || 500;
         error.status = `${code}`.startsWith("4") ? "error" : "fail";
-        error.where = where;
         throw error;
     }
 }
