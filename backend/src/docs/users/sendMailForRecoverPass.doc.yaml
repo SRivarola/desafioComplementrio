@@ -1,39 +1,21 @@
 components:
   schemas:
-    User:
+    RecoverMail:
       type: object
       properties:
         mail:
-          description: Correo del usuario
-          type: string
-        password:
-          description: Contraseña del usuario
+          description: Mail del usuario registrado
           type: string
       example:
-        mail: pepe@coder.com
-        password: Test1234
-    RestorePass:
-      type: object
-      properties:
-        password:
-          description: password para restaurar.
-          type: string
-      example:
-        token: 9e409592fc08596cf4164ee9b6d51395b7c6b32f
-        password: Test5678
-  securitySchemes:
-    cookieAuth:
-      type: apiKey
-      in: cookie
-      name: token
+        mail: testforgithub@hotmail.com
   responses:
-    successRestored:
+    successSend:
       type: object
       properties:
         message: Mensaje para el usuario.
         response: id del usuario modificado.
       example:
-        message: Password recovery succesfully.
+        message: Mail send succesfully.
     credentials:
       type: object
       properties:
@@ -73,21 +55,21 @@ components:
         status: fatal
         message: dat is not defined
 paths:
-  /api/auth/reset_pass:
-    put:
-      summary: Actualizar contraseña del usuario logueado
+  /api/auth/forgot-password:
+    post:
+      summary: Enviar correo para recuperación de clave
       tags:
         - Auth
       requestBody:
         required: true
-        description: Objeto con la contraseña a cambiar y el token enviado por mail en enlace
+        description: Objeto con mail para actualizar contraseña. Recordar tomar el token del enlace enviado por correo para utilizar en Doc de Actualización.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RestorePass'
+              $ref: '#/components/schemas/RecoverMail'
       responses:
         '200':
-          description: Contraseña actualizada exitosamente
+          description: Correo enviado exitosamente
           content:
             application/json:
               schema:
