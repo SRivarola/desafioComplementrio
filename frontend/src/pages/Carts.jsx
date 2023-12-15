@@ -2,40 +2,22 @@ import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import Cart from "../components/Cart"
 import { AuthContext } from "../context/authContext"
+import { CartContext } from "../context/cartContext"
 
 const Carts = () => {
 
-    const { user } = useContext(AuthContext);
-    const [totalAmount, setTotalAmount] = useState(null);
-    const [data, setData] = useState(null);
-    const [cart, setCart] = useState([]);
-    
-    const getCart = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/carts/`)
-        if(response.status === 200) {
-          setData(response.data.response)
-          setCart(response.data.response.docs)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    
-    useEffect(() => {
-      if(user && user.role !== 'ADMIN') getCart()
-    }, [])
-
-
+    const { cart } = useContext(CartContext);
     
   return (
     <div className="p-20">
       <h1 className="text-center font-caprasimo text-white text-2xl">CARRITO DE COMPRAS</h1>
 
       {
-        cart.length 
-          ? <Cart cart={cart} /> 
-          : null
+        cart?.docs?.length 
+          ? <Cart cart={cart.docs} /> 
+          : <div className="text-white font-semibold text-2xl text-center mt-20">
+              <h3>Don't have products in Cart.</h3>
+            </div>
       }
     </div>
   )

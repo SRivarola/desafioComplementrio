@@ -1,35 +1,16 @@
 import { NavLink, Link } from 'react-router-dom'
 import logo from '../public/images/logo.jpg'
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import SignoutButton from './SignoutButton';
 import LoginButton from './loginButton';
 import { AuthContext } from '../context/authContext';
 import { FiShoppingCart } from "react-icons/fi";
-import axios from 'axios';
+import { CartContext } from '../context/cartContext';
 
 const NavBar = () => {
   
-  const {isLogin, isGitLogin, user} = useContext(AuthContext);
-  const [isCart, setIsCart] = useState(false)
-
-  const getCart = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/carts/`)
-      if(response.status === 200) {
-        setIsCart(true)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    if(isLogin && user && user.role !== 'ADMIN') {
-      
-      getCart()
-
-    }
-  }, [isLogin]) 
+  const { isLogin, isGitLogin, user } = useContext(AuthContext);
+  const { isCart } = useContext(CartContext);
 
   return (
     <nav className="relative flex justify-evenly items-center p-4 h-[100px] bg-[#7d5e3a] border-b-2 border-b-[#d5d6c5] text-white z-20">

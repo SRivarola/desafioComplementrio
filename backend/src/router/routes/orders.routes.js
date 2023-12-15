@@ -1,7 +1,6 @@
 import MyRouter from '../router.js';
 import OrdersController from "../../controllers/orders.controller.js";
 import CartsController from '../../controllers/carts.controller.js';
-import passport from 'passport';
 import { v4 as uuidv4 } from 'uuid';
 
 const controller = new OrdersController();
@@ -12,7 +11,6 @@ export default class OrdersRouter extends MyRouter {
         this.post(
             '/',
             ["USER", "PREMIUM"],
-            passport.authenticate("current"),
             async (req, res, next) => {
                 try {
                     let user = req.user;
@@ -63,7 +61,6 @@ export default class OrdersRouter extends MyRouter {
         this.read(
             '/all',
             ["ADMIN"],
-            passport.authenticate("current"),
             async (req, res, next) => {
                 try {
                     let page = req.body.page ? req.body.page : 1

@@ -11,23 +11,26 @@ import Premium from './pages/Premium';
 import RecoverPass from './pages/RecoverPass';
 import NewPassword from './pages/NewPassword';
 import Checkout from './pages/Checkout';
+import CartContextProvider from './context/cartContext';
 
 function App() {
   return (
     <AuthContextProvider>
-      <NavBar />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Auth />} />
-        <Route path='/products' element={<ProductsContainer />} />
-        <Route path='/products/:pid' element={<ProductDetailContainer />} />
-        <Route path='/new_product' element={<ManageProducts />} />
-        <Route path='/premium' element={<Premium />} />
-        <Route path='/forgot_pass' element={<RecoverPass />} />
-        <Route path='/recover_pass/:token' element={<NewPassword />} />
-        <Route path='/carts' element={<Carts />} />
-        <Route path='/checkout/:oid' element={<Checkout />} />
-      </Routes>
+      <CartContextProvider>
+        <NavBar />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Auth />} />
+          <Route path='/products' element={<ProductsContainer />} />
+          <Route path='/products/:pid' element={<ProductDetailContainer />} />
+          <Route path='/new_product' element={<ManageProducts />} />
+          <Route path='/premium' element={<Premium />} />
+          <Route path='/forgot_pass' element={<RecoverPass />} />
+          <Route path='/recover_pass/:token' element={<NewPassword />} />
+          <Route path='/carts' element={<Carts />} />
+          <Route path='/checkout/:oid' element={<Checkout />} />
+        </Routes>
+      </CartContextProvider>
     </AuthContextProvider>
   )
 }

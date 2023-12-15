@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../context/authContext"
 import axios from "axios";
+import { CartContext } from "../context/cartContext";
 
 axios.defaults.withCredentials = true;
 
@@ -9,6 +10,7 @@ const ProductCard = ({_id, thumbnail, title, price, owner}) => {
 
   const navigate = useNavigate();
   const { isLogin, user } = useContext(AuthContext);
+  const { setIsCart } = useContext(CartContext);
 
   const handleClick = async () => {
     if(!isLogin) return navigate('/login')
@@ -21,8 +23,10 @@ const ProductCard = ({_id, thumbnail, title, price, owner}) => {
     }
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/carts`, data)
-      console.log(response)
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/carts`, data);
+      if(response.status === 201) {
+        setIsCart(prev => !prev)
+      }
     } catch (error) {
       console.log(error)
     }
