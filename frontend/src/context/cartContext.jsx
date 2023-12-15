@@ -12,22 +12,60 @@ const CartContextProvider = ({children}) => {
 
     const [isCart, setIsCart] = useState(false)
     const [cart, setCart] = useState(null);
-    console.log(isCart)
+    const [total, setTotal] = useState(null)
+    
     const getCart = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/carts/`)
         if(response.status === 200) {
             setCart(response.data.response)
             setIsCart(true)
+        } else {
+            setCart(null)
         }
       } catch (error) {
-        console.log(error)
+        setCart(null)
       }
+    };
+
+    const deleteCart = async (id) => {
+        try {
+            const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/carts/${id}`);
+            if(response.status === 200) {
+                setIsCart(prev => !prev)
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const emptyCart = async () => {
+        try {
+            const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/carts`);
+            console.log(response)
+            if(response.status === 200) {
+                setIsCart(prev => !prev);
+            };
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const getTotal = async () => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/carts/total`)
+            if(response.status === 200) {
+                setTotal(response.data.response[0].total)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
         if(isLogin && user && user.role !== 'ADMIN') {
             getCart()
+            getTotal()
         }
     }, [isLogin, isCart])
 
@@ -35,7 +73,10 @@ const CartContextProvider = ({children}) => {
         <CartContext.Provider value={{
             isCart,
             setIsCart,
-            cart
+            cart,
+            deleteCart,
+            emptyCart,
+            total
         }}>
             {children}
         </CartContext.Provider>

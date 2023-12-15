@@ -146,8 +146,10 @@ export default class CartsRouter extends MyRouter {
           ["USER", "PREMIUM"],
           async (req, res, next) => {
             try {
+              console.log('borrar carrito')
               let user = req.user;
               let response = await controller.deleteAll(user._id);
+              console.log(response)
               response ? res.sendSuccess(response) : res.sendNotFound("cart");
             } catch (error) {
               next(error);
