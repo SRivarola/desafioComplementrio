@@ -1,18 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
+import { alertError, toastSuccess } from "../helpers/toasts";
 
 axios.defaults.withCredentials = true;
 
 const FormCreateProduct = ({ setNewProduct }) => {
-
-    const [errorMessage, setErrorMessage] = useState('')
-    const [successMessage, setSuccessMessage] = useState('')
-
-    const clearMessage = async (setState) => {
-        setTimeout(() => {
-            setState('')
-        }, 2500);
-    }
 
     const handleSubmitCreate = async (e) => {
         e.preventDefault()
@@ -20,13 +12,11 @@ const FormCreateProduct = ({ setNewProduct }) => {
         try {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/products`, formData)
             if(response.status === 201){
+                toastSuccess('Product created!')
                 setNewProduct(prev => !prev)
-                setSuccessMessage(response.data.message)
-                clearMessage(setSuccessMessage)
                 e.currentTarget.reset()
             } else {
-                setErrorMessage(response.data.message)
-                clearMessage(setErrorMessage)
+                alertError('Something went wrong, please try again!')
             }
         } catch (error) {
             console.log(error)
@@ -137,14 +127,6 @@ const FormCreateProduct = ({ setNewProduct }) => {
                         className="cursor-pointer bg-black text-white rounded-full px-[50px] py-[8px] w-[390px] font-semibold text-lg"
                     />
                 </div>
-            </div>
-            <div>
-                {
-                    errorMessage && <p className="text-center text-red-600 font-semibold italic">{errorMessage}</p>
-                }
-                {
-                    successMessage && <p className="text-center text-green-500 font-semibold italic">{successMessage}</p>
-                }
             </div>
         </form>
   )

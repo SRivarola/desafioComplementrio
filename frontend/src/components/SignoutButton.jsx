@@ -3,12 +3,13 @@ import { PiSignOutBold } from 'react-icons/pi'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
+import { alertError, toastSuccess } from '../helpers/toasts';
 
 axios.defaults.withCredentials = true;
 
 const SignoutButton = () => {
 
-  const { setIsLogin, setUser } = useContext(AuthContext)
+  const { setIsLogin, setUser, user } = useContext(AuthContext)
 
   const navigate = useNavigate();
 
@@ -17,6 +18,7 @@ const SignoutButton = () => {
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/signout`);
       
       if(response.status === 200) {
+        toastSuccess(`Bye bye, ${user.mail}`)
         setIsLogin(false)
         setUser(null)
         navigate('/')

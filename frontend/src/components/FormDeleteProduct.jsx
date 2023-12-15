@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/authContext";
 import { IoWarning } from "react-icons/io5";
+import { alertError, toastSuccess } from "../helpers/toasts";
 
 axios.defaults.withCredentials = true;
 
@@ -9,8 +10,6 @@ const FormDeleteProduct = ({ products, setNewProduct }) => {
 
     const [selectedProduct, setSelectedProduct] = useState('');
     const [product, setProduct] = useState(null);
-    const [errorMessage, setErrorMessage] = useState('')
-    const [successMessage, setSuccessMessage] = useState('')
 
     const getProduct = async() => {
         try {
@@ -23,25 +22,17 @@ const FormDeleteProduct = ({ products, setNewProduct }) => {
         }
     }
 
-    const clearMessage = async (setState) => {
-        setTimeout(() => {
-            setState('')
-        }, 2500);
-    }
-
     const handleDelete = async () => {
         try {
             const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/products/${selectedProduct}`);
 
             if(response.status === 200) {
-                setSuccessMessage(response.data.message);
+                toastSuccess('Product deleted!')
                 setNewProduct(prev => !prev)
                 setSelectedProduct('');
                 setProduct(null);
-                clearMessage(setSuccessMessage);
             } else {
-                setErrorMessage(response.data.message);
-                clearMessage(setErrorMessage);
+                alertError('Something went wrong, please try again!')
             }
         } catch (error) {
             console.error(error);
@@ -95,14 +86,6 @@ const FormDeleteProduct = ({ products, setNewProduct }) => {
                                     </div>
                                     <div>
                                         <button onClick={handleDelete} className="font-semibold text-white text-lg bg-red-600 py-3 px-16 rounded-full shadow-lg shadow-red-400">DELETE PRODUCT</button>
-                                    </div>
-                                    <div>
-                                        {
-                                            errorMessage && <p className="text-center text-red-600 font-semibold italic">{errorMessage}</p>
-                                        }
-                                        {
-                                            successMessage && <p className="text-center text-green-500 font-semibold italic">{successMessage}</p>
-                                        }
                                     </div>
                                 </div>
                             </div>

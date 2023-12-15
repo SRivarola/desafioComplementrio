@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
+import { alertError, toastSuccess } from "../helpers/toasts";
 
 axios.defaults.withCredentials = true;
 
@@ -7,8 +8,6 @@ const FormUpdateProduct = ({ products }) => {
 
     const [selectedProduct, setSelectedProduct] = useState('');
     const [product, setProduct] = useState(null);
-    const [errorMessage, setErrorMessage] = useState('')
-    const [successMessage, setSuccessMessage] = useState('')
 
     const getProduct = async() => {
         try {
@@ -21,12 +20,6 @@ const FormUpdateProduct = ({ products }) => {
         }
     }
 
-    const clearMessage = async (setState) => {
-        setTimeout(() => {
-            setState('')
-        }, 2500);
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData(e.currentTarget);
@@ -34,16 +27,11 @@ const FormUpdateProduct = ({ products }) => {
             const response = await axios.put(`${import.meta.env.VITE_BASE_URL}/products/${selectedProduct}`, formData);
 
             if(response.status === 200) {
-                setSuccessMessage(response.data.message)
+                toastSuccess('Product updated!')
                 setProduct(response.data.response)
-                clearMessage(setSuccessMessage)
-                e.currentTarget.reset()
-            } else {
-                setErrorMessage(response.data.message)
-                clearMessage(setErrorMessage)
             }
         } catch (error) {
-            console.error(error);
+            console.log(error)
         }
     }
 
@@ -139,14 +127,6 @@ const FormUpdateProduct = ({ products }) => {
                                             value='Update Product'
                                         />
                                     </div>
-                                </div>
-                                <div>
-                                    {
-                                        errorMessage && <p className="text-center text-red-600 font-semibold italic">{errorMessage}</p>
-                                    }
-                                    {
-                                        successMessage && <p className="text-center text-green-500 font-semibold italic">{successMessage}</p>
-                                    }
                                 </div>
                             </form>
                         </div>

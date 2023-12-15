@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createContext, useEffect, useState, useContext } from "react";
 import { AuthContext } from './authContext';
+import { toastSuccess } from '../helpers/toasts';
 
 axios.defaults.withCredentials = true;
 
@@ -32,6 +33,7 @@ const CartContextProvider = ({children}) => {
         try {
             const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/carts/${id}`);
             if(response.status === 200) {
+                toastSuccess('Product deleted!')
                 setIsCart(prev => !prev)
             }
         } catch (error) {
@@ -44,6 +46,7 @@ const CartContextProvider = ({children}) => {
             const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/carts`);
             console.log(response)
             if(response.status === 200) {
+                toastSuccess('The cart is empty')
                 setIsCart(prev => !prev);
             };
         } catch (error) {

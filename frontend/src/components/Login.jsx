@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from "../context/authContext";
 import { BsEyeSlashFill } from "react-icons/bs"
 import { AiFillGithub } from "react-icons/ai"
+import { toastSuccess } from "../helpers/toasts";
 
 axios.defaults.withCredentials = true;
 
@@ -42,7 +43,9 @@ const Login = () => {
         if(data.mail && data.password){
             try {
                 const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login`, data)
+                console.log(response)
                 if(response.status === 200){
+                    toastSuccess(`Bienvenido, ${response.data.user.mail}!`)
                     setIsLogin(true)
                     navigate('/products')
                 }

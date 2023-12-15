@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../context/authContext"
 import axios from "axios";
 import { CartContext } from "../context/cartContext";
+import { alertError, toastSuccess } from "../helpers/toasts";
 
 axios.defaults.withCredentials = true;
 
@@ -25,10 +26,13 @@ const ProductCard = ({_id, thumbnail, title, price, owner}) => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/carts`, data);
       if(response.status === 201) {
-        setIsCart(prev => !prev)
+        toastSuccess('Product added!');
+        setIsCart(prev => !prev);
+      } else{
+        alertError('Something went wrong, try again!');
       }
     } catch (error) {
-      console.log(error)
+      alertError('Something went wrong, try again!');
     }
     
   }
