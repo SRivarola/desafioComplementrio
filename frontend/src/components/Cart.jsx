@@ -46,11 +46,11 @@ const Cart = ({cart}) => {
                     </h1>
                 </div>
             }
-            <div className="text-black mt-2 flex justify-end">
-                <button onClick={emptyCart} className="rounded-full bg-red-600 text-white font-semibold py-2 px-16">EMPTY CART</button>
-            </div>
-            <div className="w-full flex justify-end mt-5">
+            <div className="w-full flex justify-end mt-2">
                 <button onClick={handleOrder} className="rounded-full bg-blue-600 text-white text-lg py-2 px-16 font-semibold shadow-lg shadow-blue-300 border-2 border-blue-700">BUY</button>
+            </div>
+            <div className="text-black flex justify-end mt-5">
+                <button onClick={emptyCart} className="rounded-full bg-red-600 text-white font-semibold py-2 px-12 shadow-lg shadow-red-300">EMPTY CART</button>
             </div>
         </div>
     </div>

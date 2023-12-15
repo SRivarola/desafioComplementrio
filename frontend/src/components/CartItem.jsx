@@ -18,7 +18,9 @@ const CartItem = ({product}) => {
         <p className=" w-[150px] text-center">${price.toLocaleString()}</p>
         <p className=" w-[150px] text-center">${(quantity * price).toLocaleString()}</p>
         <p className=" w-[50px] flex justify-center items-center">
-          <button onClick={() => deleteCart(_id)}><FaTrashAlt className="text-black hover:text-red-600 cursor-pointer" /></button>
+          <button onClick={() => deleteCart(_id)} className="p-2 rounded hover:shadow-lg hover:border transition-all duration-200 cursor-pointer text-black hover:text-red-600">
+            <FaTrashAlt />
+          </button>
         </p>
       </div>
       <div className="w-full bg-[#a6a6a6] h-[1px]"></div>
