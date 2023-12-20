@@ -1,10 +1,13 @@
 import { useContext, useState } from "react"
 import { AuthContext } from "../context/authContext"
 import axios from "axios";
+import { alertError, toastSuccess } from "../helpers/toasts";
+import { CartContext } from "../context/cartContext";
 
 const ProductDetail = ({_id, title, description, price, thumbnail, stock}) => {
 
     const { isLogin, user } = useContext(AuthContext);
+    const { setIsCart } = useContext(CartContext);
     const [quantity, setQuantity] = useState(1)
 
     const handleQuantity = (operation) => {
@@ -29,9 +32,14 @@ const ProductDetail = ({_id, title, description, price, thumbnail, stock}) => {
 
         try {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/carts`, data);
-
+            if(response.status === 201){
+                toastSuccess('Product added!');
+                setIsCart(prev => !prev);
+            } else {
+                alertError('Something went wrong, please try again!')
+            }
         } catch (error) {
-            console.log(error)
+            alertError('Something went wrong, please try again!')
         }
         
     }
