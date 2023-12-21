@@ -39,32 +39,43 @@ export default function () {
     passport.use(
         'github',
         new GhStrategy(
-            {
-                clientID: process.env.GH_CLIENT_ID,
-                clientSecret: process.env.GH_CLIENT_SECRET,
-                callbackURL: process.env.GH_CB
-            },
-            async (accessToken, refreshToken, profile, done) => {
-                try {
-                    let user = await User.findOne({ mail: profile._json.email })
-                    if(user){
-                        return done(null, user)
-                    } else {
-                        const name = profile._json.name.split(' ');
-
-                        let one = await User.create({
-                          first_name: name[0],
-                          last_name: name[1],
-                          photo: profile._json.avatar_url,
-                          mail: profile._json.email,
-                          password: profile._json.profileUrl,
-                        });
-                        return done(null, one)
-                    }
-                } catch (error) {
-                    return done(error)
+          {
+            clientID: process.env.GH_CLIENT_ID,
+            clientSecret: process.env.GH_CLIENT_SECRET,
+            callbackURL: process.env.GH_CB
+          },
+          async (accessToken, refreshToken, profile, done) => {
+            try {
+              let user = await User.findOne({ mail: profile._json.email });
+              if (user) {
+                return done(null, user);
+              } else {
+                const name = profile._json.name;
+                let first_name, last_name;
+      
+                if (name.includes(' ')) {
+                  const nameParts = name.split(' ');
+                  first_name = nameParts[0];
+                  last_name = nameParts.slice(1).join(' '); 
+                } else {
+                  first_name = name;
+                  last_name = ' ';
                 }
+      
+                let newUser = await User.create({
+                  first_name: first_name,
+                  last_name: last_name,
+                  photo: profile._json.avatar_url,
+                  mail: profile._json.email,
+                  password: profile._json.profileUrl
+                });
+      
+                return done(null, newUser);
+              }
+            } catch (error) {
+              return done(error);
             }
+          }
         )
-    )
-}
+      )
+    };
